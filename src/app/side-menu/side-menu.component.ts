@@ -1,8 +1,8 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MENU_OPTIONS, MENU_OPTION_ID } from '@core/constants';
-import { RouterService } from '@core/services';
+import { RouterService, ViewportService } from '@core/services';
 import { PATH as HOME_PATH } from '@home/home.routing';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IMenuOption } from './model';
 import { SideMenuService } from './side-menu.service';
 
@@ -13,8 +13,8 @@ import { SideMenuService } from './side-menu.service';
 })
 export class SideMenuComponent implements OnInit, OnDestroy {
   options: Array<IMenuOption> = [];
-  private subscription = new Subscription();
-  opened: boolean = false;
+  private _subscription = new Subscription();
+  opened$: Observable<boolean>;
 
   paths = new Map<MENU_OPTION_ID, string>([
     [MENU_OPTION_ID.DASHBOARD, HOME_PATH.DASHBOARD],
@@ -23,8 +23,16 @@ export class SideMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(SideMenuService) private sideMenu: SideMenuService,
-    @Inject(RouterService) private router: RouterService
-  ) {}
+    @Inject(RouterService) private router: RouterService,
+    @Inject(ViewportService) private viewport: ViewportService
+  ) {
+    this.opened$ = this.sideMenu.open$;
+    this._subscription.add(
+      this.viewport.sizeChange$.subscribe(size => {
+        this.sideMenu.setOpen(size.width >= 768);
+      })
+    );
+  }
 
   ngOnInit() {
     const url = this.router.getURL();
@@ -44,6 +52,6 @@ export class SideMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this._subscription.unsubscribe();
   }
 }

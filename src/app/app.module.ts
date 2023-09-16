@@ -9,7 +9,12 @@ import { CoreModule } from './core/core.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, TranslateModule.forRoot(), CoreModule],
-  providers: [],
+  providers: [
+    {
+      provide: Window,
+      useValue: window
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

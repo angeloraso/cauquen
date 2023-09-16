@@ -7,7 +7,7 @@ import { PATH as HOME_PATH } from '@home/home.routing';
 import { IMenuOption } from '@menu/model';
 import { PATH as SIDE_MENU_PATH } from '@menu/side-menu.routing';
 import { SideMenuService } from '@menu/side-menu.service';
-import { Subscription, distinctUntilChanged } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'home',
@@ -17,7 +17,7 @@ import { Subscription, distinctUntilChanged } from 'rxjs';
 export class HomeComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   showBottomBar = true;
-  sidebarIsOpen = false;
+  sideMenuIsOpen$: Observable<boolean>;
   options: Array<IMenuOption> = [];
   selectedIndex: number = 0;
 
@@ -29,7 +29,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(RouterService) private router: RouterService,
     @Inject(SideMenuService) private sideMenu: SideMenuService
-  ) {}
+  ) {
+    this.sideMenuIsOpen$ = this.sideMenu.open$;
+  }
 
   ngOnInit() {
     this.options = MENU_OPTIONS;
@@ -40,14 +42,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
 
     this.subscription.add(
-      this.sideMenu.open$.pipe(distinctUntilChanged()).subscribe(isOpen => {
-        this.sidebarIsOpen = isOpen;
-      })
-    );
-
-    this.subscription.add(
-      this.sideMenu.option$.subscribe(url => {
-        this.goTo(url);
+      this.sideMenu.option$.subscribe(option => {
+        this.selectedIndex = this.options.findIndex(_option => _option.id === option.id);
+        this.goTo(option);
       })
     );
   }

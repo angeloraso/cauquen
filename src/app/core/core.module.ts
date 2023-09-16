@@ -4,11 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LANGUAGE } from './constants';
 import { es } from './i18n';
-import { CauquenTranslateService, RouterService } from './services';
+import { CauquenTranslateService, RouterService, ViewportService } from './services';
 
 @NgModule({
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule],
-  providers: [RouterService, CauquenTranslateService]
+  providers: [RouterService, CauquenTranslateService, ViewportService]
 })
 export class CoreModule {
   /* Make sure CoreModule is imported only by one NgModule the AppModule */

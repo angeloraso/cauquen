@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { IMenuOption } from './model';
 
 @Injectable({
@@ -9,7 +9,7 @@ export class SideMenuService {
   private _open = new BehaviorSubject<boolean>(false);
   private _option = new Subject<IMenuOption>();
 
-  get open$() {
+  get open$(): Observable<boolean> {
     return this._open.asObservable();
   }
 
@@ -17,7 +17,7 @@ export class SideMenuService {
     this._open.next(isOpen);
   }
 
-  get option$() {
+  get option$(): Observable<IMenuOption> {
     return this._option.asObservable();
   }
 

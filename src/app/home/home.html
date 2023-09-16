@@ -1,4 +1,11 @@
-<mat-tab-group headerPosition="below" class="home__bottom-bar" [selectedIndex]="selectedIndex" (selectedTabChange)="showOption($event)">
+<mat-tab-group 
+  headerPosition="below"
+  class="home__bottom-bar"
+  [animationDuration]="(sideMenuIsOpen$ | async) ? '0' : '300'"
+  [selectedIndex]="selectedIndex"
+  [ngClass]="{'home__bottom-bar--hidden': (sideMenuIsOpen$ | async)}"
+  (selectedTabChange)="showOption($event)">
+  
   <mat-tab *ngFor="let option of options">
 
     <router-outlet></router-outlet>

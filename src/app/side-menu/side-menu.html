@@ -1,16 +1,19 @@
-<mat-sidenav-container>
-  <mat-sidenav class="side-menu" mode="side" [(opened)]="opened">
-    
+<mat-sidenav-container class="side-menu" autosize>
+  <mat-sidenav class="side-menu__content" #drawer mode="side" [opened]="(opened$ | async)">
+
     <mat-list>
       <mat-list-item *ngFor="let option of options" (click)="showOption(option)">
         <mat-icon matListItemIcon>{{option.icon}}</mat-icon>
-        <div matListItemTitle>{{option.title}}</div>
+        <div matListItemTitle>{{option.title | translate}}</div>
       </mat-list-item>
     </mat-list>
 
   </mat-sidenav>
 
   <mat-sidenav-content>
+
     <router-outlet></router-outlet>
+    
   </mat-sidenav-content>
+
 </mat-sidenav-container>
