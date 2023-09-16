@@ -1,0 +1,12 @@
+<mat-tab-group headerPosition="below" class="home__bottom-bar" [selectedIndex]="selectedIndex" (selectedTabChange)="showOption($event)">
+  <mat-tab *ngFor="let option of options">
+
+    <router-outlet></router-outlet>
+
+    <ng-template mat-tab-label>
+      <mat-icon class="home__bottom-bar__icon">{{option.icon}}</mat-icon>
+      {{option.title | translate}}
+    </ng-template>
+  </mat-tab>
+
+</mat-tab-group>

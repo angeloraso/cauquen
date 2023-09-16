@@ -1,0 +1,68 @@
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { PATH as APP_PATH } from '@app/app.routing';
+import { MENU_OPTIONS, MENU_OPTION_ID } from '@core/constants';
+import { RouterService } from '@core/services';
+import { PATH as HOME_PATH } from '@home/home.routing';
+import { IMenuOption } from '@menu/model';
+import { PATH as SIDE_MENU_PATH } from '@menu/side-menu.routing';
+import { SideMenuService } from '@menu/side-menu.service';
+import { Subscription, distinctUntilChanged } from 'rxjs';
+
+@Component({
+  selector: 'home',
+  templateUrl: './home.html',
+  styleUrls: ['./home.css']
+})
+export class HomeComponent implements OnInit, OnDestroy {
+  private subscription = new Subscription();
+  showBottomBar = true;
+  sidebarIsOpen = false;
+  options: Array<IMenuOption> = [];
+  selectedIndex: number = 0;
+
+  paths = new Map<MENU_OPTION_ID, string>([
+    [MENU_OPTION_ID.DASHBOARD, HOME_PATH.DASHBOARD],
+    [MENU_OPTION_ID.HISTORY, HOME_PATH.HISTORY]
+  ]);
+
+  constructor(
+    @Inject(RouterService) private router: RouterService,
+    @Inject(SideMenuService) private sideMenu: SideMenuService
+  ) {}
+
+  ngOnInit() {
+    this.options = MENU_OPTIONS;
+    const url = this.router.getURL();
+
+    this.selectedIndex = this.options.findIndex(
+      _option => url.indexOf(this.paths.get(_option.id)!) !== -1
+    );
+
+    this.subscription.add(
+      this.sideMenu.open$.pipe(distinctUntilChanged()).subscribe(isOpen => {
+        this.sidebarIsOpen = isOpen;
+      })
+    );
+
+    this.subscription.add(
+      this.sideMenu.option$.subscribe(url => {
+        this.goTo(url);
+      })
+    );
+  }
+
+  showOption(event: MatTabChangeEvent) {
+    this.goTo(this.options[event.index]);
+  }
+
+  goTo(option: IMenuOption) {
+    this.router.goTo({
+      path: `/${APP_PATH.MENU}/${SIDE_MENU_PATH.HOME}/${this.paths.get(option.id)}`
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+}

@@ -1,0 +1,16 @@
+.home__bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 0 !important;
+}
+
+.home__bottom-bar__icon {
+  margin-right: 0.5em;
+}
