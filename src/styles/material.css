@@ -9,6 +9,67 @@
     --mat-tab-header-active-hover-indicator-color: var(--accent-color) !important;
 }
 
+.mat-mdc-fab.mat-primary,
+.mat-mdc-mini-fab.mat-primary {
+    --mdc-fab-container-color: var(--accent-color) !important;
+}
+
+.mat-mdc-slide-toggle.mat-accent {
+    --mdc-switch-selected-focus-state-layer-color: var(--accent-color) !important;
+    --mdc-switch-selected-handle-color: var(--accent-color) !important;
+    --mdc-switch-selected-hover-state-layer-color: var(--accent-color) !important;
+    --mdc-switch-selected-pressed-state-layer-color: var(--accent-color) !important;
+    --mdc-switch-selected-focus-handle-color: var(--dark-accent-color) !important;
+    --mdc-switch-selected-hover-handle-color: var(--dark-accent-color) !important;
+    --mdc-switch-selected-pressed-handle-color: var(--dark-accent-color) !important;
+    --mdc-switch-selected-focus-track-color: var(--light-accent-color) !important;
+    --mdc-switch-selected-hover-track-color: var(--light-accent-color) !important;
+    --mdc-switch-selected-pressed-track-color: var(--light-accent-color) !important;
+    --mdc-switch-selected-track-color: var(--light-accent-color) !important;
+}
+
+.mat-mdc-header-row {
+    color: var(--primary-color) !important;
+}
+
 .mdc-list {
     padding: 0 !important;
+}
+
+.mat-mdc-fab {
+    position: absolute !important;
+    right: 2em;
+    bottom: 2em;
+}
+
+.mat-mdc-tab-header {
+    --mdc-secondary-navigation-tab-container-height: var(--bottom-bar-height) !important;
+}
+
+.cauquen-material-dialog {
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    min-width: 36em;
+    width: fit-content;
+    max-width: 95vw !important;
+    height: fit-content;
+}
+
+.cauquen-material-dialog::-webkit-scrollbar {
+    width: 0 !important;
+    /* Remove scrollbar space */
+    background: transparent !important;
+    /* Optional: just make scrollbar invisible */
+}
+
+.cauquen-material-dialog .mat-dialog-container {
+    padding: 1em 1.5em !important;
+}
+
+@media only screen and (max-width: 576px) {
+    .cauquen-material-dialog {
+        min-width: 26em;
+    }
 }

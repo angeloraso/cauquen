@@ -7,6 +7,16 @@ export const locale = {
       MENU: {
         DASHBOARD: 'Panel',
         HISTORY: 'Historial'
+      },
+      BUTTON: {
+        CANCEL: 'Cancelar',
+        SAVE: 'Guardar'
+      },
+      FORM: {
+        FIELD: {
+          DATE: 'Fecha',
+          AMOUNT: 'Monto'
+        }
       }
     }
   }
