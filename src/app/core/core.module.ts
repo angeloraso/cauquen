@@ -4,11 +4,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LANGUAGE } from './constants';
 import { es } from './i18n';
-import { CauquenTranslateService, RouterService, ViewportService } from './services';
+import {
+  CauquenTranslateService,
+  DatabaseService,
+  RouterService,
+  ViewportService
+} from './services';
 
 @NgModule({
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule],
-  providers: [RouterService, CauquenTranslateService, ViewportService]
+  providers: [RouterService, CauquenTranslateService, ViewportService, DatabaseService]
 })
 export class CoreModule {
   /* Make sure CoreModule is imported only by one NgModule the AppModule */
@@ -24,6 +29,5 @@ export class CoreModule {
     this.translate.setDefault(LANGUAGE.SPANISH);
     this.translate.use(LANGUAGE.SPANISH);
     this.translate.loadTranslations(es);
-    // This.config.init();
   }
 }

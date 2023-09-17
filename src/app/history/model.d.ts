@@ -1,5 +1,5 @@
 export interface IHistoryRecord {
-  date: Date;
+  date: number;
   income: boolean;
   amount: number;
 }

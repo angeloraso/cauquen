@@ -39,7 +39,7 @@ export class RecordFormComponent {
     }
 
     this.dialog.close({
-      date: this._date.value,
+      date: this._date.value.getTime(),
       income: this._income.value,
       amount: this._amount.value
     });
