@@ -1,0 +1,13 @@
+html:root {
+    --hover-color: #f3f3f3;
+    --primary-color: #07368C;
+    --light-primary-color: #245BC1;
+    --dark-primary-color: #021F53;
+    --secondary-color: #240991;
+    --light-secondary-color: #240991;
+    --secondary-color: #4829C6;
+    --dark-secondary-color: #130356;
+    --accent-color: #008375;
+    --light-accent-color: #12B9A8;
+    --dark-accent-color: #004D45;
+}

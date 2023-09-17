@@ -1,18 +1,28 @@
 <mat-tab-group 
   headerPosition="below"
   class="home__bottom-bar"
-  [animationDuration]="(sideMenuIsOpen$ | async) ? '0' : '300'"
+  [animationDuration]="sideMenuIsOpen ? '0' : '300'"
   [selectedIndex]="selectedIndex"
-  [ngClass]="{'home__bottom-bar--hidden': (sideMenuIsOpen$ | async)}"
+  [ngClass]="{'home__bottom-bar--hidden': sideMenuIsOpen}"
   (selectedTabChange)="showOption($event)">
   
-  <mat-tab *ngFor="let option of options">
+  <mat-tab>
 
-    <router-outlet></router-outlet>
+    <history></history>
 
     <ng-template mat-tab-label>
-      <mat-icon class="home__bottom-bar__icon">{{option.icon}}</mat-icon>
-      {{option.title | translate}}
+      <mat-icon class="home__bottom-bar__icon">{{options[0].icon}}</mat-icon>
+      {{options[0].title | translate}}
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab>
+
+    <dashboard></dashboard>
+    
+    <ng-template mat-tab-label>
+      <mat-icon class="home__bottom-bar__icon">{{options[1].icon}}</mat-icon>
+      {{options[1].title | translate}}
     </ng-template>
   </mat-tab>
 

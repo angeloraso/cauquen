@@ -7,7 +7,7 @@ import { PATH as HOME_PATH } from '@home/home.routing';
 import { IMenuOption } from '@menu/model';
 import { PATH as SIDE_MENU_PATH } from '@menu/side-menu.routing';
 import { SideMenuService } from '@menu/side-menu.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'home',
@@ -17,7 +17,7 @@ import { Observable, Subscription } from 'rxjs';
 export class HomeComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   showBottomBar = true;
-  sideMenuIsOpen$: Observable<boolean>;
+  sideMenuIsOpen: boolean = false;
   options: Array<IMenuOption> = [];
   selectedIndex: number = 0;
 
@@ -29,16 +29,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(RouterService) private router: RouterService,
     @Inject(SideMenuService) private sideMenu: SideMenuService
-  ) {
-    this.sideMenuIsOpen$ = this.sideMenu.open$;
-  }
+  ) {}
 
   ngOnInit() {
     this.options = MENU_OPTIONS;
-    const url = this.router.getURL();
 
     this.selectedIndex = this.options.findIndex(
-      _option => url.indexOf(this.paths.get(_option.id)!) !== -1
+      _option => this.router.getURL().indexOf(this.paths.get(_option.id)!) !== -1
+    );
+
+    this.subscription.add(
+      this.sideMenu.open$.subscribe(opened => {
+        this.sideMenuIsOpen = opened;
+      })
     );
 
     this.subscription.add(
@@ -50,7 +53,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   showOption(event: MatTabChangeEvent) {
-    this.goTo(this.options[event.index]);
+    if (this.sideMenuIsOpen) {
+      return;
+    }
+
+    const option = this.options[event.index];
+
+    this.options.forEach(option => {
+      option.active = false;
+    });
+
+    option.active = true;
+
+    this.goTo(option);
   }
 
   goTo(option: IMenuOption) {

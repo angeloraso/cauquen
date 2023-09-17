@@ -2,9 +2,13 @@
   <mat-sidenav class="side-menu__content" #drawer mode="side" [opened]="(opened$ | async)">
 
     <mat-list>
-      <mat-list-item *ngFor="let option of options" (click)="showOption(option)">
-        <mat-icon matListItemIcon>{{option.icon}}</mat-icon>
-        <div matListItemTitle>{{option.title | translate}}</div>
+      <mat-list-item 
+        class="side-menu__list__option"
+        [ngClass]="{'side-menu__list__option--active': option.active}"
+        *ngFor="let option of options"
+        (click)="showOption(option)">
+        <mat-icon [ngClass]="{'side-menu__list__option__content--active': option.active}" matListItemIcon>{{option.icon}}</mat-icon>
+        <div [ngClass]="{'side-menu__list__option__content--active': option.active}" matListItemTitle>{{option.title | translate}}</div>
       </mat-list-item>
     </mat-list>
 

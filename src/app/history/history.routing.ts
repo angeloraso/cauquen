@@ -3,8 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HistoryComponent } from './history.component';
 
 export enum PATH {
-  EMPTY = '',
-  ANY = '**'
+  EMPTY = ''
 }
 
 const routes: Routes = [

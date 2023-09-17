@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from '@dashboard/dashboard.component';
+import { HistoryComponent } from '@history/history.component';
 import { HomeComponent } from './home.component';
 
 export enum PATH {
@@ -21,11 +23,11 @@ const routes: Routes = [
       },
       {
         path: PATH.DASHBOARD,
-        loadChildren: () => import('@dashboard/dashboard.module').then(m => m.DashboardModule)
+        component: DashboardComponent
       },
       {
         path: PATH.HISTORY,
-        loadChildren: () => import('@history/history.module').then(m => m.HistoryModule)
+        component: HistoryComponent
       },
       {
         path: PATH.ANY,

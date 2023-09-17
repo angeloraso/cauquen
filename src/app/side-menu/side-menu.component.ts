@@ -35,11 +35,14 @@ export class SideMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const url = this.router.getURL();
-    MENU_OPTIONS.forEach(_option => {
-      _option.active = url.indexOf(this.paths.get(_option.id)!) !== -1;
-      this.options.push(_option);
-    });
+    this.options = MENU_OPTIONS;
+
+    for (let i = 0; i < this.options.length; i++) {
+      if (this.router.getURL().indexOf(this.paths.get(this.options[i].id)!) !== -1) {
+        this.options[i].active = true;
+        break;
+      }
+    }
   }
 
   showOption(option: IMenuOption) {
