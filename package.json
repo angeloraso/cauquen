@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o",
+    "start:pwa": "npm run build && npx http-server -o -p 4200 -c-1 dist",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -11,17 +12,18 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~16.2.5",
-    "@angular/cdk": "^16.2.4",
+    "@angular/cdk": "~16.2.4",
     "@angular/common": "~16.2.5",
     "@angular/compiler": "~16.2.5",
     "@angular/core": "~16.2.5",
     "@angular/forms": "~16.2.5",
-    "@angular/material": "^16.2.4",
+    "@angular/material": "~16.2.4",
     "@angular/platform-browser": "~16.2.5",
     "@angular/platform-browser-dynamic": "~16.2.5",
     "@angular/router": "~16.2.5",
-    "@ngx-translate/core": "^15.0.0",
-    "firebase": "^10.4.0",
+    "@ngx-translate/core": "~15.0.0",
+    "firebase": "~10.4.0",
+    "http-server": "~14.1.1",
     "rxjs": "~7.8.1",
     "tslib": "~2.6.2",
     "zone.js": "~0.13.3"
