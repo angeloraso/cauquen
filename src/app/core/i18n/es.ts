@@ -4,6 +4,7 @@ export const locale = {
   lang: LANGUAGE.SPANISH,
   translations: {
     CORE: {
+      EMPTY: 'Sin elementos',
       MENU: {
         DASHBOARD: 'Panel',
         HISTORY: 'Historial'

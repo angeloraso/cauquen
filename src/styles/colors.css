@@ -10,4 +10,7 @@ html:root {
     --accent-color: #008375;
     --light-accent-color: #12B9A8;
     --dark-accent-color: #004D45;
+
+    --income-color: #5fbc5a;
+    --expense-color: #e76565;
 }

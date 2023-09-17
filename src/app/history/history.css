@@ -1,0 +1,18 @@
+.history__table__income {
+    font-weight: bold;
+    color: var(--income-color);
+}
+
+.history__table__expense {
+    font-weight: bold;
+    color: var(--expense-color);
+}
+
+.history__table--empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20em;
+    width: 100%;
+    text-align: center;
+}
