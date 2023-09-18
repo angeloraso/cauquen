@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { IHistoryRecord } from '@core/model';
 
 @Component({
   selector: 'record-form',
@@ -14,29 +15,43 @@ export class RecordFormComponent {
 
   constructor(
     @Inject(FormBuilder) private fb: FormBuilder,
-    @Inject(MatDialogRef) private dialog: MatDialogRef<RecordFormComponent>
+    @Inject(MatDialogRef) private dialog: MatDialogRef<RecordFormComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: IHistoryRecord
   ) {
     this.form = this.fb.group({
+      id: [null],
       date: [new Date(), [Validators.required]],
       income: [true, [Validators.required]],
       amount: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
       balance: [null, [Validators.min(this.MIN_VALUE), Validators.required]]
     });
+
+    if (this.data) {
+      this.id.setValue(this.data.id);
+      this.date.setValue(new Date(this.data.date));
+      this.income.setValue(this.data.amount >= 0);
+      this.amount.setValue(Math.abs(this.data.amount));
+      this.balance.setValue(this.data.balance);
+    }
   }
 
-  get _date() {
+  get id() {
+    return this.form.get('id') as AbstractControl;
+  }
+
+  get date() {
     return this.form.get('date') as AbstractControl;
   }
 
-  get _income() {
+  get income() {
     return this.form.get('income') as AbstractControl;
   }
 
-  get _amount() {
+  get amount() {
     return this.form.get('amount') as AbstractControl;
   }
 
-  get _balance() {
+  get balance() {
     return this.form.get('balance') as AbstractControl;
   }
 
@@ -46,9 +61,10 @@ export class RecordFormComponent {
     }
 
     this.dialog.close({
-      date: this._date.value.getTime(),
-      amount: this._income.value ? this._amount.value : this._amount.value * -1,
-      balance: this._balance.value
+      id: this.id.value,
+      date: this.date.value.getTime(),
+      amount: this.income.value ? this.amount.value : this.amount.value * -1,
+      balance: this.balance.value
     });
   }
 

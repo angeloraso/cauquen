@@ -11,7 +11,8 @@ export const locale = {
       },
       BUTTON: {
         CANCEL: 'Cancelar',
-        SAVE: 'Guardar'
+        SAVE: 'Guardar',
+        CONFIRM: 'Confirmar'
       },
       FORM: {
         FIELD: {

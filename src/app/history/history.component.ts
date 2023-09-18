@@ -3,6 +3,7 @@ import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmAlertComponent } from '@components/confirm-alert';
 import { RecordFormComponent } from '@components/record-form';
 import { IHistoryRecord } from '@core/model';
 import { Subscription } from 'rxjs';
@@ -15,7 +16,7 @@ import { HistoryService } from './history.service';
 })
 export class HistoryComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort | null = null;
-  readonly DISPLAYED_COLUMNS = ['date', 'amount', 'balance'];
+  readonly DISPLAYED_COLUMNS = ['date', 'amount', 'balance', 'actions'];
   dataSource = new MatTableDataSource<IHistoryRecord>();
 
   private _subscription = new Subscription();
@@ -44,25 +45,72 @@ export class HistoryComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 1);
   }
 
-  openDialog(): void {
+  openDialog(record?: IHistoryRecord): void {
     const dialogRef = this.dialog.open(RecordFormComponent, {
+      data: record,
       scrollStrategy: new NoopScrollStrategy(),
       panelClass: 'cauquen-material-dialog'
     });
 
     this._subscription.add(
-      dialogRef.afterClosed().subscribe(record => {
-        if (record) {
-          this.addRecord(record);
+      dialogRef.afterClosed().subscribe(_record => {
+        if (_record) {
+          if (record) {
+            this._editRecord(_record);
+          } else {
+            this._addRecord(_record);
+          }
         }
       })
     );
   }
 
-  async addRecord(record: IHistoryRecord) {
+  openAlertDialog(record: IHistoryRecord) {
+    const dialogRef = this.dialog.open(ConfirmAlertComponent, {
+      data: record,
+      scrollStrategy: new NoopScrollStrategy(),
+      panelClass: 'cauquen-material-dialog'
+    });
+
+    this._subscription.add(
+      dialogRef.afterClosed().subscribe((res: boolean) => {
+        if (res) {
+          this._deleteRecord(record);
+        }
+      })
+    );
+  }
+
+  private async _addRecord(record: IHistoryRecord) {
     try {
-      await this.history.addRecord(record);
+      await this.history.postRecord(record);
       this.dataSource.data = [...this.dataSource.data, record];
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  private async _editRecord(record: IHistoryRecord) {
+    try {
+      await this.history.putRecord(record);
+      const index = this.dataSource.data.findIndex(_record => _record.id === record.id);
+      if (index !== -1) {
+        this.dataSource.data[index] = record;
+        this.dataSource.data = [...this.dataSource.data];
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  private async _deleteRecord(record: IHistoryRecord) {
+    try {
+      await this.history.deleteRecord(record);
+      const index = this.dataSource.data.findIndex(_record => _record.id === record.id);
+      if (index !== -1) {
+        this.dataSource.data.splice(index, 1);
+        this.dataSource.data = [...this.dataSource.data];
+      }
     } catch (error) {
       console.log(error);
     }

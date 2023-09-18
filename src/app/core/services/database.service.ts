@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { IHistoryRecord } from '@core/model';
 import { FirebaseApp } from 'firebase/app';
-import { Firestore, addDoc, collection, getDocs, getFirestore } from 'firebase/firestore';
+import {
+  Firestore,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  getFirestore,
+  setDoc
+} from 'firebase/firestore';
 
 enum DB {
   HISTORY = 'HISTORY'
@@ -37,7 +45,29 @@ export class DatabaseService {
   postHistoryRecord(record: IHistoryRecord): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await addDoc(collection(this.DB!, DB.HISTORY), record);
+        await setDoc(doc(this.DB!, DB.HISTORY, record.id), Object.assign({}, record));
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  putHistoryRecord(record: IHistoryRecord): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await setDoc(doc(this.DB!, DB.HISTORY, record.id), Object.assign({}, record));
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  deleteHistoryRecord(id: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await deleteDoc(doc(this.DB!, DB.HISTORY, id));
         resolve();
       } catch (error) {
         reject(error);

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { IHistoryRecord } from '@core/model';
+import { HistoryRecord, IHistoryRecord } from '@core/model';
 import { DatabaseService } from '@core/services';
 
 @Injectable()
@@ -21,7 +21,15 @@ export class HistoryService {
     });
   }
 
-  addRecord(record: IHistoryRecord): Promise<void> {
-    return this.database.postHistoryRecord(record);
+  postRecord(record: Omit<IHistoryRecord, 'id'>): Promise<void> {
+    return this.database.postHistoryRecord(new HistoryRecord(record));
+  }
+
+  putRecord(record: IHistoryRecord): Promise<void> {
+    return this.database.putHistoryRecord(record);
+  }
+
+  deleteRecord(record: IHistoryRecord): Promise<void> {
+    return this.database.deleteHistoryRecord(record.id);
   }
 }
