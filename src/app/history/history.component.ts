@@ -1,20 +1,20 @@
 import { NoopScrollStrategy } from '@angular/cdk/overlay';
-import { AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmAlertComponent } from '@components/confirm-alert';
 import { RecordFormComponent } from '@components/record-form';
 import { IHistoryRecord } from '@core/model';
+import { HistoryService } from '@history/history.service';
 import { Subscription } from 'rxjs';
-import { HistoryService } from './history.service';
 
 @Component({
   selector: 'history',
   templateUrl: './history.html',
   styleUrls: ['./history.css']
 })
-export class HistoryComponent implements OnInit, AfterViewInit, OnDestroy {
+export class HistoryComponent implements AfterViewInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort | null = null;
   readonly DISPLAYED_COLUMNS = ['date', 'amount', 'balance', 'actions'];
   dataSource = new MatTableDataSource<IHistoryRecord>();
@@ -26,23 +26,18 @@ export class HistoryComponent implements OnInit, AfterViewInit, OnDestroy {
     @Inject(HistoryService) private history: HistoryService
   ) {}
 
-  async ngOnInit() {
+  async ngAfterViewInit() {
     try {
       const data = await this.history.getHistory();
-      this.dataSource.data = data;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
       if (this.sort) {
         this.dataSource.sort = this.sort;
         this.dataSource.sort.active = 'date';
         this.dataSource.sort.direction = 'desc';
       }
-    }, 1);
+      this.dataSource.data = data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   openDialog(record?: IHistoryRecord): void {
