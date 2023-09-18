@@ -15,10 +15,19 @@
 
     <mat-form-field floatLabel="always">
         <mat-label>{{'CORE.FORM.FIELD.AMOUNT' | translate}}</mat-label>
-        <input matInput formControlName="amount" type="number" placeholder="0.00">
+        <input matInput formControlName="amount" type="number" placeholder="0.00" min="0">
         <span matTextPrefix>$&nbsp;</span>
+        <mat-error *ngIf="_amount.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</mat-error>
+        <mat-error *ngIf="_amount.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</mat-error>
     </mat-form-field>
 
+    <mat-form-field floatLabel="always">
+        <mat-label>{{'CORE.FORM.FIELD.BALANCE' | translate}}</mat-label>
+        <input matInput formControlName="balance" type="number" placeholder="0.00" min="0">
+        <span matTextPrefix>$&nbsp;</span>
+        <mat-error *ngIf="_balance.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</mat-error>
+        <mat-error *ngIf="_balance.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</mat-error>
+    </mat-form-field>
 
     <cauquen-confirm-footer
         (cancel)="cancel()"

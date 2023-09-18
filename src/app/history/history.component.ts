@@ -4,9 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { RecordFormComponent } from '@components/record-form';
+import { IHistoryRecord } from '@core/model';
 import { Subscription } from 'rxjs';
 import { HistoryService } from './history.service';
-import { IHistoryRecord } from './model';
 
 @Component({
   selector: 'history',
@@ -15,7 +15,7 @@ import { IHistoryRecord } from './model';
 })
 export class HistoryComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort | null = null;
-  readonly DISPLAYED_COLUMNS = ['date', 'amount'];
+  readonly DISPLAYED_COLUMNS = ['date', 'amount', 'balance'];
   dataSource = new MatTableDataSource<IHistoryRecord>();
 
   private _subscription = new Subscription();

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
+import { IHistoryRecord } from '@core/model';
 import { DatabaseService } from '@core/services';
-import { IHistoryRecord } from './model';
 
 @Injectable()
 export class HistoryService {

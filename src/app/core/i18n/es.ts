@@ -16,7 +16,12 @@ export const locale = {
       FORM: {
         FIELD: {
           DATE: 'Fecha',
-          AMOUNT: 'Monto'
+          AMOUNT: 'Monto',
+          BALANCE: 'Balance'
+        },
+        ERROR: {
+          REQUIRED: 'Este campo es requerido',
+          MIN: 'El valor debe ser mayor a '
         }
       }
     }

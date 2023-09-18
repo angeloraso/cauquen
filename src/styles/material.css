@@ -37,9 +37,9 @@
 }
 
 .mat-mdc-fab {
-    position: absolute !important;
+    position: fixed !important;
     right: 2em;
-    bottom: 2em;
+    bottom: 5em;
 }
 
 .mat-mdc-tab-header {

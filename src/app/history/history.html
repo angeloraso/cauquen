@@ -8,7 +8,12 @@
 
         <ng-container matColumnDef="amount">
             <th mat-header-cell *matHeaderCellDef>{{'CORE.FORM.FIELD.AMOUNT' | translate}}</th>
-            <td mat-cell [ngClass]="{'history__table__income': element.income, 'history__table__expense': !element.income}" *matCellDef="let element">$ {{element.income ? element.amount : '-' + element.amount}}</td>
+            <td mat-cell [ngClass]="{'history__table__income': element.amount > 0, 'history__table__expense': element.amount < 0}" *matCellDef="let element">$ {{element.amount}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="balance">
+            <th mat-header-cell *matHeaderCellDef>{{'CORE.FORM.FIELD.BALANCE' | translate}}</th>
+            <td mat-cell class="history__table__balance" *matCellDef="let element">$ {{element.balance}}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="DISPLAYED_COLUMNS"></tr>

@@ -11,6 +11,9 @@ html:root {
     --light-accent-color: #12B9A8;
     --dark-accent-color: #004D45;
 
-    --income-color: #5fbc5a;
-    --expense-color: #e76565;
+    --success-color: #5fbc5a;
+    --default-color: #666666;
+    --info-color: #2b94f4;
+    --warning-color: #f7a64c;
+    --danger-color: #e76565;
 }

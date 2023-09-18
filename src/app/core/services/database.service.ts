@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IHistoryRecord } from '@history/model';
+import { IHistoryRecord } from '@core/model';
 import { FirebaseApp } from 'firebase/app';
 import { Firestore, addDoc, collection, getDocs, getFirestore } from 'firebase/firestore';
 

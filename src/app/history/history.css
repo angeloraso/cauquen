@@ -1,11 +1,16 @@
 .history__table__income {
     font-weight: bold;
-    color: var(--income-color);
+    color: var(--success-color);
 }
 
 .history__table__expense {
     font-weight: bold;
-    color: var(--expense-color);
+    color: var(--danger-color);
+}
+
+.history__table__balance {
+    font-weight: bold;
+    color: var(--info-color);
 }
 
 .history__table--empty {

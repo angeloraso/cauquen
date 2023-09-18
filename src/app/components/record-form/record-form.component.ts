@@ -10,6 +10,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class RecordFormComponent {
   form: FormGroup;
 
+  readonly MIN_VALUE = 0;
+
   constructor(
     @Inject(FormBuilder) private fb: FormBuilder,
     @Inject(MatDialogRef) private dialog: MatDialogRef<RecordFormComponent>
@@ -17,7 +19,8 @@ export class RecordFormComponent {
     this.form = this.fb.group({
       date: [new Date(), [Validators.required]],
       income: [true, [Validators.required]],
-      amount: [null, [Validators.required]]
+      amount: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
+      balance: [null, [Validators.min(this.MIN_VALUE), Validators.required]]
     });
   }
 
@@ -33,6 +36,10 @@ export class RecordFormComponent {
     return this.form.get('amount') as AbstractControl;
   }
 
+  get _balance() {
+    return this.form.get('balance') as AbstractControl;
+  }
+
   confirm() {
     if (this.form.invalid) {
       return;
@@ -40,8 +47,8 @@ export class RecordFormComponent {
 
     this.dialog.close({
       date: this._date.value.getTime(),
-      income: this._income.value,
-      amount: this._amount.value
+      amount: this._income.value ? this._amount.value : this._amount.value * -1,
+      balance: this._balance.value
     });
   }
 
