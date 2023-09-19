@@ -1,3 +1,9 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2em;
+}
+
 .dashboard__summary-card {
     display: flex;
     flex-direction: column;

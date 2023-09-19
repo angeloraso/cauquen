@@ -1,4 +1,4 @@
-<div class="cauquen-wrapper">
+<div class="cauquen-wrapper dashboard">
 
     <span class="cauquen-card dashboard__summary-card">
 
@@ -11,6 +11,12 @@
         </span>
 
     </span>
+
+    <cauquen-line-chart 
+        id="month-dashboard"
+        [labels]="labels"
+        [series]="series">
+    </cauquen-line-chart>
 
     <button mat-fab color="primary" (click)="openDialog()">
         <mat-icon>add</mat-icon>

@@ -8,6 +8,8 @@ import {
   doc,
   getDocs,
   getFirestore,
+  orderBy,
+  query,
   setDoc
 } from 'firebase/firestore';
 
@@ -26,7 +28,7 @@ export class DatabaseService {
   getHistory(): Promise<Array<unknown>> {
     return new Promise<Array<unknown>>(async (resolve, reject) => {
       try {
-        const snap = await getDocs(collection(this.DB!, DB.HISTORY));
+        const snap = await getDocs(query(collection(this.DB!, DB.HISTORY), orderBy('date', 'asc')));
         if (snap.empty) {
           resolve([]);
         } else {

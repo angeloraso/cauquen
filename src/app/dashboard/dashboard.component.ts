@@ -1,5 +1,5 @@
 import { NoopScrollStrategy } from '@angular/cdk/overlay';
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RecordFormComponent } from '@components/record-form';
 import { IHistoryRecord } from '@core/model';
@@ -11,14 +11,36 @@ import { Subscription } from 'rxjs';
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
-export class DashboardComponent implements OnDestroy {
+export class DashboardComponent implements OnInit, OnDestroy {
   private _subscription = new Subscription();
   total: number = 0.0;
+
+  labels: Array<string> = [];
+  series: Array<Array<number>> = [];
 
   constructor(
     @Inject(MatDialog) private dialog: MatDialog,
     @Inject(HistoryService) private history: HistoryService
   ) {}
+
+  async ngOnInit() {
+    try {
+      const labels: Array<string> = [];
+      const series: Array<number> = [];
+      const history = await this.history.getHistory();
+      history.forEach(_record => {
+        const date = new Date(_record.date);
+        const label = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+        labels.push(label);
+        series.push(_record.balance);
+      });
+
+      this.labels = labels;
+      this.series.push(series);
+    } catch (error) {
+      console.debug(error);
+    }
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(RecordFormComponent, {
