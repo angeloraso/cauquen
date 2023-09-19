@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class DashboardComponent implements OnDestroy {
   private _subscription = new Subscription();
+  total: number = 0.0;
 
   constructor(
     @Inject(MatDialog) private dialog: MatDialog,

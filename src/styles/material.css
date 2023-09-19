@@ -32,6 +32,11 @@
     color: var(--primary-color) !important;
 }
 
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+    padding: 0 0.2em !important;
+}
+
 .mdc-list {
     padding: 0 !important;
 }

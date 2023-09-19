@@ -1,5 +1,16 @@
 <div class="cauquen-wrapper">
-dashboard
+
+    <span class="cauquen-card dashboard__summary-card">
+
+        <span class="dashboard__summary-card__total">
+
+            <h1 class="dashboard__summary-card__total__label">Total: </h1>
+
+            <h2 class="dashboard__summary-card__total__value" [ngClass]="{'dashboard__summary-card__total__value--negative': total < 0, 'dashboard__summary-card__total__value--positive': total > 0}">{{total}} %</h2>
+
+        </span>
+
+    </span>
 
     <button mat-fab color="primary" (click)="openDialog()">
         <mat-icon>add</mat-icon>

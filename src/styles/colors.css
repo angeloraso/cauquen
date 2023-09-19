@@ -1,5 +1,4 @@
 html:root {
-    --hover-color: #f3f3f3;
     --primary-color: #07368C;
     --light-primary-color: #245BC1;
     --dark-primary-color: #021F53;
@@ -10,6 +9,9 @@ html:root {
     --accent-color: #008375;
     --light-accent-color: #12B9A8;
     --dark-accent-color: #004D45;
+
+    --hover-color: #f3f3f3;
+    --background-color: #c1d6fe;
 
     --success-color: #5fbc5a;
     --default-color: #666666;
