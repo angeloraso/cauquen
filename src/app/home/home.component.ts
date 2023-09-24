@@ -57,6 +57,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.selectedIndex = event.index;
+
     const option = this.options[event.index];
 
     this.options.forEach(option => {

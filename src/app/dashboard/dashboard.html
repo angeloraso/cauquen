@@ -13,10 +13,33 @@
     </span>
 
     <cauquen-line-chart 
-        id="month-dashboard"
-        [labels]="labels"
-        [series]="series">
+        id="general-profit-dashboard"
+        title="{{'DASHBOARD.GENERAL_PROFIT.TITLE' | translate}}"
+        [labels]="generalProfitLabels"
+        [series]="generalProfitSeries">
     </cauquen-line-chart>
+
+    <cauquen-bar-chart 
+        id="month-profit-dashboard"
+        title="{{'DASHBOARD.MONTH_PROFIT.TITLE' | translate}}"
+        [low]="-10"
+        [labels]="monthProfitLabels"
+        [series]="monthProfitSeries">
+    </cauquen-bar-chart>
+
+    <cauquen-bar-chart 
+        id="inflation-dashboard"
+        title="{{'DASHBOARD.INFLATION.TITLE' | translate}}"
+        [labels]="inflationLabels"
+        [series]="inflationSeries">
+    </cauquen-bar-chart>
+
+    <cauquen-bar-chart 
+        id="fixed-rates-dashboard"
+        title="{{'DASHBOARD.FIXED_RATES.TITLE' | translate}}"
+        [labels]="fixedRatesLabels"
+        [series]="fixedRatesSeries">
+    </cauquen-bar-chart>
 
     <button mat-fab color="primary" (click)="openDialog()">
         <mat-icon>add</mat-icon>

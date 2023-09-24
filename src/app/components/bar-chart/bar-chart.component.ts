@@ -1,19 +1,19 @@
 import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, Component, Inject, Input, Renderer2 } from '@angular/core';
-import { LineChart } from 'chartist';
+import { BarChart } from 'chartist';
 
 @Component({
-  selector: 'cauquen-line-chart',
-  templateUrl: 'line-chart.html',
-  styleUrls: ['line-chart.css']
+  selector: 'cauquen-bar-chart',
+  templateUrl: 'bar-chart.html',
+  styleUrls: ['bar-chart.css']
 })
-export class LineChartComponent implements AfterViewInit {
+export class BarChartComponent implements AfterViewInit {
   @Input() id: string = '';
   @Input() title: string = '';
   @Input() low: number = 0;
-  @Input() showArea: boolean = false;
+  @Input() showArea: boolean = true;
 
-  readonly CHART_ID = 'cauquen-line-chart';
+  readonly CHART_ID = 'cauquen-bar-chart';
 
   private _afterViewInit = false;
 
@@ -66,17 +66,15 @@ export class LineChartComponent implements AfterViewInit {
       return;
     }
 
-    new LineChart(
+    new BarChart(
       `#${this.CHART_ID}-${data.id}`,
       {
         labels: data.labels,
         series: data.series
       },
       {
-        height: 250,
-        low: this.low,
-        showArea: this.showArea,
-        showPoint: false
+        height: 200,
+        low: this.low
       }
     );
 
@@ -95,13 +93,6 @@ export class LineChartComponent implements AfterViewInit {
           this.renderer.setStyle(child, 'top', '1em');
           this.renderer.setStyle(child, 'right', '1em');
           this.renderer.setStyle(child, 'font-size', '0.6em');
-        } else if (
-          child &&
-          child.classList.contains('ct-label') &&
-          child.classList.contains('ct-vertical') &&
-          child.classList.contains('ct-start')
-        ) {
-          this.renderer.setStyle(child, 'font-size', '0.7em');
         }
       });
     }, 1);

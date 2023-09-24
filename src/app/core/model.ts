@@ -30,4 +30,5 @@ export interface IInflation {
   from: number;
   to: number;
   value: number;
+  fixedRate: number;
 }

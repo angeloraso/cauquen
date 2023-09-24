@@ -8,7 +8,7 @@
   
   <mat-tab>
 
-    <cauquen-history></cauquen-history>
+    <cauquen-history *ngIf="selectedIndex === 0"></cauquen-history>
 
     <ng-template mat-tab-label>
       <mat-icon class="home__bottom-bar__icon">{{options[0].icon}}</mat-icon>
@@ -19,7 +19,7 @@
 
   <mat-tab>
 
-    <cauquen-dashboard></cauquen-dashboard>
+    <cauquen-dashboard *ngIf="selectedIndex === 1"></cauquen-dashboard>
     
     <ng-template mat-tab-label>
       <mat-icon class="home__bottom-bar__icon">{{options[1].icon}}</mat-icon>

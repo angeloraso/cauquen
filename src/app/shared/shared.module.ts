@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { AngularMaterialModule } from './angularMaterial.module';
+import { ComponentsModule } from './components/components.module';
 import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
@@ -12,7 +13,8 @@ import { PipesModule } from './pipes/pipes.module';
     ReactiveFormsModule,
     AngularMaterialModule,
     TranslateModule,
-    PipesModule
+    PipesModule,
+    ComponentsModule
   ]
 })
 export class SharedModule {}
