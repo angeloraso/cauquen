@@ -10,7 +10,7 @@ import { HistoryService } from '@history/history.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'history',
+  selector: 'cauquen-history',
   templateUrl: './history.html',
   styleUrls: ['./history.css']
 })

@@ -20,3 +20,14 @@ export class HistoryRecord implements HistoryRecord {
     this.balance = record.balance;
   }
 }
+
+export enum COUNTRY_CODE {
+  ARGENTINA = 'AR'
+}
+
+export interface IInflation {
+  country: COUNTRY_CODE;
+  from: number;
+  to: number;
+  value: number;
+}

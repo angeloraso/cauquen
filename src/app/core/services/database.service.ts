@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IHistoryRecord } from '@core/model';
+import { COUNTRY_CODE, IHistoryRecord } from '@core/model';
 import { FirebaseApp } from 'firebase/app';
 import {
   Firestore,
@@ -10,11 +10,23 @@ import {
   getFirestore,
   orderBy,
   query,
-  setDoc
+  setDoc,
+  where
 } from 'firebase/firestore';
 
 enum DB {
-  HISTORY = 'HISTORY'
+  HISTORY = 'HISTORY',
+  INFLATION = 'INFLATION'
+}
+
+enum OPERATOR {
+  EQUAL = '==',
+  NOT_EQUAL = '!=',
+  LESS = '<',
+  LESS_OR_EQUAL = '<=',
+  GREATER = '>',
+  GREATER_OR_EQUAL = '>=',
+  CONTAINS = 'array-contains'
 }
 
 @Injectable()
@@ -71,6 +83,32 @@ export class DatabaseService {
       try {
         await deleteDoc(doc(this.DB!, DB.HISTORY, id));
         resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  getInflation(data: { country: COUNTRY_CODE; from: number; to: number }) {
+    return new Promise<Array<unknown>>(async (resolve, reject) => {
+      try {
+        const snap = await getDocs(
+          query(
+            collection(this.DB!, DB.INFLATION),
+            where('country', OPERATOR.EQUAL, data.country),
+            where('from', OPERATOR.GREATER_OR_EQUAL, data.from),
+            orderBy('from', 'asc')
+          )
+        );
+        if (snap.empty) {
+          resolve([]);
+        } else {
+          const docs: Array<unknown> = [];
+          snap.forEach(doc => {
+            docs.push(doc.data());
+          });
+          resolve(docs.filter(_doc => (<any>_doc).to <= data.to));
+        }
       } catch (error) {
         reject(error);
       }

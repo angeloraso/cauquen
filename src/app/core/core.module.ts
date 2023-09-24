@@ -5,15 +5,24 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LANGUAGE } from './constants';
 import { es } from './i18n';
 import {
+  ArgentinaService,
   CauquenTranslateService,
   DatabaseService,
   RouterService,
+  UtilsService,
   ViewportService
 } from './services';
 
 @NgModule({
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule],
-  providers: [RouterService, CauquenTranslateService, ViewportService, DatabaseService]
+  providers: [
+    RouterService,
+    CauquenTranslateService,
+    ViewportService,
+    DatabaseService,
+    ArgentinaService,
+    UtilsService
+  ]
 })
 export class CoreModule {
   /* Make sure CoreModule is imported only by one NgModule the AppModule */
