@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { PATH } from '@app/app.routing';
 import { AuthService } from '@core/auth/auth.service';
 import { RouterService } from '@core/services';
@@ -29,11 +29,11 @@ export class LoginComponent {
   }
 
   get email() {
-    return this.form.get('email');
+    return this.form.get('email') as AbstractControl;
   }
 
   get password() {
-    return this.form.get('password');
+    return this.form.get('password') as AbstractControl;
   }
 
   async onLogin() {

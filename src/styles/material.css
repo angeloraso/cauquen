@@ -78,3 +78,15 @@
         min-width: 26em;
     }
 }
+
+.mat-mdc-raised-button:not(:disabled) {
+    background-color: var(--primary-color) !important;
+}
+
+mat-form-field {
+    width: 100% !important;
+}
+
+.mat-mdc-form-field-icon-suffix {
+    padding-right: 0.5em !important;
+}

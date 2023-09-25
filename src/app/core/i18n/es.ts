@@ -18,11 +18,14 @@ export const locale = {
         FIELD: {
           DATE: 'Fecha',
           AMOUNT: 'Monto',
-          BALANCE: 'Balance'
+          BALANCE: 'Balance',
+          EMAIL: 'Email',
+          PASSWORD: 'Contraseña'
         },
         ERROR: {
           REQUIRED: 'Este campo es requerido',
-          MIN: 'El valor debe ser mayor a '
+          MIN: 'El valor debe ser mayor a ',
+          EMAIL: 'Email inválido'
         }
       }
     }

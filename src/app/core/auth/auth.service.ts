@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import { FirebaseApp } from 'firebase/app';
-import { Auth, User, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  Auth,
+  User,
+  getAuth,
+  indexedDBLocalPersistence,
+  setPersistence,
+  signInWithEmailAndPassword
+} from 'firebase/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -16,7 +23,17 @@ export class AuthService {
   }
 
   start(app: FirebaseApp) {
-    this.AUTH = getAuth(app);
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        this.AUTH = getAuth(app);
+        await setPersistence(this.AUTH, indexedDBLocalPersistence);
+        this._user = this.AUTH.currentUser;
+        this._isLoggedIn.next(Boolean(this.AUTH.currentUser));
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
   login(credentials: { email: string; password: string }) {
