@@ -1,0 +1,45 @@
+<div class="login-component">
+  
+  <form class="form-holder" [formGroup]="form">
+    <span class="login-item">
+
+      <mat-form-field floatLabel="always">
+        <mat-label>{{'CORE.FORM.FIELD.EMAIL' | translate}}</mat-label>
+        <input 
+          #showHidePasswordInput
+          matInput
+          type="email"
+          (blur)="hideLogo = false;"
+          (focus)="hideLogo = true;"
+          (keyup)="nextInput($event)"
+          formControlName="email">
+        <mat-error *ngIf="email?.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</mat-error>
+        <mat-error *ngIf="email?.hasError('email')">{{'CORE.FORM.ERROR.EMAIL' | translate}}</mat-error>
+      </mat-form-field>
+
+    </span>
+
+    <span class="login-item">
+      <cauquen-show-hide-password>
+
+        <mat-form-field floatLabel="always">
+          <mat-label>{{'CORE.FORM.FIELD.PASSWORD' | translate}}</mat-label>
+          <input 
+            #showHidePasswordInput
+            matInput
+            type="password"
+            (blur)="hideLogo = false;"
+            (focus)="hideLogo = true;"
+            (keyup)="passwordEnter($event)"
+            formControlName="password">
+          <mat-error *ngIf="password?.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</mat-error>
+        </mat-form-field>
+      </cauquen-show-hide-password>
+    </span>
+    <div class="error-msg" *ngIf="password?.dirty && password?.errors?.required">{{'REQUIRED_FIELD' | translate }}</div>
+  </form>
+
+  <button [disabled]="form.invalid && form.touched" color="primary" class="submit-btn" (click)="onLogin()">{{'LOGIN' | translate}}</button>
+
+</div>
+

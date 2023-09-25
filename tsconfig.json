@@ -27,6 +27,7 @@
       "@env/*": ["src/environments/*"],
       "@shared/*": ["src/app/shared/*"],
       "@core/*": ["src/app/core/*"],
+      "@auth/*": ["src/app/core/auth/*"],
       "@components/*": ["src/app/components/*"],
       "@app/*": ["src/app/*"],
       "@home/*": ["src/app/home/*"],
