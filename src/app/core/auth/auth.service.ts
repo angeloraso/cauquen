@@ -26,9 +26,12 @@ export class AuthService {
     return new Promise<void>(async (resolve, reject) => {
       try {
         this.AUTH = getAuth(app);
-        await setPersistence(this.AUTH, indexedDBLocalPersistence);
+        await setPersistence(this.AUTH!, indexedDBLocalPersistence);
         this._user = this.AUTH.currentUser;
         this._isLoggedIn.next(Boolean(this.AUTH.currentUser));
+        if (!this._user) {
+          await setPersistence(this.AUTH!, indexedDBLocalPersistence);
+        }
         resolve();
       } catch (error) {
         reject(error);

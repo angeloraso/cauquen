@@ -9,6 +9,7 @@ import {
   CauquenTranslateService,
   DatabaseService,
   RouterService,
+  ServiceWorkerService,
   UtilsService,
   ViewportService
 } from './services';
@@ -21,7 +22,8 @@ import {
     ViewportService,
     DatabaseService,
     ArgentinaService,
-    UtilsService
+    UtilsService,
+    ServiceWorkerService
   ]
 })
 export class CoreModule {
