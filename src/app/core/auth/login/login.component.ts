@@ -16,6 +16,7 @@ export class LoginComponent {
   public showError = false;
   showPassword = false;
   hideLogo = false;
+  showLoading = false;
 
   constructor(
     @Inject(AuthService) private authService: AuthService,
@@ -37,10 +38,11 @@ export class LoginComponent {
   }
 
   async onLogin() {
-    if (this.email?.invalid || this.password?.invalid) {
+    if (this.form.invalid) {
       return;
     }
 
+    this.showLoading = true;
     this.authService
       .login({ email: this.email?.value, password: this.password?.value })
       .then(() => {
@@ -48,6 +50,9 @@ export class LoginComponent {
       })
       .catch(async error => {
         console.error(error);
+      })
+      .finally(() => {
+        this.showLoading = false;
       });
   }
 
