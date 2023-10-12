@@ -1,18 +1,20 @@
-import { Injectable } from '@angular/core';
-import { COUNTRY_CODE, IHistoryRecord } from '@core/model';
+import { Injectable, OnDestroy } from '@angular/core';
+import { COUNTRY_CODE, IHistoryRecord, IInflation } from '@core/model';
 import { FirebaseApp } from 'firebase/app';
 import {
   Firestore,
+  Unsubscribe,
   collection,
   deleteDoc,
   doc,
-  getDocs,
   getFirestore,
+  onSnapshot,
   orderBy,
   query,
   setDoc,
   where
 } from 'firebase/firestore';
+import { BehaviorSubject } from 'rxjs';
 
 enum DB {
   HISTORY = 'HISTORY',
@@ -30,26 +32,35 @@ enum OPERATOR {
 }
 
 @Injectable()
-export class DatabaseService {
+export class DatabaseService implements OnDestroy {
   DB: Firestore | null = null;
+  #subscriptions = new Set<Unsubscribe>();
+  #history = new BehaviorSubject<Array<IHistoryRecord> | undefined>(undefined);
+  #inflation = new BehaviorSubject<Array<IInflation> | undefined>(undefined);
 
   start(app: FirebaseApp) {
     this.DB = getFirestore(app);
   }
 
-  getHistory(): Promise<Array<unknown>> {
-    return new Promise<Array<unknown>>(async (resolve, reject) => {
+  getHistory() {
+    return new Promise<Array<IHistoryRecord>>((resolve, reject) => {
       try {
-        const snap = await getDocs(query(collection(this.DB!, DB.HISTORY), orderBy('date', 'asc')));
-        if (snap.empty) {
-          resolve([]);
-        } else {
+        if (typeof this.#history.value !== 'undefined') {
+          resolve(this.#history.value);
+          return;
+        }
+
+        const q = query(collection(this.DB!, DB.HISTORY), orderBy('date', 'asc'));
+        const unsubscribe = onSnapshot(q, querySnapshot => {
           const docs: Array<unknown> = [];
-          snap.forEach(doc => {
+          querySnapshot.forEach(doc => {
             docs.push(doc.data());
           });
-          resolve(docs);
-        }
+          this.#history.next(docs as Array<IHistoryRecord>);
+          resolve(this.#history.value as Array<IHistoryRecord>);
+        });
+
+        this.#subscriptions.add(unsubscribe);
       } catch (error) {
         reject(error);
       }
@@ -90,28 +101,40 @@ export class DatabaseService {
   }
 
   getInflation(data: { country: COUNTRY_CODE; from: number; to: number }) {
-    return new Promise<Array<unknown>>(async (resolve, reject) => {
+    return new Promise<Array<IInflation>>((resolve, reject) => {
       try {
-        const snap = await getDocs(
-          query(
-            collection(this.DB!, DB.INFLATION),
-            where('country', OPERATOR.EQUAL, data.country),
-            where('from', OPERATOR.GREATER_OR_EQUAL, data.from),
-            orderBy('from', 'asc')
-          )
+        if (typeof this.#inflation.value !== 'undefined') {
+          resolve(this.#inflation.value);
+          return;
+        }
+
+        const q = query(
+          collection(this.DB!, DB.INFLATION),
+          where('country', OPERATOR.EQUAL, data.country),
+          where('from', OPERATOR.GREATER_OR_EQUAL, data.from),
+          orderBy('from', 'asc')
         );
-        if (snap.empty) {
-          resolve([]);
-        } else {
+        const unsubscribe = onSnapshot(q, querySnapshot => {
           const docs: Array<unknown> = [];
-          snap.forEach(doc => {
+          querySnapshot.forEach(doc => {
             docs.push(doc.data());
           });
-          resolve(docs.filter(_doc => (<any>_doc).to <= data.to));
-        }
+          this.#inflation.next(docs as Array<IInflation>);
+          resolve(this.#inflation.value as Array<IInflation>);
+        });
+
+        this.#subscriptions.add(unsubscribe);
       } catch (error) {
         reject(error);
       }
     });
+  }
+
+  ngOnDestroy() {
+    const subscriptions = Array.from(this.#subscriptions);
+    subscriptions.forEach(unsubscribe => {
+      unsubscribe();
+    });
+    this.#subscriptions.clear();
   }
 }
