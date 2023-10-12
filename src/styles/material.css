@@ -9,6 +9,10 @@
     --mat-tab-header-active-hover-indicator-color: var(--accent-color) !important;
 }
 
+.mat-mdc-tab {
+    padding: 0 !important;
+}
+
 .mat-mdc-fab.mat-primary,
 .mat-mdc-mini-fab.mat-primary {
     --mdc-fab-container-color: var(--accent-color) !important;

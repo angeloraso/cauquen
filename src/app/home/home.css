@@ -14,5 +14,9 @@
 }
 
 .home__bottom-bar__tab__icon {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
+}
+
+.home__bottom-bar__tab__text {
+  font-size: 0.8rem;
 }

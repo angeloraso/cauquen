@@ -25,7 +25,8 @@ export const locale = {
           PASSWORD: 'Contraseña',
           FROM: 'Desde',
           TO: 'Hasta',
-          INFLATION: 'Inflación'
+          INFLATION: 'Inflación',
+          FIXED_RATE: 'Tasa'
         },
         ERROR: {
           REQUIRED: 'Este campo es requerido',

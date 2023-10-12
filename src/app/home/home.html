@@ -13,7 +13,7 @@
     <ng-template mat-tab-label>
       <span class="home__bottom-bar__tab">
         <mat-icon class="home__bottom-bar__tab__icon">{{options[0].icon}}</mat-icon>
-        <span>{{options[0].title | translate}}</span>
+        <span class="home__bottom-bar__tab__text">{{options[0].title | translate}}</span>
       </span>
     </ng-template>
 
@@ -26,7 +26,7 @@
     <ng-template mat-tab-label>
       <span class="home__bottom-bar__tab">
         <mat-icon class="home__bottom-bar__tab__icon">{{options[1].icon}}</mat-icon>
-        <span>{{options[1].title | translate}}</span>
+        <span class="home__bottom-bar__tab__text">{{options[1].title | translate}}</span>
       </span>
     </ng-template>
 
@@ -39,7 +39,20 @@
     <ng-template mat-tab-label>
       <span class="home__bottom-bar__tab">
         <mat-icon class="home__bottom-bar__tab__icon">{{options[2].icon}}</mat-icon>
-        <span>{{options[2].title | translate}}</span>
+        <span class="home__bottom-bar__tab__text">{{options[2].title | translate}}</span>
+      </span>
+    </ng-template>
+
+  </mat-tab>
+
+  <mat-tab>
+
+    <cauquen-fixed-rate *ngIf="selectedIndex === 3"></cauquen-fixed-rate>
+    
+    <ng-template mat-tab-label>
+      <span class="home__bottom-bar__tab">
+        <mat-icon class="home__bottom-bar__tab__icon">{{options[3].icon}}</mat-icon>
+        <span class="home__bottom-bar__tab__text">{{options[3].title | translate}}</span>
       </span>
     </ng-template>
 

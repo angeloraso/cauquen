@@ -1,0 +1,10 @@
+.fixed-rate {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2em;
+}
+
+.fixed-rate__table__value {
+    font-weight: bold;
+    color: var(--info-color);
+}
