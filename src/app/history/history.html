@@ -27,7 +27,7 @@
         <tr mat-row *matRowDef="let row; columns: DISPLAYED_COLUMNS;" (click)="openDialog(row)"></tr>
     </table>
 
-    <span *ngIf="dataSource.data.length === 0" class="history__table--empty">{{'CORE.EMPTY' | translate}}</span>
+    <span *ngIf="dataSource.data.length === 0" class="cauquen__table--empty">{{'CORE.EMPTY' | translate}}</span>
 
 
     <button mat-fab color="primary" (click)="openDialog()">

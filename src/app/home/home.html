@@ -11,8 +11,10 @@
     <cauquen-history *ngIf="selectedIndex === 0"></cauquen-history>
 
     <ng-template mat-tab-label>
-      <mat-icon class="home__bottom-bar__icon">{{options[0].icon}}</mat-icon>
-      {{options[0].title | translate}}
+      <span class="home__bottom-bar__tab">
+        <mat-icon class="home__bottom-bar__tab__icon">{{options[0].icon}}</mat-icon>
+        <span>{{options[0].title | translate}}</span>
+      </span>
     </ng-template>
 
   </mat-tab>
@@ -22,8 +24,23 @@
     <cauquen-dashboard *ngIf="selectedIndex === 1"></cauquen-dashboard>
     
     <ng-template mat-tab-label>
-      <mat-icon class="home__bottom-bar__icon">{{options[1].icon}}</mat-icon>
-      {{options[1].title | translate}}
+      <span class="home__bottom-bar__tab">
+        <mat-icon class="home__bottom-bar__tab__icon">{{options[1].icon}}</mat-icon>
+        <span>{{options[1].title | translate}}</span>
+      </span>
+    </ng-template>
+
+  </mat-tab>
+
+  <mat-tab>
+
+    <cauquen-inflation *ngIf="selectedIndex === 2"></cauquen-inflation>
+    
+    <ng-template mat-tab-label>
+      <span class="home__bottom-bar__tab">
+        <mat-icon class="home__bottom-bar__tab__icon">{{options[2].icon}}</mat-icon>
+        <span>{{options[2].title | translate}}</span>
+      </span>
     </ng-template>
 
   </mat-tab>

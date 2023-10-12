@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { InflationComponent } from '@app/inflation/inflation.component';
 import { DashboardComponent } from '@dashboard/dashboard.component';
 import { HistoryComponent } from '@history/history.component';
 import { HomeComponent } from './home.component';
@@ -8,6 +9,8 @@ export enum PATH {
   EMPTY = '',
   DASHBOARD = 'dashboard',
   HISTORY = 'history',
+  INFLATION = 'inflation',
+  FIXED_RATE = 'fixed-rate',
   ANY = '**'
 }
 
@@ -28,6 +31,10 @@ const routes: Routes = [
       {
         path: PATH.HISTORY,
         component: HistoryComponent
+      },
+      {
+        path: PATH.INFLATION,
+        component: InflationComponent
       },
       {
         path: PATH.ANY,

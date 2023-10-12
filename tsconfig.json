@@ -34,6 +34,7 @@
       "@menu/*": ["src/app/side-menu/*"],
       "@dashboard/*": ["src/app/dashboard/*"],
       "@history/*": ["src/app/history/*"],
+      "@inflation/*": ["src/app/inflation/*"]
     }
   },
   "angularCompilerOptions": {

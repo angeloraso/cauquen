@@ -16,12 +16,3 @@
 .history__table__actions__delete {
     color: var(--danger-color);
 }
-
-.history__table--empty {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 20em;
-    width: 100%;
-    text-align: center;
-}

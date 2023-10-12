@@ -11,6 +11,7 @@ export class BarChartComponent implements AfterViewInit {
   @Input() id: string = '';
   @Input() title: string = '';
   @Input() low: number = 0;
+  @Input() high: number = 30;
   @Input() showArea: boolean = true;
 
   readonly CHART_ID = 'cauquen-bar-chart';
@@ -74,7 +75,8 @@ export class BarChartComponent implements AfterViewInit {
       },
       {
         height: 200,
-        low: this.low
+        low: this.low,
+        high: this.high ? this.high : this.low ? this.low : undefined
       }
     );
 

@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { DashboardModule } from '@app/dashboard/dashboard.module';
-import { HistoryModule } from '@app/history/history.module';
+import { DashboardModule } from '@dashboard/dashboard.module';
+import { HistoryModule } from '@history/history.module';
+import { InflationModule } from '@inflation/inflation.module';
 import { SharedModule } from '@shared/shared.module';
 import { HomeRoutingModule } from './home.routing';
 
 @NgModule({
-  imports: [SharedModule, HomeRoutingModule, DashboardModule, HistoryModule],
+  imports: [SharedModule, HomeRoutingModule, DashboardModule, HistoryModule, InflationModule],
   declarations: [HomeRoutingModule.COMPONENTS]
 })
 export class HomeModule {}

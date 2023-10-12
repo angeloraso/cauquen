@@ -7,7 +7,9 @@ export const locale = {
       EMPTY: 'Sin elementos',
       MENU: {
         DASHBOARD: 'Panel',
-        HISTORY: 'Historial'
+        HISTORY: 'Historial',
+        INFLATION: 'Inflación',
+        FIXED_RATE: 'Tasa'
       },
       BUTTON: {
         CANCEL: 'Cancelar',
@@ -20,7 +22,10 @@ export const locale = {
           AMOUNT: 'Monto',
           BALANCE: 'Balance',
           EMAIL: 'Email',
-          PASSWORD: 'Contraseña'
+          PASSWORD: 'Contraseña',
+          FROM: 'Desde',
+          TO: 'Hasta',
+          INFLATION: 'Inflación'
         },
         ERROR: {
           REQUIRED: 'Este campo es requerido',
