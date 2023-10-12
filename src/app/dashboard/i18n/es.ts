@@ -9,12 +9,6 @@ export const locale = {
       },
       MONTH_PROFIT: {
         TITLE: 'Rendimiento mensual (%)'
-      },
-      INFLATION: {
-        TITLE: 'Inflación (%)'
-      },
-      FIXED_RATES: {
-        TITLE: 'Tasa de interés (%)'
       }
     }
   }
