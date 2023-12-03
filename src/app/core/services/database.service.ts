@@ -141,6 +141,17 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
+  putCountryRecord(record: ICountryRecord): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await setDoc(doc(this.DB!, DB.COUNTRY_RECORDS, record.id), Object.assign({}, record));
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   deleteCountryRecord(id: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {

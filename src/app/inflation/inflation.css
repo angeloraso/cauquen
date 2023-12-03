@@ -8,3 +8,7 @@
     font-weight: bold;
     color: var(--info-color);
 }
+
+.inflation__table__actions__delete {
+    color: var(--danger-color);
+}

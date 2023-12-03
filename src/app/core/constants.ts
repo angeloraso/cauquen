@@ -1,4 +1,5 @@
 import { IMenuOption } from '@menu/model';
+import { COUNTRY_CODE } from './model';
 
 export enum MENU_OPTION_ID {
   DASHBOARD = 'DASHBOARD',
@@ -10,6 +11,8 @@ export enum MENU_OPTION_ID {
 export enum LANGUAGE {
   SPANISH = 'es'
 }
+
+export const COUNTRIES = [{ id: COUNTRY_CODE.ARGENTINA, name: 'CORE.COUNTRY.AR' }];
 
 export const MENU_OPTIONS: Array<IMenuOption> = [
   {

@@ -16,6 +16,9 @@ export const locale = {
         SAVE: 'Guardar',
         CONFIRM: 'Confirmar'
       },
+      COUNTRY: {
+        AR: 'Argentina'
+      },
       FORM: {
         FIELD: {
           DATE: 'Fecha',
@@ -26,7 +29,8 @@ export const locale = {
           FROM: 'Desde',
           TO: 'Hasta',
           INFLATION: 'Inflación',
-          FIXED_RATE: 'Tasa'
+          FIXED_RATE: 'Tasa',
+          COUNTRY: 'País'
         },
         ERROR: {
           REQUIRED: 'Este campo es requerido',

@@ -8,3 +8,7 @@
     font-weight: bold;
     color: var(--info-color);
 }
+
+.fixed-rate__table__actions__delete {
+    color: var(--danger-color);
+}

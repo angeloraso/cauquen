@@ -32,4 +32,12 @@ export class ArgentinaService {
   postRecord(record: ICountryRecord) {
     return this.database.postCountryRecord(new CountryRecord(record));
   }
+
+  putRecord(record: ICountryRecord): Promise<void> {
+    return this.database.putCountryRecord(record);
+  }
+
+  deleteRecord(record: ICountryRecord): Promise<void> {
+    return this.database.deleteCountryRecord(record.id);
+  }
 }
