@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
-import { COUNTRY_CODE, IInflation } from '@core/model';
+import { COUNTRY_CODE, CountryRecord, ICountryRecord } from '@core/model';
 import { DatabaseService } from './database.service';
 @Injectable()
 export class ArgentinaService {
   constructor(@Inject(DatabaseService) private database: DatabaseService) {}
 
-  getInflation(data?: { from: number; to: number }): Promise<Array<IInflation>> {
+  getData(data?: { from: number; to: number }): Promise<Array<ICountryRecord>> {
     let from: number = Date.now();
     let to: number = Date.now();
 
@@ -24,8 +24,12 @@ export class ArgentinaService {
       to = Date.now();
     }
 
-    return this.database.getInflation({ country: COUNTRY_CODE.ARGENTINA, from, to }) as Promise<
-      Array<IInflation>
+    return this.database.getCountryData({ country: COUNTRY_CODE.ARGENTINA, from, to }) as Promise<
+      Array<ICountryRecord>
     >;
+  }
+
+  postRecord(record: ICountryRecord) {
+    return this.database.postCountryRecord(new CountryRecord(record));
   }
 }

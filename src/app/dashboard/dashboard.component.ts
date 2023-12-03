@@ -1,7 +1,10 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ICountryRecord } from '@core/model';
 import { ArgentinaService, UtilsService } from '@core/services';
 import { HistoryService } from '@history/history.service';
 import { Subscription } from 'rxjs';
+import { CountryRecordFormComponent } from './components';
 
 @Component({
   selector: 'cauquen-dashboard',
@@ -21,7 +24,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(HistoryService) private history: HistoryService,
     @Inject(ArgentinaService) private argentina: ArgentinaService,
-    @Inject(UtilsService) private utils: UtilsService
+    @Inject(UtilsService) private utils: UtilsService,
+    @Inject(MatDialog) private dialog: MatDialog
   ) {}
 
   async ngOnInit() {
@@ -32,15 +36,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
       const monthProfitLabels: Array<string> = [];
       const monthProfitSeries: Array<number> = [];
 
-      const [history, inflation] = await Promise.all([
+      const [history, countryRecords] = await Promise.all([
         this.history.getHistory(),
-        this.argentina.getInflation()
+        this.argentina.getData()
       ]);
 
       let previousBalance = 0;
-      inflation.forEach(_ipc => {
+      countryRecords.forEach(_countryRecord => {
         const records = history.filter(
-          _record => _record.date >= _ipc.from && _record.date <= _ipc.to
+          _historyRecord =>
+            _historyRecord.date >= _countryRecord.from && _historyRecord.date <= _countryRecord.to
         );
 
         if (records.length === 0) {
@@ -57,19 +62,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         previousBalance = lastRecord.balance;
 
-        const netBalance = lastRecord.balance - (lastRecord.balance * _ipc.value) / 100;
+        const netBalance = lastRecord.balance - (lastRecord.balance * _countryRecord.ipc) / 100;
 
         const difference = netBalance - total;
 
         const profit = this.utils.roundNumber((difference * 100) / total);
 
-        const date = new Date(_ipc.from);
+        const date = new Date(_countryRecord.from);
         const label = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 
         generalProfitLabels.push(label);
         generalProfitSeries[0].push(lastRecord.balance);
-        generalProfitSeries[1].push(total + (total * _ipc.value) / 100);
-        generalProfitSeries[2].push(total + (total * (_ipc.fixedRate / 12)) / 100);
+        generalProfitSeries[1].push(total + (total * _countryRecord.ipc) / 100);
+        generalProfitSeries[2].push(total + (total * (_countryRecord.fixedRate / 12)) / 100);
 
         monthProfitLabels.push(label);
         monthProfitSeries.push(profit);
@@ -93,6 +98,39 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.monthProfitSeries = [monthProfitSeries];
     } catch (error) {
       console.debug(error);
+    }
+  }
+
+  sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  removeDuplicates(arr: any) {
+    return arr.filter((item: any, index: any, self: any) => {
+      return index === self.findIndex((obj: any) => obj.to === item.to && obj.from === item.from);
+    });
+  }
+
+  openDialog(record?: ICountryRecord): void {
+    const dialogRef = this.dialog.open(CountryRecordFormComponent, {
+      data: record,
+      panelClass: 'cauquen-material-dialog'
+    });
+
+    this._subscription.add(
+      dialogRef.afterClosed().subscribe(_record => {
+        if (_record) {
+          this._addRecord(_record);
+        }
+      })
+    );
+  }
+
+  private async _addRecord(record: ICountryRecord) {
+    try {
+      await this.argentina.postRecord(record);
+    } catch (error) {
+      console.log(error);
     }
   }
 

@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { COUNTRY_CODE, IHistoryRecord, IInflation } from '@core/model';
+import { COUNTRY_CODE, ICountryRecord, IHistoryRecord } from '@core/model';
 import { FirebaseApp } from 'firebase/app';
 import {
   Firestore,
@@ -18,7 +18,7 @@ import { BehaviorSubject } from 'rxjs';
 
 enum DB {
   HISTORY = 'HISTORY',
-  INFLATION = 'INFLATION'
+  COUNTRY_RECORDS = 'COUNTRY_RECORDS'
 }
 
 enum OPERATOR {
@@ -36,7 +36,7 @@ export class DatabaseService implements OnDestroy {
   DB: Firestore | null = null;
   #subscriptions = new Set<Unsubscribe>();
   #history = new BehaviorSubject<Array<IHistoryRecord> | undefined>(undefined);
-  #inflation = new BehaviorSubject<Array<IInflation> | undefined>(undefined);
+  #countryData = new BehaviorSubject<Array<ICountryRecord> | undefined>(undefined);
 
   start(app: FirebaseApp) {
     this.DB = getFirestore(app);
@@ -100,16 +100,16 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
-  getInflation(data: { country: COUNTRY_CODE; from: number; to: number }) {
-    return new Promise<Array<IInflation>>((resolve, reject) => {
+  getCountryData(data: { country: COUNTRY_CODE; from: number; to: number }) {
+    return new Promise<Array<ICountryRecord>>((resolve, reject) => {
       try {
-        if (typeof this.#inflation.value !== 'undefined') {
-          resolve(this.#inflation.value);
+        if (typeof this.#countryData.value !== 'undefined') {
+          resolve(this.#countryData.value);
           return;
         }
 
         const q = query(
-          collection(this.DB!, DB.INFLATION),
+          collection(this.DB!, DB.COUNTRY_RECORDS),
           where('country', OPERATOR.EQUAL, data.country),
           where('from', OPERATOR.GREATER_OR_EQUAL, data.from),
           orderBy('from', 'asc')
@@ -119,11 +119,33 @@ export class DatabaseService implements OnDestroy {
           querySnapshot.forEach(doc => {
             docs.push(doc.data());
           });
-          this.#inflation.next(docs as Array<IInflation>);
-          resolve(this.#inflation.value as Array<IInflation>);
+          this.#countryData.next(docs as Array<ICountryRecord>);
+          resolve(this.#countryData.value as Array<ICountryRecord>);
         });
 
         this.#subscriptions.add(unsubscribe);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  postCountryRecord(record: ICountryRecord): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await setDoc(doc(this.DB!, DB.COUNTRY_RECORDS, record.id), Object.assign({}, record));
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  deleteCountryRecord(id: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await deleteDoc(doc(this.DB!, DB.COUNTRY_RECORDS, id));
+        resolve();
       } catch (error) {
         reject(error);
       }

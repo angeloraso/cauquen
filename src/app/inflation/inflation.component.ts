@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { IInflation } from '@core/model';
+import { ICountryRecord } from '@core/model';
 import { ArgentinaService } from '@core/services';
 
 @Component({
@@ -12,7 +12,7 @@ import { ArgentinaService } from '@core/services';
 export class InflationComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort | null = null;
   readonly DISPLAYED_COLUMNS = ['from', 'to', 'value'];
-  dataSource = new MatTableDataSource<IInflation>();
+  dataSource = new MatTableDataSource<ICountryRecord>();
 
   inflationLabels: Array<string> = [];
   inflationSeries: Array<Array<number>> = [];
@@ -24,14 +24,14 @@ export class InflationComponent implements OnInit {
       const inflationLabels: Array<string> = [];
       const inflationSeries: Array<number> = [];
 
-      const inflation = await this.argentina.getInflation();
+      const inflation = await this.argentina.getData();
 
       inflation.forEach(_ipc => {
         const date = new Date(_ipc.from);
         const label = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 
         inflationLabels.push(label);
-        inflationSeries.push(_ipc.value);
+        inflationSeries.push(_ipc.ipc);
       });
 
       this.inflationLabels = inflationLabels;

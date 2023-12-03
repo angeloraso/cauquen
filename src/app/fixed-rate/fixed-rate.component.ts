@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { IInflation } from '@core/model';
+import { ICountryRecord } from '@core/model';
 import { ArgentinaService } from '@core/services';
 
 @Component({
@@ -12,7 +12,7 @@ import { ArgentinaService } from '@core/services';
 export class FixedRateComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort | null = null;
   readonly DISPLAYED_COLUMNS = ['from', 'to', 'fixedRate'];
-  dataSource = new MatTableDataSource<IInflation>();
+  dataSource = new MatTableDataSource<ICountryRecord>();
 
   fixedRateLabels: Array<string> = [];
   fixedRateSeries: Array<Array<number>> = [];
@@ -24,7 +24,7 @@ export class FixedRateComponent implements OnInit {
       const fixedRateLabels: Array<string> = [];
       const fixedRateSeries: Array<number> = [];
 
-      const inflation = await this.argentina.getInflation();
+      const inflation = await this.argentina.getData();
 
       inflation.forEach(_ipc => {
         const date = new Date(_ipc.from);

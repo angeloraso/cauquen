@@ -4,18 +4,18 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IHistoryRecord } from '@core/model';
 
 @Component({
-  selector: 'record-form',
-  templateUrl: './record-form.html',
-  styleUrls: ['./record-form.css']
+  selector: 'country-record-form',
+  templateUrl: './country-record-form.html',
+  styleUrls: ['./country-record-form.css']
 })
-export class RecordFormComponent {
+export class CountryRecordFormComponent {
   form: FormGroup;
 
   readonly MIN_VALUE = 0;
 
   constructor(
     @Inject(FormBuilder) private fb: FormBuilder,
-    @Inject(MatDialogRef) private dialog: MatDialogRef<RecordFormComponent>,
+    @Inject(MatDialogRef) private dialog: MatDialogRef<CountryRecordFormComponent>,
     @Inject(MAT_DIALOG_DATA) private data: IHistoryRecord
   ) {
     this.form = this.fb.group({

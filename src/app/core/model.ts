@@ -25,10 +25,29 @@ export enum COUNTRY_CODE {
   ARGENTINA = 'AR'
 }
 
-export interface IInflation {
+export interface ICountryRecord {
+  id: string;
   country: COUNTRY_CODE;
   from: number;
   to: number;
-  value: number;
+  ipc: number;
   fixedRate: number;
+}
+
+export class CountryRecord implements ICountryRecord {
+  id: string;
+  country: COUNTRY_CODE;
+  from: number;
+  to: number;
+  ipc: number;
+  fixedRate: number;
+
+  constructor(record: Omit<ICountryRecord, 'id'>) {
+    this.id = uuid4();
+    this.country = record.country ?? COUNTRY_CODE.ARGENTINA;
+    this.from = record.from;
+    this.to = record.to;
+    this.ipc = record.ipc;
+    this.fixedRate = record.fixedRate;
+  }
 }

@@ -4,10 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmAlertComponent } from '@components/confirm-alert';
-import { RecordFormComponent } from '@components/record-form';
 import { IHistoryRecord } from '@core/model';
 import { HistoryService } from '@history/history.service';
 import { Subscription } from 'rxjs';
+import { HistoryRecordFormComponent } from './components';
 
 @Component({
   selector: 'cauquen-history',
@@ -41,7 +41,7 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
   }
 
   openDialog(record?: IHistoryRecord): void {
-    const dialogRef = this.dialog.open(RecordFormComponent, {
+    const dialogRef = this.dialog.open(HistoryRecordFormComponent, {
       data: record,
       scrollStrategy: new NoopScrollStrategy(),
       panelClass: 'cauquen-material-dialog'
