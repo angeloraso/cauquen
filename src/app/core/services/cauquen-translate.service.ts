@@ -3,7 +3,7 @@ import { LANGUAGE } from '@core/constants';
 import { TranslateService } from '@ngx-translate/core';
 
 export interface ILocale {
-  lang: LANGUAGE;
+  lang: LANGUAGE | string;
   translations: Record<string, unknown>;
 }
 

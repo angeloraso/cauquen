@@ -1,7 +1,5 @@
-import { LANGUAGE } from '@core/constants';
-
 export const locale = {
-  lang: LANGUAGE.SPANISH,
+  lang: 'es',
   translations: {
     CONFIRM_ALERT: {
       TITLE: 'Eliminar',

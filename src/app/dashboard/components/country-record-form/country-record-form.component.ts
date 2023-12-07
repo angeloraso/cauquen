@@ -1,8 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { COUNTRIES } from '@core/constants';
 import { COUNTRY_CODE, ICountryRecord } from '@core/model';
-import { COUNTRIES } from './../../../core/constants';
 
 @Component({
   selector: 'country-record-form',
