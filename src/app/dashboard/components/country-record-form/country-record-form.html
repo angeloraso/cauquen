@@ -32,7 +32,7 @@
     </mat-form-field>
 
     <mat-form-field floatLabel="always">
-        <mat-label>{{'CORE.FORM.FIELD.BALANCE' | translate}}</mat-label>
+        <mat-label>{{'CORE.FORM.FIELD.FIXED_RATE' | translate}}</mat-label>
         <input matInput formControlName="fixedRate" type="number" placeholder="0.00" min="0">
         <mat-error *ngIf="fixedRate.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</mat-error>
         <mat-error *ngIf="fixedRate.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</mat-error>
