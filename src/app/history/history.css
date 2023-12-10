@@ -16,3 +16,7 @@
 .history__table__actions__delete {
     color: var(--danger-color);
 }
+
+.history__table__row--end-of-month {
+    background-color: var(--hover-color);
+}
