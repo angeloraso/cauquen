@@ -56,7 +56,19 @@ export class AuthService {
     });
   }
 
-  getUserInfo() {
-    return this._user?.providerData;
+  getEmail(): string | null {
+    if (this._user && this._user.providerData[0]) {
+      return this._user.providerData[0].email;
+    }
+
+    return null;
+  }
+
+  getId(): string | null {
+    if (this._user && this._user.providerData[0]) {
+      return this._user.providerData[0].uid;
+    }
+
+    return null;
   }
 }
