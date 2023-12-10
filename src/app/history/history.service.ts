@@ -10,11 +10,7 @@ export class HistoryService {
     return new Promise<Array<IHistoryRecord>>(async (resolve, reject) => {
       try {
         const history = await this.database.getHistory();
-        if (history) {
-          resolve(history as Array<IHistoryRecord>);
-        } else {
-          resolve([]);
-        }
+        resolve(history ?? []);
       } catch (error) {
         reject(error);
       }
