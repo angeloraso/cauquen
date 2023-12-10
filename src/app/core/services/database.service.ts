@@ -1,4 +1,5 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { AuthService } from '@core/auth/auth.service';
 import { COUNTRY_CODE, ICountryRecord, IHistoryRecord } from '@core/model';
 import { FirebaseApp } from 'firebase/app';
 import {
@@ -38,6 +39,8 @@ export class DatabaseService implements OnDestroy {
   #history = new BehaviorSubject<Array<IHistoryRecord> | undefined>(undefined);
   #countryData = new BehaviorSubject<Array<ICountryRecord> | undefined>(undefined);
 
+  constructor(@Inject(AuthService) private auth: AuthService) {}
+
   start(app: FirebaseApp) {
     this.DB = getFirestore(app);
   }
@@ -50,7 +53,12 @@ export class DatabaseService implements OnDestroy {
           return;
         }
 
-        const q = query(collection(this.DB!, DB.HISTORY), orderBy('date', 'asc'));
+        const userId = this.auth.getId();
+        if (!userId) {
+          throw new Error('No user id');
+        }
+
+        const q = query(collection(this.DB!, `${DB.HISTORY}-${userId}`), orderBy('date', 'asc'));
         const unsubscribe = onSnapshot(q, querySnapshot => {
           const docs: Array<unknown> = [];
           querySnapshot.forEach(doc => {
@@ -70,7 +78,15 @@ export class DatabaseService implements OnDestroy {
   postHistoryRecord(record: IHistoryRecord): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await setDoc(doc(this.DB!, DB.HISTORY, record.id), Object.assign({}, record));
+        const userId = this.auth.getId();
+        if (!userId) {
+          throw new Error('No user id');
+        }
+
+        await setDoc(
+          doc(this.DB!, `${DB.HISTORY}-${userId}`, record.id),
+          Object.assign({}, record)
+        );
         resolve();
       } catch (error) {
         reject(error);
@@ -81,7 +97,15 @@ export class DatabaseService implements OnDestroy {
   putHistoryRecord(record: IHistoryRecord): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await setDoc(doc(this.DB!, DB.HISTORY, record.id), Object.assign({}, record));
+        const userId = this.auth.getId();
+        if (!userId) {
+          throw new Error('No user id');
+        }
+
+        await setDoc(
+          doc(this.DB!, `${DB.HISTORY}-${userId}`, record.id),
+          Object.assign({}, record)
+        );
         resolve();
       } catch (error) {
         reject(error);
@@ -92,7 +116,12 @@ export class DatabaseService implements OnDestroy {
   deleteHistoryRecord(id: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await deleteDoc(doc(this.DB!, DB.HISTORY, id));
+        const userId = this.auth.getId();
+        if (!userId) {
+          throw new Error('No user id');
+        }
+
+        await deleteDoc(doc(this.DB!, `${DB.HISTORY}-${userId}`, id));
         resolve();
       } catch (error) {
         reject(error);
