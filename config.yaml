@@ -1,8 +1,8 @@
 vars:
   BUNDLE_ID:
-    default: ar.com.tero
+    default: ar.com.cauquen
   PACKAGE_NAME:
-    default: ar.com.tero
+    default: ar.com.cauquen
   VERSION_NAME:
   VERSION_CODE:
     default: 1
