@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Cauquen</string>
-    <string name="title_activity_main">Cauquen</string>
-    <string name="package_name">ar.com.cauquen</string>
-    <string name="custom_url_scheme">ar.com.cauquen</string>
-</resources>
