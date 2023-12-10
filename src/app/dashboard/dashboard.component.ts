@@ -87,6 +87,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
         (accumulator, currentValue) => accumulator + currentValue.amount,
         0
       );
+
+      if (
+        !generalProfitSeries[0] ||
+        generalProfitSeries[0].length === 0 ||
+        !generalProfitSeries[1] ||
+        generalProfitSeries[1].length === 0
+      ) {
+        return;
+      }
+
       this.total = this.utils.roundNumber(
         ((generalProfitSeries[0][generalProfitSeries[0].length - 1] -
           generalProfitSeries[1][generalProfitSeries[1].length - 1]) *
