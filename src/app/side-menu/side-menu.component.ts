@@ -1,6 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { RouterService } from '@bizy/services';
 import { MENU_OPTIONS, MENU_OPTION_ID } from '@core/constants';
-import { RouterService, ViewportService } from '@core/services';
+import { ViewportService } from '@core/services';
 import { PATH as HOME_PATH } from '@home/home.routing';
 import { Observable, Subscription } from 'rxjs';
 import { IMenuOption } from './model';

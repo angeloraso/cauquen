@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { RouterService } from '@bizy/services';
 import { ROOT_PATHS } from '@core/constants';
-import { MobileService, RouterService } from '@core/services';
+import { MobileService } from '@core/services';
 
 @Component({
   selector: 'app-root',

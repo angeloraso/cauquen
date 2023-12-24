@@ -9,8 +9,8 @@
     "amplify/backend/awscloudformation": true
   },
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": false,
-    "source.organizeImports": true
+    "source.fixAll.eslint": "never",
+    "source.organizeImports": "explicit"
   },
   "javascript.updateImportsOnFileMove.enabled": "never",
   "typescript.updateImportsOnFileMove.enabled": "never",
@@ -54,5 +54,10 @@
   },
   "cSpell.words": [
     "unlistening"
-  ]
+  ],
+  "[css][javascript][json][typescript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    }
+  }
 }

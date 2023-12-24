@@ -1,8 +1,8 @@
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { PATH } from '@app/app.routing';
+import { RouterService } from '@bizy/services';
 import { AuthService } from '@core/auth/auth.service';
-import { RouterService } from '@core/services';
 
 @Component({
   selector: 'cauquen-login',

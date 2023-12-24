@@ -1,8 +1,8 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { PATH as APP_PATH } from '@app/app.routing';
+import { RouterService } from '@bizy/services';
 import { MENU_OPTIONS, MENU_OPTION_ID } from '@core/constants';
-import { RouterService } from '@core/services';
 import { PATH as HOME_PATH } from '@home/home.routing';
 import { IMenuOption } from '@menu/model';
 import { PATH as SIDE_MENU_PATH } from '@menu/side-menu.routing';

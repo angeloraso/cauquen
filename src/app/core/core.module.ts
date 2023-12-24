@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterService } from '@bizy/services';
 import { LANGUAGE } from '@core/constants';
 import { es } from './i18n';
 import {
@@ -9,7 +10,6 @@ import {
   CauquenTranslateService,
   DatabaseService,
   MobileService,
-  RouterService,
   ServiceWorkerService,
   UtilsService,
   ViewportService
