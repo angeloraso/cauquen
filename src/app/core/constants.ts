@@ -8,7 +8,8 @@ export enum MENU_OPTION_ID {
   DASHBOARD = 'DASHBOARD',
   HISTORY = 'HISTORY',
   INFLATION = 'INFLATION',
-  FIXED_RATE = 'FIXED_RATE'
+  FIXED_RATE = 'FIXED_RATE',
+  CONFIG = 'CONFIG'
 }
 
 export enum LANGUAGE {
@@ -20,6 +21,7 @@ export const ROOT_PATHS = [
   `/${APP_PATH.MENU}/${SIDE_MENU_PATH.HOME}/${HOME_PATH.DASHBOARD}`,
   `/${APP_PATH.MENU}/${SIDE_MENU_PATH.HOME}/${HOME_PATH.INFLATION}`,
   `/${APP_PATH.MENU}/${SIDE_MENU_PATH.HOME}/${HOME_PATH.FIXED_RATE}`,
+  `/${APP_PATH.MENU}/${SIDE_MENU_PATH.HOME}/${HOME_PATH.CONFIG}`,
   `/${APP_PATH.AUTH}`
 ];
 
@@ -48,6 +50,12 @@ export const MENU_OPTIONS: Array<IMenuOption> = [
     id: MENU_OPTION_ID.FIXED_RATE,
     title: 'CORE.MENU.FIXED_RATE',
     icon: 'account_balance',
+    active: false
+  },
+  {
+    id: MENU_OPTION_ID.CONFIG,
+    title: 'CORE.MENU.CONFIG',
+    icon: 'settings',
     active: false
   }
 ];

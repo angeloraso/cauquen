@@ -7,6 +7,10 @@
   display: none !important;
 }
 
+::ng-deep .mdc-tab {
+  min-width: 4rem !important;
+}
+
 .home__bottom-bar__tab {
   display: flex;
   flex-direction: column;

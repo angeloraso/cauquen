@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { ConfigModule } from '@config/config.module';
 import { DashboardModule } from '@dashboard/dashboard.module';
 import { FixedRateModule } from '@fixed-rate/fixed-rate.module';
 import { HistoryModule } from '@history/history.module';
@@ -13,7 +14,8 @@ import { HomeRoutingModule } from './home.routing';
     DashboardModule,
     HistoryModule,
     InflationModule,
-    FixedRateModule
+    FixedRateModule,
+    ConfigModule
   ],
   declarations: [HomeRoutingModule.COMPONENTS]
 })

@@ -1,0 +1,27 @@
+<div class="about-popup">
+
+    <span class="about-popup__close">
+    
+        <mat-icon class="about-popup__close-button" (click)="close()">close</mat-icon>
+
+    </span>
+
+    <span class="about-popup__header">
+        <img src="/assets/favicons/favicon.ico" alt="logo"/>
+    </span>
+
+    <cauquen-loading [show]="loading">
+
+        <span class="about-popup__content">
+    
+            <cauquen-title [title]="DESCRIPTION"></cauquen-title>
+
+            <h2><strong>{{VERSION}}</strong></h2>
+
+            <h4>{{USER_AGENT}}</h4>
+    
+        </span>
+
+    </cauquen-loading>
+
+</div>

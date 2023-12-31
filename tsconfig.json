@@ -35,7 +35,8 @@
       "@dashboard/*": ["src/app/dashboard/*"],
       "@history/*": ["src/app/history/*"],
       "@inflation/*": ["src/app/inflation/*"],
-      "@fixed-rate/*": ["src/app/fixed-rate/*"]
+      "@fixed-rate/*": ["src/app/fixed-rate/*"],
+      "@config/*": ["src/app/config/*"]
     }
   },
   "angularCompilerOptions": {

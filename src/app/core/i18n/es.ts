@@ -9,7 +9,8 @@ export const locale = {
         DASHBOARD: 'Panel',
         HISTORY: 'Historial',
         INFLATION: 'Inflación',
-        FIXED_RATE: 'Tasa'
+        FIXED_RATE: 'Tasa',
+        CONFIG: 'Config'
       },
       BUTTON: {
         CANCEL: 'Cancelar',

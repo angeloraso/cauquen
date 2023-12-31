@@ -1,0 +1,23 @@
+.config {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    padding-top: 4rem;
+}
+
+.config__toolbar {
+    padding: 0.5rem;
+    background-color: #fff;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+
+.cauquen-card {
+    display: flex;
+    align-items: center;
+    column-gap: 1rem;
+    border: none;
+    cursor: pointer;
+}
