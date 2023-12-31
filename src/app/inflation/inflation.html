@@ -1,12 +1,17 @@
 <div class="cauquen-wrapper inflation">
 
-    <cauquen-bar-chart 
-        id="inflation-dashboard"
-        title="{{'INFLATION.TITLE' | translate}}"
-        [labels]="inflationLabels"
-        [high]="30"
-        [series]="inflationSeries">
-    </cauquen-bar-chart>
+    <span>
+
+        <cauquen-bar-chart 
+            id="inflation-dashboard"
+            title="{{'INFLATION.TITLE' | translate}}"
+            [labels]="inflationLabels"
+            [high]="30"
+            link="https://datosmacro.expansion.com/ipc-paises/argentina?sc=IPC-IG"
+            [series]="inflationSeries">
+        </cauquen-bar-chart>
+    
+    </span>
 
     <table mat-table [dataSource]="dataSource" matSort>
 

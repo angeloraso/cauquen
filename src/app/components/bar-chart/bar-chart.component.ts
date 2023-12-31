@@ -10,6 +10,7 @@ import { BarChart } from 'chartist';
 export class BarChartComponent implements AfterViewInit {
   @Input() id: string = '';
   @Input() title: string = '';
+  @Input() link: string = '';
   @Input() low: number = 0;
   @Input() high: number = 30;
   @Input() showArea: boolean = true;

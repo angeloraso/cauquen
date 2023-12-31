@@ -1,5 +1,10 @@
 <div class="bar-chart">
-    <cauquen-title *ngIf="title" [title]="title"></cauquen-title>
+
+    <span class="bar-chart__header">
+        <cauquen-title *ngIf="title" [title]="title"></cauquen-title>
+
+        <a *ngIf="link" [href]="link" target="_blank">{{'BAR_CHART.MORE_INFO' | translate}}</a>
+    </span>
 
     <span id="{{CHART_ID}}-{{id}}"></span>
 </div>

@@ -1,7 +1,7 @@
 .inflation {
     display: flex;
     flex-direction: column;
-    row-gap: 2em;
+    row-gap: 1rem;
 }
 
 .inflation__table__value {

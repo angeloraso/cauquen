@@ -1,7 +1,7 @@
 .fixed-rate {
     display: flex;
     flex-direction: column;
-    row-gap: 2em;
+    row-gap: 1rem;
 }
 
 .fixed-rate__table__value {
