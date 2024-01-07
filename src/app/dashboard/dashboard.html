@@ -6,7 +6,10 @@
 
             <h1 class="dashboard__summary-card__total__label">Total: </h1>
 
-            <h2 class="dashboard__summary-card__total__value" [ngClass]="{'dashboard__summary-card__total__value--negative': total < 0, 'dashboard__summary-card__total__value--positive': total > 0}">{{total}} %</h2>
+            <h2 
+                class="dashboard__summary-card__total__value"
+                [ngClass]="{'dashboard__summary-card__total__value--negative': total < 0, 'dashboard__summary-card__total__value--positive': total > 0}"
+                [bizyLoading]="loading">{{total}} %</h2>
 
         </span>
 

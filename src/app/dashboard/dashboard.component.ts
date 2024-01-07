@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   monthProfitLabels: Array<string> = [];
   monthProfitSeries: Array<Array<number>> = [];
+  loading: boolean = false;
 
   constructor(
     @Inject(HistoryService) private history: HistoryService,
@@ -30,6 +31,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     try {
+      this.loading = true;
       const generalProfitLabels: Array<string> = [];
       const generalProfitSeries: Array<Array<number>> = [[], [], []];
 
@@ -108,6 +110,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.monthProfitSeries = [monthProfitSeries];
     } catch (error) {
       console.debug(error);
+    } finally {
+      this.loading = false;
     }
   }
 
