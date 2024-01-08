@@ -1,0 +1,5 @@
+:root {
+    --bizy-loading-color-1st-line: var(--light-primary-color);
+    --bizy-loading-color-2nd-line: var(--primary-color);
+    --bizy-loading-color-3rd-line: var(--dark-primary-color);
+}
