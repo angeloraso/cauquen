@@ -3,6 +3,7 @@ import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { PopupService } from '@bizy/services';
 import { ConfirmAlertComponent } from '@components/confirm-alert';
 import { IHistoryRecord } from '@core/model';
 import { HistoryService } from '@history/history.service';
@@ -23,6 +24,7 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     @Inject(MatDialog) private dialog: MatDialog,
+    @Inject(PopupService) private popup: PopupService<HistoryRecordFormComponent, IHistoryRecord>,
     @Inject(HistoryService) private history: HistoryService
   ) {}
 
@@ -41,14 +43,10 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
   }
 
   openDialog(record?: IHistoryRecord): void {
-    const dialogRef = this.dialog.open(HistoryRecordFormComponent, {
-      data: record,
-      scrollStrategy: new NoopScrollStrategy(),
-      panelClass: 'cauquen-material-dialog'
-    });
+    this.popup.open({ component: HistoryRecordFormComponent, data: record });
 
     this._subscription.add(
-      dialogRef.afterClosed().subscribe(_record => {
+      this.popup.closed$.subscribe(_record => {
         if (_record) {
           if (record) {
             this._editRecord(_record);

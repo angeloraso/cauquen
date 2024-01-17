@@ -1,5 +1,7 @@
 <form class="cauquen-form" [formGroup]="form">
 
+    <cauquen-title title="Registro"></cauquen-title>
+
     <mat-form-field>
         <mat-label>{{'CORE.FORM.FIELD.DATE' | translate}}</mat-label>
         <input matInput formControlName="date" [matDatepicker]="picker">
@@ -10,28 +12,39 @@
 
     <span class="cauquen-form__toggle-field">
         <h4 class="cauquen-form__toggle-field__label">Entrada de dinero:</h4>
-        <mat-slide-toggle formControlName="income"></mat-slide-toggle>
+        <bizy-toggle [checked]="income.value"></bizy-toggle>
     </span>
 
-    <mat-form-field floatLabel="always">
-        <mat-label>{{'CORE.FORM.FIELD.AMOUNT' | translate}}</mat-label>
-        <input matInput formControlName="amount" type="number" placeholder="0.00" min="0">
-        <span matTextPrefix>$&nbsp;</span>
-        <mat-error *ngIf="amount.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</mat-error>
-        <mat-error *ngIf="amount.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</mat-error>
-    </mat-form-field>
 
-    <mat-form-field floatLabel="always">
-        <mat-label>{{'CORE.FORM.FIELD.BALANCE' | translate}}</mat-label>
-        <input matInput formControlName="balance" type="number" placeholder="0.00" min="0">
-        <span matTextPrefix>$&nbsp;</span>
-        <mat-error *ngIf="balance.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</mat-error>
-        <mat-error *ngIf="balance.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</mat-error>
-    </mat-form-field>
+    <bizy-input 
+        label="{{'CORE.FORM.FIELD.AMOUNT' | translate}}"
+        type="number"
+        placeholder="0.00"
+        [min]="0"
+        [control]="amount">
+        <span input-start>$&nbsp;</span>
 
-    <cauquen-confirm-footer
+        <bizy-error input-error *ngIf="amount.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        <bizy-error input-error *ngIf="amount.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
+        
+    </bizy-input>
+
+    <bizy-input 
+        label="{{'CORE.FORM.FIELD.BALANCE' | translate}}"
+        type="number"
+        placeholder="0.00"
+        [min]="0"
+        [control]="balance">
+        <span input-start>$&nbsp;</span>
+
+        <bizy-error input-error *ngIf="balance.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        <bizy-error input-error *ngIf="balance.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
+        
+    </bizy-input>
+
+    <bizy-confirm-buttons
         (cancel)="cancel()"
         (confirm)="confirm()">
-    </cauquen-confirm-footer>
+    </bizy-confirm-buttons>
 
 </form>

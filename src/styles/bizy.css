@@ -1,5 +1,32 @@
+@import '/node_modules/@bizy/directives/styles/loading.css';
+@import '/node_modules/@bizy/services/styles/popup.css';
+@import '/node_modules/@bizy/components/styles/normalize.css';
+@import '/node_modules/@bizy/components/styles/animations.css';
+
 :root {
     --bizy-loading-color-1st-line: var(--light-primary-color);
     --bizy-loading-color-2nd-line: var(--primary-color);
     --bizy-loading-color-3rd-line: var(--dark-primary-color);
+
+    --bizy-popup-background-color: #fff;
+    --bizy-popup-close-button-color: var(--text-color);
+    --bizy-popup-close-button-hover-color: var(--danger-color);
+
+    --bizy-confirm-buttons-confirm-background-color: var(--accent-color);
+    --bizy-confirm-buttons-confirm-color: #fff;
+    --bizy-confirm-buttons-cancel-background-color: transparent;
+    --bizy-confirm-buttons-cancel-color: var(--info-color);
+
+    --bizy-toggle-off-color: var(--danger-color);
+    --bizy-toggle-off-background-color: var(--light-danger-color);
+    --bizy-toggle-on-color: var(--success-color);
+    --bizy-toggle-on-background-color: var(--light-success-color);
+
+    --bizy-input-label-color: var(--info-color);
+    --bizy-input-color: var(--text-color);
+    --bizy-input-error-color: var(--danger-color);
+    --bizy-input-background-color: var(--hover-color);
+    --bizy-input-placeholder-color: var(--text-color);
+
+    --bizy-error-color: var(--danger-color);
 }

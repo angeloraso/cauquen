@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PopupService } from '@bizy/services';
 import { IHistoryRecord } from '@core/model';
 
 @Component({
@@ -15,8 +15,7 @@ export class HistoryRecordFormComponent {
 
   constructor(
     @Inject(FormBuilder) private fb: FormBuilder,
-    @Inject(MatDialogRef) private dialog: MatDialogRef<HistoryRecordFormComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: IHistoryRecord
+    @Inject(PopupService) private popup: PopupService<HistoryRecordFormComponent, IHistoryRecord>
   ) {
     this.form = this.fb.group({
       id: [null],
@@ -26,33 +25,34 @@ export class HistoryRecordFormComponent {
       balance: [null, [Validators.min(this.MIN_VALUE), Validators.required]]
     });
 
-    if (this.data) {
-      this.id.setValue(this.data.id);
-      this.date.setValue(new Date(this.data.date));
-      this.income.setValue(this.data.amount >= 0);
-      this.amount.setValue(Math.abs(this.data.amount));
-      this.balance.setValue(this.data.balance);
+    const data = this.popup.getData<IHistoryRecord>();
+    if (data) {
+      this.id.setValue(data.id);
+      this.date.setValue(new Date(data.date));
+      this.income.setValue(data.amount >= 0);
+      this.amount.setValue(Math.abs(data.amount));
+      this.balance.setValue(data.balance);
     }
   }
 
   get id() {
-    return this.form.get('id') as AbstractControl;
+    return this.form.get('id') as FormControl;
   }
 
   get date() {
-    return this.form.get('date') as AbstractControl;
+    return this.form.get('date') as FormControl;
   }
 
   get income() {
-    return this.form.get('income') as AbstractControl;
+    return this.form.get('income') as FormControl;
   }
 
   get amount() {
-    return this.form.get('amount') as AbstractControl;
+    return this.form.get('amount') as FormControl;
   }
 
   get balance() {
-    return this.form.get('balance') as AbstractControl;
+    return this.form.get('balance') as FormControl;
   }
 
   confirm() {
@@ -60,15 +60,17 @@ export class HistoryRecordFormComponent {
       return;
     }
 
-    this.dialog.close({
-      id: this.id.value,
-      date: this.date.value.getTime(),
-      amount: this.income.value ? this.amount.value : this.amount.value * -1,
-      balance: this.balance.value
+    this.popup.close({
+      data: {
+        id: this.id.value,
+        date: this.date.value.getTime(),
+        amount: this.income.value ? this.amount.value : this.amount.value * -1,
+        balance: this.balance.value
+      }
     });
   }
 
   cancel() {
-    this.dialog.close();
+    this.popup.close();
   }
 }

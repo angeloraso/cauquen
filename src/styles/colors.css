@@ -11,11 +11,28 @@ html:root {
     --dark-accent-color: #004D45;
 
     --hover-color: #f3f3f3;
+    --text-color: #040d1e;
     --background-color: #c1d6fe;
 
+    --apply-color: #16aa88;
+    --light-apply-color: #e4faf6;
+    --dark-apply-color: #094839;
     --success-color: #5fbc5a;
-    --default-color: #666666;
+    --light-success-color: #dfeddd;
+    --dark-success-color: #3f8e3a;
+    --default-color: #666;
+    --light-default-color: #eee;
+    --dark-default-color: #333;
     --info-color: #2b94f4;
+    --light-info-color: #e2eefa;
+    --dark-info-color: #355b7f;
+    --alert-color: #fffe56;
+    --light-alert-color: #fffdc8;
+    --dark-alert-color: #7e7915;
     --warning-color: #f7a64c;
+    --light-warning-color: #fde5c9;
+    --dark-warning-color: #c07b2d;
     --danger-color: #e76565;
+    --light-danger-color: #ffe0e0;
+    --dark-danger-color: #c34b4b;
 }

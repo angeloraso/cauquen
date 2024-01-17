@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LogService, RouterService, UserAgentService } from '@bizy/services';
 import { LANGUAGE } from '@core/constants';
+import { IonicModule } from '@ionic/angular';
 import { es } from './i18n';
 import {
   ArgentinaService,
@@ -16,7 +17,12 @@ import {
 } from './services';
 
 @NgModule({
-  imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    IonicModule.forRoot({ mode: 'ios' })
+  ],
   providers: [
     RouterService,
     CauquenTranslateService,
