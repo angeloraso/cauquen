@@ -17,9 +17,10 @@ export class HistoryRecordFormComponent {
     @Inject(FormBuilder) private fb: FormBuilder,
     @Inject(PopupService) private popup: PopupService<HistoryRecordFormComponent, IHistoryRecord>
   ) {
+    const today = new Date();
     this.form = this.fb.group({
       id: [null],
-      date: [new Date(), [Validators.required]],
+      date: [today.toISOString(), [Validators.required]],
       income: [true, [Validators.required]],
       amount: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
       balance: [null, [Validators.min(this.MIN_VALUE), Validators.required]]
@@ -27,8 +28,9 @@ export class HistoryRecordFormComponent {
 
     const data = this.popup.getData<IHistoryRecord>();
     if (data) {
+      const date = new Date(data.date);
       this.id.setValue(data.id);
-      this.date.setValue(new Date(data.date));
+      this.date.setValue(date.toISOString());
       this.income.setValue(data.amount >= 0);
       this.amount.setValue(Math.abs(data.amount));
       this.balance.setValue(data.balance);

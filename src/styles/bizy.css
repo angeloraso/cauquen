@@ -27,6 +27,8 @@
     --bizy-input-error-color: var(--danger-color);
     --bizy-input-background-color: var(--hover-color);
     --bizy-input-placeholder-color: var(--text-color);
+    --bizy-input-date-color: var(--info-color);
+    --bizy-input-date-contrast-color: #fff;
 
     --bizy-error-color: var(--danger-color);
 }

@@ -2,19 +2,21 @@
 
     <cauquen-title title="Registro"></cauquen-title>
 
-    <mat-form-field>
-        <mat-label>{{'CORE.FORM.FIELD.DATE' | translate}}</mat-label>
-        <input matInput formControlName="date" [matDatepicker]="picker">
-        <mat-hint>DD/MM/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+    <bizy-input 
+        label="{{'CORE.FORM.FIELD.DATE' | translate}}"
+        type="month-year"
+        [control]="date">
+
+        <span input-end><i class="fa-solid fa-calendar"></i></span>
+
+        <bizy-error input-error *ngIf="date.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        
+    </bizy-input>
 
     <span class="cauquen-form__toggle-field">
         <h4 class="cauquen-form__toggle-field__label">Entrada de dinero:</h4>
         <bizy-toggle [checked]="income.value"></bizy-toggle>
     </span>
-
 
     <bizy-input 
         label="{{'CORE.FORM.FIELD.AMOUNT' | translate}}"
