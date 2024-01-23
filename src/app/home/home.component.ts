@@ -1,5 +1,4 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MatTabChangeEvent } from '@angular/material/tabs';
 import { PATH as APP_PATH } from '@app/app.routing';
 import { RouterService } from '@bizy/services';
 import { MENU_OPTIONS, MENU_OPTION_ID } from '@core/constants';
@@ -55,17 +54,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  showOption(event: MatTabChangeEvent) {
+  onSelect(option: IMenuOption) {
     if (this.sideMenuIsOpen) {
       return;
     }
 
-    this.selectedIndex = event.index;
-
-    const option = this.options[event.index];
-
-    this.options.forEach(option => {
-      option.active = false;
+    this.options.forEach(_option => {
+      _option.active = false;
     });
 
     option.active = true;

@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddHistoryRecordComponent } from './add-history-record/add-history-record.component';
+import { EditHistoryRecordComponent } from './edit-history-record/edit-history-record.component';
 import { HistoryComponent } from './history.component';
 
 export enum PATH {
-  EMPTY = ''
+  EMPTY = '',
+  ADD = 'add'
 }
 
 const routes: Routes = [
@@ -11,6 +14,14 @@ const routes: Routes = [
     path: PATH.EMPTY,
     component: HistoryComponent,
     pathMatch: 'full'
+  },
+  {
+    path: PATH.ADD,
+    component: AddHistoryRecordComponent
+  },
+  {
+    path: ':historyRecordId',
+    component: EditHistoryRecordComponent
   }
 ];
 
@@ -19,5 +30,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class HistoryRoutingModule {
-  static COMPONENTS = [HistoryComponent];
+  static COMPONENTS = [HistoryComponent, AddHistoryRecordComponent, EditHistoryRecordComponent];
 }

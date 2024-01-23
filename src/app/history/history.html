@@ -24,13 +24,12 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="DISPLAYED_COLUMNS"></tr>
-        <tr mat-row *matRowDef="let row; columns: DISPLAYED_COLUMNS;" [ngClass]="{'history__table__row--end-of-month': !row.amount}" (click)="openDialog(row)"></tr>
+        <tr mat-row *matRowDef="let row; columns: DISPLAYED_COLUMNS;" [ngClass]="{'history__table__row--end-of-month': !row.amount}" (click)="editRecord(row)"></tr>
     </table>
 
     <span *ngIf="dataSource.data.length === 0" class="cauquen__table--empty">{{'CORE.EMPTY' | translate}}</span>
 
-
-    <button mat-fab color="primary" (click)="openDialog()">
+    <button mat-fab color="primary" (click)="addRecord()">
         <mat-icon>add</mat-icon>
     </button>
 </div>

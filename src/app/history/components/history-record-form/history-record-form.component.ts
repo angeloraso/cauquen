@@ -1,22 +1,53 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { PopupService } from '@bizy/services';
 import { IHistoryRecord } from '@core/model';
 
 @Component({
-  selector: 'history-record-form',
+  selector: 'cauquen-history-record-form',
   templateUrl: './history-record-form.html',
   styleUrls: ['./history-record-form.css']
 })
 export class HistoryRecordFormComponent {
+  @Output() cancel = new EventEmitter<void>();
+  @Output() confirm = new EventEmitter<IHistoryRecord>();
+  @Input() set id(id: string) {
+    if (!id) {
+      return;
+    }
+
+    this._id.setValue(id);
+  }
+
+  @Input() set date(date: number) {
+    if (!date) {
+      return;
+    }
+
+    const _date = new Date(date);
+    this._date.setValue(_date.toISOString());
+  }
+
+  @Input() set amount(amount: number) {
+    if (!amount) {
+      return;
+    }
+
+    this._amount.setValue(Math.abs(amount));
+    this._income.setValue(amount >= 0);
+  }
+
+  @Input() set balance(balance: number) {
+    if (!balance) {
+      return;
+    }
+
+    this._balance.setValue(balance);
+  }
   form: FormGroup;
 
   readonly MIN_VALUE = 0;
 
-  constructor(
-    @Inject(FormBuilder) private fb: FormBuilder,
-    @Inject(PopupService) private popup: PopupService<HistoryRecordFormComponent, IHistoryRecord>
-  ) {
+  constructor(@Inject(FormBuilder) private fb: FormBuilder) {
     const today = new Date();
     this.form = this.fb.group({
       id: [null],
@@ -25,54 +56,44 @@ export class HistoryRecordFormComponent {
       amount: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
       balance: [null, [Validators.min(this.MIN_VALUE), Validators.required]]
     });
-
-    const data = this.popup.getData<IHistoryRecord>();
-    if (data) {
-      const date = new Date(data.date);
-      this.id.setValue(data.id);
-      this.date.setValue(date.toISOString());
-      this.income.setValue(data.amount >= 0);
-      this.amount.setValue(Math.abs(data.amount));
-      this.balance.setValue(data.balance);
-    }
   }
 
-  get id() {
+  get _id() {
     return this.form.get('id') as FormControl;
   }
 
-  get date() {
+  get _date() {
     return this.form.get('date') as FormControl;
   }
 
-  get income() {
+  get _income() {
     return this.form.get('income') as FormControl;
   }
 
-  get amount() {
+  get _amount() {
     return this.form.get('amount') as FormControl;
   }
 
-  get balance() {
+  get _balance() {
     return this.form.get('balance') as FormControl;
   }
 
-  confirm() {
+  _confirm() {
     if (this.form.invalid) {
       return;
     }
 
-    this.popup.close({
-      data: {
-        id: this.id.value,
-        date: this.date.value.getTime(),
-        amount: this.income.value ? this.amount.value : this.amount.value * -1,
-        balance: this.balance.value
-      }
+    this;
+
+    this.confirm.emit({
+      id: this._id.value,
+      date: this._date.value.getTime(),
+      amount: this._income.value ? this._amount.value : this._amount.value * -1,
+      balance: this._balance.value
     });
   }
 
-  cancel() {
-    this.popup.close();
+  _cancel() {
+    this.cancel.emit();
   }
 }

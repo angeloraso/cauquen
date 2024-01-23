@@ -31,4 +31,8 @@
     --bizy-input-date-contrast-color: #fff;
 
     --bizy-error-color: var(--danger-color);
+
+    --bizy-tabs-background-color: #fff;
+    --bizy-tab-color: var(--text-color);
+    --bizy-tab-selected-color: var(--accent-color) !important;
 }

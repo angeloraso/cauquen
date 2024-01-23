@@ -6,17 +6,14 @@ html:root {
     --light-secondary-color: #240991;
     --secondary-color: #4829C6;
     --dark-secondary-color: #130356;
-    --accent-color: #008375;
-    --light-accent-color: #12B9A8;
-    --dark-accent-color: #004D45;
+    --accent-color: #16aa88;
+    --light-accent-color: #e4faf6;
+    --dark-accent-color: #094839;
 
     --hover-color: #f3f3f3;
     --text-color: #040d1e;
     --background-color: #c1d6fe;
 
-    --apply-color: #16aa88;
-    --light-apply-color: #e4faf6;
-    --dark-apply-color: #094839;
     --success-color: #5fbc5a;
     --light-success-color: #dfeddd;
     --dark-success-color: #3f8e3a;

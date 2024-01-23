@@ -5,17 +5,17 @@
     <bizy-input 
         label="{{'CORE.FORM.FIELD.DATE' | translate}}"
         type="date"
-        [control]="date">
+        [control]="_date">
 
         <span input-end><i class="fa-solid fa-calendar"></i></span>
 
-        <bizy-error input-error *ngIf="date.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        <bizy-error input-error *ngIf="_date.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
         
     </bizy-input>
 
     <span class="cauquen-form__toggle-field">
-        <h4 class="cauquen-form__toggle-field__label">Entrada de dinero:</h4>
-        <bizy-toggle [checked]="income.value"></bizy-toggle>
+        <h4 class="cauquen-form__toggle-field__label">{{'CORE.FORM.FIELD.INCOME' | translate}}":</h4>
+        <bizy-toggle [checked]="_income.value"></bizy-toggle>
     </span>
 
     <bizy-input 
@@ -23,11 +23,11 @@
         type="number"
         placeholder="0.00"
         [min]="0"
-        [control]="amount">
+        [control]="_amount">
         <span input-start>$&nbsp;</span>
 
-        <bizy-error input-error *ngIf="amount.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
-        <bizy-error input-error *ngIf="amount.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
+        <bizy-error input-error *ngIf="_amount.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        <bizy-error input-error *ngIf="_amount.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
         
     </bizy-input>
 
@@ -36,17 +36,17 @@
         type="number"
         placeholder="0.00"
         [min]="0"
-        [control]="balance">
+        [control]="_balance">
         <span input-start>$&nbsp;</span>
 
-        <bizy-error input-error *ngIf="balance.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
-        <bizy-error input-error *ngIf="balance.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
+        <bizy-error input-error *ngIf="_balance.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        <bizy-error input-error *ngIf="_balance.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
         
     </bizy-input>
 
     <bizy-confirm-buttons
-        (cancel)="cancel()"
-        (confirm)="confirm()">
+        (cancel)="_cancel()"
+        (confirm)="_confirm()">
     </bizy-confirm-buttons>
 
 </form>

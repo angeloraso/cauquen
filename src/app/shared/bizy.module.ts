@@ -4,6 +4,7 @@ import {
   ConfirmButtonsModule,
   ErrorModule,
   InputModule,
+  TabsModule,
   ToggleModule,
   VirtualScrollModule
 } from '@bizy/components';
@@ -19,7 +20,9 @@ import { PopupModule } from '@bizy/services';
     ConfirmButtonsModule,
     ToggleModule,
     InputModule,
-    ErrorModule
+    ErrorModule,
+    ConfirmButtonsModule,
+    TabsModule
   ]
 })
 export class BizyModule {}

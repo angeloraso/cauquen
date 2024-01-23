@@ -31,7 +31,8 @@ export const locale = {
           TO: 'Hasta',
           INFLATION: 'Inflación',
           FIXED_RATE: 'Tasa',
-          COUNTRY: 'País'
+          COUNTRY: 'País',
+          INCOME: 'Entrada de dinero'
         },
         ERROR: {
           REQUIRED: 'Este campo es requerido',

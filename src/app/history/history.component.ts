@@ -3,12 +3,10 @@ import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { PopupService } from '@bizy/services';
 import { ConfirmAlertComponent } from '@components/confirm-alert';
 import { IHistoryRecord } from '@core/model';
 import { HistoryService } from '@history/history.service';
 import { Subscription } from 'rxjs';
-import { HistoryRecordFormComponent } from './components';
 
 @Component({
   selector: 'cauquen-history',
@@ -24,7 +22,6 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     @Inject(MatDialog) private dialog: MatDialog,
-    @Inject(PopupService) private popup: PopupService<HistoryRecordFormComponent, IHistoryRecord>,
     @Inject(HistoryService) private history: HistoryService
   ) {}
 
@@ -42,20 +39,13 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  openDialog(record?: IHistoryRecord): void {
-    this.popup.open({ component: HistoryRecordFormComponent, data: record });
+  addRecord() {
+    // this.router.goTo({ path: PATH.ADD });
+  }
 
-    this._subscription.add(
-      this.popup.closed$.subscribe(_record => {
-        if (_record) {
-          if (record) {
-            this._editRecord(_record);
-          } else {
-            this._addRecord(_record);
-          }
-        }
-      })
-    );
+  editRecord(record: IHistoryRecord) {
+    console.log(record);
+    // this.router.goTo({ path: String(record.id) });
   }
 
   openAlertDialog(record: IHistoryRecord) {
@@ -72,28 +62,6 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
         }
       })
     );
-  }
-
-  private async _addRecord(record: IHistoryRecord) {
-    try {
-      await this.history.postRecord(record);
-      this.dataSource.data = [...this.dataSource.data, record];
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  private async _editRecord(record: IHistoryRecord) {
-    try {
-      await this.history.putRecord(record);
-      const index = this.dataSource.data.findIndex(_record => _record.id === record.id);
-      if (index !== -1) {
-        this.dataSource.data[index] = record;
-        this.dataSource.data = [...this.dataSource.data];
-      }
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   private async _deleteRecord(record: IHistoryRecord) {
