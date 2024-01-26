@@ -4,6 +4,7 @@ import {
   ConfirmButtonsModule,
   ErrorModule,
   InputModule,
+  SidebarModule,
   TabsModule,
   ToggleModule,
   ToolbarModule,
@@ -26,7 +27,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ConfirmButtonsModule,
     TabsModule,
     TranslateModule,
-    ToolbarModule
+    ToolbarModule,
+    SidebarModule
   ]
 })
 export class BizyModule {}

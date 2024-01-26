@@ -1,4 +1,29 @@
 <div class="home">
+
+  <bizy-sidebar class="home__sidebar">
+
+    <bizy-sidebar-header>
+      
+      <bizy-toolbar></bizy-toolbar>
+
+    </bizy-sidebar-header>
+
+    <bizy-sidebar-option 
+      *ngFor="let option of options"
+      [selected]="option.selected" 
+      (onSelect)="onSelect(option)">
+
+      <span class="home__sidebar__option" [ngClass]="{'home__sidebar__option--selected': option.selected}" sidebar-option-content>
+        
+        <mat-icon>{{option.icon}}</mat-icon>
+        
+        <span>{{option.label | translate}}</span>
+
+      </span>
+
+    </bizy-sidebar-option>
+
+  </bizy-sidebar>
     
   <div class="home__content">
 
@@ -12,7 +37,7 @@
           <router-outlet></router-outlet>
       </span>
 
-      <bizy-tabs>
+      <bizy-tabs class="home__tabs">
 
           <bizy-tab 
             *ngFor="let option of options"

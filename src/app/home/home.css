@@ -7,6 +7,25 @@
   overflow: hidden;
 }
 
+.home__sidebar {
+  display: none;
+}
+
+.home__tabs {
+  display: block;
+}
+
+@media only screen and (min-width: 768px) {
+  .home__sidebar {
+    display: block;
+  }
+
+  .home__tabs {
+    display: none;
+  }
+}
+
+
 .home__content {
   flex: 1;
   display: flex;
@@ -23,6 +42,19 @@
   overflow-y: scroll;
   overflow-x: hidden;
   background-color: var(--background-color);
+}
+
+.home__sidebar__option {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  min-height: 1.6rem;
+  min-width: 10rem;
+  cursor: pointer;
+}
+
+.home__sidebar__option--selected {
+  color: var(--accent-color);
 }
 
 .home__content__tab__icon {
