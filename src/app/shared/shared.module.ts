@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
 import { AngularMaterialModule } from './angularMaterial.module';
 import { BizyModule } from './bizy.module';
 import { ComponentsModule } from './components/components.module';
@@ -13,7 +12,6 @@ import { PipesModule } from './pipes/pipes.module';
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    TranslateModule,
     PipesModule,
     ComponentsModule,
     BizyModule

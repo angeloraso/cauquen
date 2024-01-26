@@ -1,6 +1,6 @@
 import { Inject, NgModule } from '@angular/core';
+import { TranslateService } from '@bizy/services';
 import { ConfirmFooterModule } from '@components/confirm-footer';
-import { CauquenTranslateService } from '@core/services';
 import { SharedModule } from '@shared/shared.module';
 import { ConfirmAlertComponent } from './confirm-alert.component';
 import { es } from './i18n';
@@ -11,7 +11,7 @@ import { es } from './i18n';
   exports: [ConfirmAlertComponent]
 })
 export class ConfirmAlertModule {
-  constructor(@Inject(CauquenTranslateService) private translate: CauquenTranslateService) {
+  constructor(@Inject(TranslateService) private translate: TranslateService) {
     this.translate.loadTranslations(es);
   }
 }

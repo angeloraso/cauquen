@@ -1,8 +1,8 @@
 import { Inject, NgModule } from '@angular/core';
+import { TranslateService } from '@bizy/services';
 import { BarChartModule } from '@components/bar-chart';
 import { ConfirmFooterModule } from '@components/confirm-footer';
 import { LineChartModule } from '@components/line-chart';
-import { CauquenTranslateService } from '@core/services';
 import { SharedModule } from '@shared/shared.module';
 import { CountryRecordFormComponent } from './components';
 import { DashboardRoutingModule } from './dashboard.routing';
@@ -22,7 +22,7 @@ const COMPONENTS: Array<any> = [CountryRecordFormComponent];
   exports: DashboardRoutingModule.COMPONENTS
 })
 export class DashboardModule {
-  constructor(@Inject(CauquenTranslateService) private translate: CauquenTranslateService) {
+  constructor(@Inject(TranslateService) private translate: TranslateService) {
     this.translate.loadTranslations(es);
   }
 }

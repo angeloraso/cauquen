@@ -2,6 +2,12 @@
     
   <div class="home__content">
 
+      <bizy-toolbar>
+
+          <h1 slot=start>{{toolbarTitle | translate}}</h1>
+
+      </bizy-toolbar>
+
       <span class="home__content__router-outlet">
           <router-outlet></router-outlet>
       </span>
@@ -10,13 +16,13 @@
 
           <bizy-tab 
             *ngFor="let option of options"
-            [id]="option.id"
-            [selected]="option.active"
+            [id]="option.path"
+            [selected]="option.selected"
             (onSelect)="onSelect(option)">
         
             <mat-icon class="home__content__tab__icon" tab-icon>{{option.icon}}</mat-icon>
         
-            <span tab-label>{{option.title | translate}}</span>
+            <span tab-label>{{option.label | translate}}</span>
         
           </bizy-tab>
         

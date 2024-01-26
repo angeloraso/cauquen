@@ -1,7 +1,7 @@
 import { Inject, NgModule } from '@angular/core';
+import { TranslateService } from '@bizy/services';
 import { BarChartModule } from '@components/bar-chart';
 import { ConfirmAlertModule } from '@components/confirm-alert';
-import { CauquenTranslateService } from '@core/services';
 import { SharedModule } from '@shared/shared.module';
 import { FixedRateRoutingModule } from './fixed-rate.routing';
 import { es } from './i18n';
@@ -12,7 +12,7 @@ import { es } from './i18n';
   exports: FixedRateRoutingModule.COMPONENTS
 })
 export class FixedRateModule {
-  constructor(@Inject(CauquenTranslateService) private translate: CauquenTranslateService) {
+  constructor(@Inject(TranslateService) private translate: TranslateService) {
     this.translate.loadTranslations(es);
   }
 }

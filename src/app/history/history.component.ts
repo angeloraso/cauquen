@@ -3,10 +3,12 @@ import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { RouterService } from '@bizy/services';
 import { ConfirmAlertComponent } from '@components/confirm-alert';
 import { IHistoryRecord } from '@core/model';
-import { HistoryService } from '@history/history.service';
+import { HistoryService } from '@core/services';
 import { Subscription } from 'rxjs';
+import { PATH } from './history.routing';
 
 @Component({
   selector: 'cauquen-history',
@@ -22,6 +24,7 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     @Inject(MatDialog) private dialog: MatDialog,
+    @Inject(RouterService) private router: RouterService,
     @Inject(HistoryService) private history: HistoryService
   ) {}
 
@@ -40,12 +43,12 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
   }
 
   addRecord() {
-    // this.router.goTo({ path: PATH.ADD });
+    this.router.goTo({ path: PATH.ADD });
   }
 
   editRecord(record: IHistoryRecord) {
     console.log(record);
-    // this.router.goTo({ path: String(record.id) });
+    this.router.goTo({ path: String(record.id) });
   }
 
   openAlertDialog(record: IHistoryRecord) {

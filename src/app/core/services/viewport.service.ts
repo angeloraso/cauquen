@@ -5,7 +5,9 @@ interface IViewportSize {
   height: number;
   width: number;
 }
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ViewportService {
   private _viewportSizeChanged: BehaviorSubject<IViewportSize>;
 

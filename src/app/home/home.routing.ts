@@ -1,10 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfigComponent } from '@app/config/config.component';
-import { DashboardComponent } from '@dashboard/dashboard.component';
-import { FixedRateComponent } from '@fixed-rate/fixed-rate.component';
-import { HistoryComponent } from '@history/history.component';
-import { InflationComponent } from '@inflation/inflation.component';
 import { HomeComponent } from './home.component';
 
 export enum PATH {
@@ -29,23 +24,23 @@ const routes: Routes = [
       },
       {
         path: PATH.DASHBOARD,
-        component: DashboardComponent
+        loadChildren: () => import('@dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
         path: PATH.HISTORY,
-        component: HistoryComponent
+        loadChildren: () => import('@history/history.module').then(m => m.HistoryModule)
       },
       {
         path: PATH.INFLATION,
-        component: InflationComponent
+        loadChildren: () => import('@inflation/inflation.module').then(m => m.InflationModule)
       },
       {
         path: PATH.FIXED_RATE,
-        component: FixedRateComponent
+        loadChildren: () => import('@fixed-rate/fixed-rate.module').then(m => m.FixedRateModule)
       },
       {
         path: PATH.CONFIG,
-        component: ConfigComponent
+        loadChildren: () => import('@config/config.module').then(m => m.ConfigModule)
       },
       {
         path: PATH.ANY,

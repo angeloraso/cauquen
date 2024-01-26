@@ -1,7 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { COUNTRY_CODE, CountryRecord, ICountryRecord } from '@core/model';
 import { DatabaseService } from './database.service';
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ArgentinaService {
   constructor(@Inject(DatabaseService) private database: DatabaseService) {}
 

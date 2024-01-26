@@ -32,7 +32,9 @@ enum OPERATOR {
   CONTAINS = 'array-contains'
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DatabaseService implements OnDestroy {
   DB: Firestore | null = null;
   #subscriptions = new Set<Unsubscribe>();

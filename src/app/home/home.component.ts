@@ -1,80 +1,80 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { PATH as APP_PATH } from '@app/app.routing';
 import { RouterService } from '@bizy/services';
-import { MENU_OPTIONS, MENU_OPTION_ID } from '@core/constants';
 import { PATH as HOME_PATH } from '@home/home.routing';
-import { IMenuOption } from '@menu/model';
-import { PATH as SIDE_MENU_PATH } from '@menu/side-menu.routing';
-import { SideMenuService } from '@menu/side-menu.service';
-import { Subscription } from 'rxjs';
-
+interface IOption {
+  path: string;
+  label: string;
+  icon: string;
+  selected: boolean;
+}
 @Component({
   selector: 'home',
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
-  private subscription = new Subscription();
-  showBottomBar = true;
-  sideMenuIsOpen: boolean = false;
-  options: Array<IMenuOption> = [];
-  selectedIndex: number = 0;
+export class HomeComponent implements OnInit {
+  toolbarTitle: string = '';
+  options: Array<IOption> = [
+    {
+      path: `/${APP_PATH.HOME}/${HOME_PATH.HISTORY}`,
+      label: 'CORE.MENU.HISTORY',
+      icon: 'history',
+      selected: false
+    },
+    {
+      path: `/${APP_PATH.HOME}/${HOME_PATH.DASHBOARD}`,
+      label: 'CORE.MENU.DASHBOARD',
+      icon: 'dashboard',
+      selected: false
+    },
+    {
+      path: `/${APP_PATH.HOME}/${HOME_PATH.INFLATION}`,
+      label: 'CORE.MENU.INFLATION',
+      icon: 'trending_up',
+      selected: false
+    },
+    {
+      path: `/${APP_PATH.HOME}/${HOME_PATH.FIXED_RATE}`,
+      label: 'CORE.MENU.FIXED_RATE',
+      icon: 'account_balance',
+      selected: false
+    },
+    {
+      path: `/${APP_PATH.HOME}/${HOME_PATH.CONFIG}`,
+      label: 'CORE.MENU.CONFIG',
+      icon: 'settings',
+      selected: false
+    }
+  ];
 
-  paths = new Map<MENU_OPTION_ID, string>([
-    [MENU_OPTION_ID.DASHBOARD, HOME_PATH.DASHBOARD],
-    [MENU_OPTION_ID.HISTORY, HOME_PATH.HISTORY],
-    [MENU_OPTION_ID.INFLATION, HOME_PATH.INFLATION],
-    [MENU_OPTION_ID.FIXED_RATE, HOME_PATH.FIXED_RATE],
-    [MENU_OPTION_ID.CONFIG, HOME_PATH.CONFIG]
-  ]);
-
-  constructor(
-    @Inject(RouterService) private router: RouterService,
-    @Inject(SideMenuService) private sideMenu: SideMenuService
-  ) {}
+  constructor(@Inject(RouterService) private router: RouterService) {}
 
   ngOnInit() {
-    this.options = MENU_OPTIONS;
-
-    this.selectedIndex = this.options.findIndex(
-      _option => this.router.getURL().indexOf(this.paths.get(_option.id)!) !== -1
-    );
-
-    this.subscription.add(
-      this.sideMenu.open$.subscribe(opened => {
-        this.sideMenuIsOpen = opened;
-      })
-    );
-
-    this.subscription.add(
-      this.sideMenu.option$.subscribe(option => {
-        this.selectedIndex = this.options.findIndex(_option => _option.id === option.id);
-        this.goTo(option);
-      })
-    );
+    this.options.forEach(_option => {
+      if (this.router.getURL().includes(_option.path)) {
+        _option.selected = true;
+        this.toolbarTitle = _option.label;
+      }
+    });
   }
 
-  onSelect(option: IMenuOption) {
-    if (this.sideMenuIsOpen) {
+  onSelect(option: IOption) {
+    if (!option) {
       return;
     }
 
     this.options.forEach(_option => {
-      _option.active = false;
+      _option.selected = false;
     });
 
-    option.active = true;
+    option.selected = true;
+    this.toolbarTitle = option.label;
 
-    this.goTo(option);
+    this.goTo(option.path);
   }
 
-  goTo(option: IMenuOption) {
-    this.router.goTo({
-      path: `/${APP_PATH.MENU}/${SIDE_MENU_PATH.HOME}/${this.paths.get(option.id)}`
-    });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  goTo(path: string) {
+    this.router.goTo({ path });
   }
 }

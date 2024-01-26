@@ -1,5 +1,5 @@
 import { Inject, NgModule } from '@angular/core';
-import { CauquenTranslateService } from '@core/services';
+import { TranslateService } from '@bizy/services';
 import { SharedModule } from '@shared/shared.module';
 import { BarChartComponent } from './bar-chart.component';
 import { es } from './i18n';
@@ -10,7 +10,7 @@ import { es } from './i18n';
   exports: [BarChartComponent]
 })
 export class BarChartModule {
-  constructor(@Inject(CauquenTranslateService) private translate: CauquenTranslateService) {
+  constructor(@Inject(TranslateService) private translate: TranslateService) {
     this.translate.loadTranslations(es);
   }
 }

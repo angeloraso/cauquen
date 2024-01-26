@@ -46,7 +46,7 @@ export class LoginComponent {
     this.authService
       .login({ email: this.email?.value, password: this.password?.value })
       .then(() => {
-        this.router.goTo({ path: `/${PATH.MENU}` });
+        this.router.goTo({ path: `/${PATH.HOME}` });
       })
       .catch(async error => {
         console.error(error);

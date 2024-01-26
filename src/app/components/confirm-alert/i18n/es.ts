@@ -1,5 +1,7 @@
+import { LANGUAGE } from '@bizy/services';
+
 export const locale = {
-  lang: 'es',
+  lang: LANGUAGE.SPANISH,
   translations: {
     CONFIRM_ALERT: {
       TITLE: 'Eliminar',

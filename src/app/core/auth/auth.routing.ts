@@ -1,16 +1,20 @@
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 
+export enum PATH {
+  EMPTY = '',
+  LOGIN = 'login'
+}
+
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: PATH.LOGIN,
     pathMatch: 'full'
   },
   {
-    path: 'login',
+    path: PATH.LOGIN,
     component: LoginComponent
   }
 ];

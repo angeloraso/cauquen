@@ -4,7 +4,7 @@ import { authCanLoadGuard, autoLoginCanLoadGuard } from '@core/guards';
 
 export enum PATH {
   EMPTY = '',
-  MENU = '-',
+  HOME = 'home',
   AUTH = 'auth',
   ANY = '**'
 }
@@ -21,8 +21,8 @@ const routes: Routes = [
     canLoad: [autoLoginCanLoadGuard]
   },
   {
-    path: PATH.MENU,
-    loadChildren: () => import('@menu/side-menu.module').then(m => m.SideMenuModule),
+    path: PATH.HOME,
+    loadChildren: () => import('@home/home.module').then(m => m.HomeModule),
     canLoad: [authCanLoadGuard]
   },
   {

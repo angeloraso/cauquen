@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { RouterService } from '@bizy/services';
 import { IHistoryRecord } from '@core/model';
-import { HistoryService } from '@history/history.service';
+import { HistoryService } from '@core/services';
 
 @Component({
   selector: 'cauquen-add-history-record',

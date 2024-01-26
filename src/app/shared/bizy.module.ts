@@ -6,10 +6,12 @@ import {
   InputModule,
   TabsModule,
   ToggleModule,
+  ToolbarModule,
   VirtualScrollModule
 } from '@bizy/components';
 import { DirectivesModule } from '@bizy/directives';
 import { PopupModule } from '@bizy/services';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   exports: [
@@ -22,7 +24,9 @@ import { PopupModule } from '@bizy/services';
     InputModule,
     ErrorModule,
     ConfirmButtonsModule,
-    TabsModule
+    TabsModule,
+    TranslateModule,
+    ToolbarModule
   ]
 })
 export class BizyModule {}

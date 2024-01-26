@@ -9,7 +9,9 @@ enum VERSION_TYPE {
   VERSION_INSTALLATION_FAILED = 'VERSION_INSTALLATION_FAILED'
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ServiceWorkerService implements OnDestroy {
   private _subscription = new Subscription();
 

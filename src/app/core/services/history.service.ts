@@ -2,7 +2,9 @@ import { Inject, Injectable } from '@angular/core';
 import { HistoryRecord, IHistoryRecord } from '@core/model';
 import { DatabaseService } from '@core/services';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HistoryService {
   constructor(@Inject(DatabaseService) private database: DatabaseService) {}
 

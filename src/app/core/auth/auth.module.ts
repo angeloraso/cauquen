@@ -1,7 +1,7 @@
 import { Inject, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateService } from '@bizy/services';
 import { ShowHidePasswordModule } from '@components/show-hide-password';
-import { CauquenTranslateService } from '@core/services';
 import { SharedModule } from '@shared/shared.module';
 import { AuthRoutingModule } from './auth.routing';
 import { es } from './i18n';
@@ -11,7 +11,7 @@ import { es } from './i18n';
   declarations: [AuthRoutingModule.COMPONENTS]
 })
 export class AuthModule {
-  constructor(@Inject(CauquenTranslateService) private translate: CauquenTranslateService) {
+  constructor(@Inject(TranslateService) private translate: TranslateService) {
     this.translate.loadTranslations(es);
   }
 }

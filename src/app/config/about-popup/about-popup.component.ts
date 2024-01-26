@@ -1,6 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { LogService, UserAgentService } from '@bizy/services';
+import { AfterViewInit, ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { LogService, PopupService, UserAgentService } from '@bizy/services';
 import pkg from '../../../../package.json';
 
 @Component({
@@ -8,24 +7,23 @@ import pkg from '../../../../package.json';
   templateUrl: 'about-popup.html',
   styleUrls: ['about-popup.css']
 })
-export class AboutPopupComponent implements OnInit {
-  DESCRIPTION: string = '';
-  VERSION: string = '';
+export class AboutPopupComponent implements AfterViewInit {
+  readonly DESCRIPTION: string = pkg.description;
+  readonly VERSION: string = pkg.version;
   USER_AGENT: string = '';
-  loading: boolean = false;
+  loading: boolean = true;
 
   constructor(
-    @Inject(MatDialogRef) private dialog: MatDialogRef<AboutPopupComponent>,
-    @Inject(UserAgentService) private userAgent: UserAgentService,
-    @Inject(LogService) private log: LogService
+    @Inject(UserAgentService) public userAgent: UserAgentService,
+    @Inject(LogService) private log: LogService,
+    @Inject(ChangeDetectorRef) private ref: ChangeDetectorRef,
+    @Inject(PopupService) private popup: PopupService<AboutPopupComponent, void>
   ) {}
 
-  async ngOnInit() {
+  async ngAfterViewInit() {
     try {
       this.loading = true;
       this.USER_AGENT = await this.userAgent.get();
-      this.VERSION = pkg.version;
-      this.DESCRIPTION = pkg.description;
     } catch (error) {
       this.log.error({
         fileName: 'about-popup.component',
@@ -34,10 +32,11 @@ export class AboutPopupComponent implements OnInit {
       });
     } finally {
       this.loading = false;
+      this.ref.detectChanges();
     }
   }
 
   close() {
-    this.dialog.close();
+    this.popup.close();
   }
 }

@@ -1,15 +1,19 @@
-import { NgModule } from '@angular/core';
+import { Inject, NgModule } from '@angular/core';
+import { TranslateService } from '@bizy/services';
 import { ConfirmAlertModule } from '@components/confirm-alert';
 import { SharedModule } from '@shared/shared.module';
 import { HistoryRecordFormComponent } from './components';
 import { HistoryRoutingModule } from './history.routing';
-import { HistoryService } from './history.service';
+import { es } from './i18n';
 
 const COMPONENTS: Array<any> = [HistoryRecordFormComponent];
 @NgModule({
   imports: [SharedModule, HistoryRoutingModule, ConfirmAlertModule],
   declarations: HistoryRoutingModule.COMPONENTS.concat(COMPONENTS),
-  exports: HistoryRoutingModule.COMPONENTS,
-  providers: [HistoryService]
+  exports: HistoryRoutingModule.COMPONENTS
 })
-export class HistoryModule {}
+export class HistoryModule {
+  constructor(@Inject(TranslateService) private translate: TranslateService) {
+    this.translate.loadTranslations(es);
+  }
+}

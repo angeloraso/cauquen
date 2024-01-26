@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { PopupService } from '@bizy/services';
 import { ICountryRecord } from '@core/model';
 import { AboutPopupComponent } from './about-popup/about-popup.component';
 
@@ -18,7 +18,7 @@ export class ConfigComponent implements OnInit {
   fixedRateLabels: Array<string> = [];
   fixedRateSeries: Array<Array<number>> = [];
 
-  constructor(@Inject(MatDialog) private dialog: MatDialog) {}
+  constructor(@Inject(PopupService) private popup: PopupService<AboutPopupComponent, void>) {}
 
   async ngOnInit() {
     try {
@@ -28,10 +28,7 @@ export class ConfigComponent implements OnInit {
     }
   }
 
-  openDialog(record?: ICountryRecord): void {
-    this.dialog.open(AboutPopupComponent, {
-      data: record,
-      panelClass: 'cauquen-material-dialog'
-    });
+  openDialog(): void {
+    this.popup.open({ component: AboutPopupComponent });
   }
 }

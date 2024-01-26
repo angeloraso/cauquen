@@ -5,7 +5,9 @@ import { StatusBar } from '@capacitor/status-bar';
 import { ENV } from '@env/environment';
 import { Observable, Subject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class MobileService {
   private _backButton = new Subject<void>();
 

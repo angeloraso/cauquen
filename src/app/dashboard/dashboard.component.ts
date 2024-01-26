@@ -1,8 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ICountryRecord } from '@core/model';
-import { ArgentinaService, UtilsService } from '@core/services';
-import { HistoryService } from '@history/history.service';
+import { ArgentinaService, HistoryService, UtilsService } from '@core/services';
 import { Subscription } from 'rxjs';
 import { CountryRecordFormComponent } from './components';
 

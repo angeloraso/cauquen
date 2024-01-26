@@ -1,5 +1,7 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { PATH as APP_PATH } from '@app/app.routing';
+import { PATH as AUTH_PATH } from '@auth/auth.routing';
 import { AuthService } from '@core/auth/auth.service';
 import { map, take } from 'rxjs/operators';
 
@@ -10,7 +12,7 @@ export const authCanLoadGuard = () => {
     take(1),
     map(isLoggedIn => {
       if (!isLoggedIn) {
-        router.navigateByUrl('/auth/login', { replaceUrl: true });
+        router.navigateByUrl(`/${APP_PATH.AUTH}/${AUTH_PATH.LOGIN}`, { replaceUrl: true });
         return false;
       }
 
@@ -26,7 +28,7 @@ export const authCanActivateGuard = () => {
     take(1),
     map(isLoggedIn => {
       if (!isLoggedIn) {
-        router.navigateByUrl('/auth/login', { replaceUrl: true });
+        router.navigateByUrl(`/${APP_PATH.AUTH}/${AUTH_PATH.LOGIN}`, { replaceUrl: true });
         console.error('Not permissions');
         return false;
       }

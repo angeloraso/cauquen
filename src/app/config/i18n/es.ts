@@ -1,10 +1,9 @@
-import { LANGUAGE } from '@core/constants';
+import { LANGUAGE } from '@bizy/services';
 
 export const locale = {
   lang: LANGUAGE.SPANISH,
   translations: {
     CONFIG: {
-      TITLE: 'Configuración',
       ABOUT: 'Información'
     }
   }
