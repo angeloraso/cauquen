@@ -1,0 +1,21 @@
+<bizy-toolbar>
+
+    <h1 slot=start>{{'INFO.EDIT_INFO_RECORD.TITLE' | translate}}</h1>
+
+</bizy-toolbar>
+
+<div class="cauquen-wrapper edit-info-record" [bizyLoading]="loading">
+
+    <cauquen-country-record-form
+        *ngIf="record"
+        [id]="record.id"
+        [from]="record.from"
+        [to]="record.to"
+        [country]="record.country"
+        [ipc]="record.ipc"
+        [fixedRate]="record.fixedRate"
+        (cancel)="goBack()"
+        (confirm)="confirm($event)">
+    </cauquen-country-record-form>
+
+</div>

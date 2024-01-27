@@ -10,6 +10,7 @@ import { IHistoryRecord } from '@core/model';
 export class HistoryRecordFormComponent {
   @Output() cancel = new EventEmitter<void>();
   @Output() confirm = new EventEmitter<IHistoryRecord>();
+
   @Input() set id(id: string) {
     if (!id) {
       return;
@@ -83,11 +84,11 @@ export class HistoryRecordFormComponent {
       return;
     }
 
-    this;
+    const date = new Date(this._date.value);
 
     this.confirm.emit({
       id: this._id.value,
-      date: this._date.value.getTime(),
+      date: date.getTime(),
       amount: this._income.value ? this._amount.value : this._amount.value * -1,
       balance: this._balance.value
     });

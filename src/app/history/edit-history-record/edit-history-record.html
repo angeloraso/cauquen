@@ -4,9 +4,14 @@
 
 </bizy-toolbar>
 
-<div class="cauquen-wrapper edit-history-record">
+<div class="cauquen-wrapper edit-history-record" [bizyLoading]="loading">
 
     <cauquen-history-record-form
+        *ngIf="record"
+        [id]="record.id"
+        [date]="record.date"
+        [amount]="record.amount"
+        [balance]="record.balance"
         (cancel)="goBack()"
         (confirm)="confirm($event)">
     </cauquen-history-record-form>

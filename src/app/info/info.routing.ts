@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddInfoRecordComponent } from './add-info-record/add-info-record.component';
+import { EditInfoRecordComponent } from './edit-info-record/edit-info-record.component';
 import { InfoComponent } from './info.component';
 
 export enum PATH {
-  EMPTY = ''
+  EMPTY = '',
+  ADD = 'add'
 }
 
 const routes: Routes = [
@@ -11,6 +14,14 @@ const routes: Routes = [
     path: PATH.EMPTY,
     component: InfoComponent,
     pathMatch: 'full'
+  },
+  {
+    path: PATH.ADD,
+    component: AddInfoRecordComponent
+  },
+  {
+    path: ':countryRecordId',
+    component: EditInfoRecordComponent
   }
 ];
 
@@ -19,5 +30,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class InfoRoutingModule {
-  static COMPONENTS = [InfoComponent];
+  static COMPONENTS = [InfoComponent, AddInfoRecordComponent, EditInfoRecordComponent];
 }

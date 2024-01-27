@@ -1,0 +1,14 @@
+<bizy-toolbar>
+
+    <h1 slot=start>{{'INFO.ADD_INFO_RECORD.TITLE' | translate}}</h1>
+
+</bizy-toolbar>
+
+<div class="cauquen-wrapper add-info-record">
+
+    <cauquen-country-record-form
+        (cancel)="goBack()"
+        (confirm)="confirm($event)">
+    </cauquen-country-record-form>
+
+</div>

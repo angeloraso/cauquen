@@ -31,6 +31,21 @@ export class ArgentinaService {
     >;
   }
 
+  getRecord(recordId: string) {
+    return new Promise<ICountryRecord>(async (resolve, reject) => {
+      try {
+        const record = await this.database.getCountryRecord(recordId);
+        if (record) {
+          resolve(record);
+        } else {
+          throw new Error('Not exists');
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   postRecord(record: ICountryRecord) {
     return this.database.postCountryRecord(new CountryRecord(record));
   }

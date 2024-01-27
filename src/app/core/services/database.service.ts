@@ -8,6 +8,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getFirestore,
   onSnapshot,
   orderBy,
@@ -77,6 +78,32 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
+  getHistoryRecord(recordId: string) {
+    return new Promise<IHistoryRecord | null>((resolve, reject) => {
+      if (typeof this.#history.value !== 'undefined') {
+        resolve(this.#history.value.find(_record => _record.id === recordId) || null);
+        return;
+      }
+
+      const userId = this.auth.getId();
+      if (!userId) {
+        throw new Error('No user id');
+      }
+
+      getDoc(doc(this.DB!, `${DB.HISTORY}-${userId}`, recordId))
+        .then(record => {
+          if (record.exists()) {
+            resolve(record.data() as IHistoryRecord);
+          } else {
+            resolve(null);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+
   postHistoryRecord(record: IHistoryRecord): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
@@ -87,7 +114,15 @@ export class DatabaseService implements OnDestroy {
 
         await setDoc(
           doc(this.DB!, `${DB.HISTORY}-${userId}`, record.id),
-          Object.assign({}, record)
+          Object.assign(
+            {},
+            {
+              id: record.id,
+              date: Number(record.date),
+              amount: Number(record.amount),
+              balance: Number(record.balance)
+            }
+          )
         );
         resolve();
       } catch (error) {
@@ -106,7 +141,15 @@ export class DatabaseService implements OnDestroy {
 
         await setDoc(
           doc(this.DB!, `${DB.HISTORY}-${userId}`, record.id),
-          Object.assign({}, record)
+          Object.assign(
+            {},
+            {
+              id: record.id,
+              date: Number(record.date),
+              amount: Number(record.amount),
+              balance: Number(record.balance)
+            }
+          )
         );
         resolve();
       } catch (error) {
@@ -161,10 +204,49 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
+  getCountryRecord(recordId: string) {
+    return new Promise<ICountryRecord | null>((resolve, reject) => {
+      if (typeof this.#countryData.value !== 'undefined') {
+        resolve(this.#countryData.value.find(_record => _record.id === recordId) || null);
+        return;
+      }
+
+      const userId = this.auth.getId();
+      if (!userId) {
+        throw new Error('No user id');
+      }
+
+      getDoc(doc(this.DB!, `${DB.COUNTRY_RECORDS}-${userId}`, recordId))
+        .then(record => {
+          if (record.exists()) {
+            resolve(record.data() as ICountryRecord);
+          } else {
+            resolve(null);
+          }
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }
+
   postCountryRecord(record: ICountryRecord): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await setDoc(doc(this.DB!, DB.COUNTRY_RECORDS, record.id), Object.assign({}, record));
+        await setDoc(
+          doc(this.DB!, DB.COUNTRY_RECORDS, record.id),
+          Object.assign(
+            {},
+            {
+              id: record.id,
+              from: Number(record.from),
+              to: Number(record.to),
+              country: record.country,
+              ipc: Number(record.ipc),
+              fixedRate: Number(record.fixedRate)
+            }
+          )
+        );
         resolve();
       } catch (error) {
         reject(error);
@@ -175,7 +257,20 @@ export class DatabaseService implements OnDestroy {
   putCountryRecord(record: ICountryRecord): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await setDoc(doc(this.DB!, DB.COUNTRY_RECORDS, record.id), Object.assign({}, record));
+        await setDoc(
+          doc(this.DB!, DB.COUNTRY_RECORDS, record.id),
+          Object.assign(
+            {},
+            {
+              id: record.id,
+              from: Number(record.from),
+              to: Number(record.to),
+              country: record.country,
+              ipc: Number(record.ipc),
+              fixedRate: Number(record.fixedRate)
+            }
+          )
+        );
         resolve();
       } catch (error) {
         reject(error);

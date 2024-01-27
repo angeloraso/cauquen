@@ -1,0 +1,65 @@
+<form class="cauquen-form" [formGroup]="form">
+
+    <mat-form-field>
+        <mat-label>{{'CORE.FORM.FIELD.COUNTRY' | translate}}</mat-label>
+        <mat-select formControlName="country">
+            <mat-option *ngFor="let c of COUNTRIES" [value]="c.id">{{c.name | translate}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <bizy-input 
+        label="{{'CORE.FORM.FIELD.DATE' | translate}}"
+        type="date"
+        [control]="_from">
+
+        <span input-end><i class="fa-solid fa-calendar"></i></span>
+
+        <bizy-error input-error *ngIf="_from.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        
+    </bizy-input>
+
+    <bizy-input 
+        label="{{'CORE.FORM.FIELD.DATE' | translate}}"
+        type="date"
+        [control]="_to">
+
+        <span input-end><i class="fa-solid fa-calendar"></i></span>
+
+        <bizy-error input-error *ngIf="_to.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        
+    </bizy-input>
+
+    <bizy-input 
+        label="{{'CORE.FORM.FIELD.INFLATION' | translate}}"
+        type="number"
+        placeholder="0.00"
+        [min]="0"
+        [clear]="false"
+        [control]="_ipc">
+        <span input-end>%</span>
+
+        <bizy-error input-error *ngIf="_ipc.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        <bizy-error input-error *ngIf="_ipc.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
+        
+    </bizy-input>
+
+    <bizy-input 
+        label="{{'CORE.FORM.FIELD.FIXED_RATE' | translate}}"
+        type="number"
+        placeholder="0.00"
+        [min]="0"
+        [clear]="false"
+        [control]="_fixedRate">
+        <span input-end>%</span>
+
+        <bizy-error input-error *ngIf="_fixedRate.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        <bizy-error input-error *ngIf="_fixedRate.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
+        
+    </bizy-input>
+
+    <bizy-confirm-buttons
+        (cancel)="_cancel()"
+        (confirm)="_confirm()">
+    </bizy-confirm-buttons>
+
+</form>

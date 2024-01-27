@@ -19,6 +19,21 @@ export class HistoryService {
     });
   }
 
+  getRecord(recordId: string) {
+    return new Promise<IHistoryRecord>(async (resolve, reject) => {
+      try {
+        const record = await this.database.getHistoryRecord(recordId);
+        if (record) {
+          resolve(record);
+        } else {
+          throw new Error('Not exists');
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   postRecord(record: Omit<IHistoryRecord, 'id'>): Promise<void> {
     return this.database.postHistoryRecord(new HistoryRecord(record));
   }

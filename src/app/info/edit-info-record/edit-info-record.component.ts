@@ -1,20 +1,20 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterService } from '@bizy/services';
-import { IHistoryRecord } from '@core/model';
-import { HistoryService } from '@core/services';
+import { ICountryRecord } from '@core/model';
+import { ArgentinaService } from '@core/services';
 
 @Component({
-  selector: 'cauquen-edit-history-record',
-  templateUrl: './edit-history-record.html',
-  styleUrls: ['./edit-history-record.css']
+  selector: 'cauquen-edit-info-record',
+  templateUrl: './edit-info-record.html',
+  styleUrls: ['./edit-info-record.css']
 })
-export class EditHistoryRecordComponent implements OnInit {
+export class EditInfoRecordComponent implements OnInit {
   loading = false;
-  record: IHistoryRecord | null = null;
+  record: ICountryRecord | null = null;
 
   constructor(
-    @Inject(HistoryService) private history: HistoryService,
+    @Inject(ArgentinaService) private argentina: ArgentinaService,
     @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
     @Inject(RouterService) private router: RouterService
   ) {}
@@ -22,14 +22,14 @@ export class EditHistoryRecordComponent implements OnInit {
   async ngOnInit() {
     try {
       this.loading = true;
-      const recordId = this.router.getId(this.activatedRoute, 'historyRecordId');
+      const recordId = this.router.getId(this.activatedRoute, 'countryRecordId');
 
       if (!recordId) {
         this.goBack();
         return;
       }
 
-      const record = await this.history.getRecord(recordId);
+      const record = await this.argentina.getRecord(recordId);
 
       this.record = record;
     } catch (error) {
@@ -44,10 +44,10 @@ export class EditHistoryRecordComponent implements OnInit {
     this.router.goBack();
   }
 
-  async confirm(record: IHistoryRecord) {
+  async confirm(record: ICountryRecord) {
     try {
       this.loading = true;
-      await this.history.putRecord(record);
+      await this.argentina.putRecord(record);
       this.goBack();
     } catch (error) {
       console.log(error);
