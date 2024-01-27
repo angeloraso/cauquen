@@ -6,8 +6,7 @@ export enum PATH {
   EMPTY = '',
   DASHBOARD = 'dashboard',
   HISTORY = 'history',
-  INFLATION = 'inflation',
-  FIXED_RATE = 'fixed-rate',
+  INFO = 'info',
   CONFIG = 'config',
   ANY = '**'
 }
@@ -31,12 +30,8 @@ const routes: Routes = [
         loadChildren: () => import('@history/history.module').then(m => m.HistoryModule)
       },
       {
-        path: PATH.INFLATION,
-        loadChildren: () => import('@inflation/inflation.module').then(m => m.InflationModule)
-      },
-      {
-        path: PATH.FIXED_RATE,
-        loadChildren: () => import('@fixed-rate/fixed-rate.module').then(m => m.FixedRateModule)
+        path: PATH.INFO,
+        loadChildren: () => import('@info/info.module').then(m => m.InfoModule)
       },
       {
         path: PATH.CONFIG,

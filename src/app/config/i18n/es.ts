@@ -4,6 +4,7 @@ export const locale = {
   lang: LANGUAGE.SPANISH,
   translations: {
     CONFIG: {
+      TITLE: 'Confguración',
       ABOUT: 'Información'
     }
   }

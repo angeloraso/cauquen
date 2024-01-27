@@ -1,9 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ICountryRecord } from '@core/model';
 import { ArgentinaService, HistoryService, UtilsService } from '@core/services';
 import { Subscription } from 'rxjs';
-import { CountryRecordFormComponent } from './components';
 
 @Component({
   selector: 'cauquen-dashboard',
@@ -19,13 +16,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   monthProfitLabels: Array<string> = [];
   monthProfitSeries: Array<Array<number>> = [];
+
+  inflationLabels: Array<string> = [];
+  inflationSeries: Array<Array<number>> = [];
+
+  fixedRateLabels: Array<string> = [];
+  fixedRateSeries: Array<Array<number>> = [];
+
   loading: boolean = false;
 
   constructor(
     @Inject(HistoryService) private history: HistoryService,
     @Inject(ArgentinaService) private argentina: ArgentinaService,
-    @Inject(UtilsService) private utils: UtilsService,
-    @Inject(MatDialog) private dialog: MatDialog
+    @Inject(UtilsService) private utils: UtilsService
   ) {}
 
   async ngOnInit() {
@@ -36,6 +39,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
       const monthProfitLabels: Array<string> = [];
       const monthProfitSeries: Array<number> = [];
+
+      const inflationLabels: Array<string> = [];
+      const inflationSeries: Array<number> = [];
+
+      const fixedRateLabels: Array<string> = [];
+      const fixedRateSeries: Array<number> = [];
 
       const [history, countryRecords] = await Promise.all([
         this.history.getHistory(),
@@ -79,10 +88,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         monthProfitLabels.push(label);
         monthProfitSeries.push(profit);
+
+        inflationLabels.push(label);
+        inflationSeries.push(_countryRecord.ipc);
+
+        fixedRateLabels.push(label);
+        fixedRateSeries.push(_countryRecord.fixedRate);
       });
 
       this.generalProfitLabels = generalProfitLabels;
       this.generalProfitSeries = generalProfitSeries;
+
+      this.inflationLabels = inflationLabels;
+      this.inflationSeries = [inflationSeries];
+
+      this.fixedRateLabels = fixedRateLabels;
+      this.fixedRateSeries = [fixedRateSeries];
 
       const total = history.reduce(
         (accumulator, currentValue) => accumulator + currentValue.amount,
@@ -111,39 +132,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
       console.debug(error);
     } finally {
       this.loading = false;
-    }
-  }
-
-  sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  removeDuplicates(arr: any) {
-    return arr.filter((item: any, index: any, self: any) => {
-      return index === self.findIndex((obj: any) => obj.to === item.to && obj.from === item.from);
-    });
-  }
-
-  openDialog(record?: ICountryRecord): void {
-    const dialogRef = this.dialog.open(CountryRecordFormComponent, {
-      data: record,
-      panelClass: 'cauquen-material-dialog'
-    });
-
-    this._subscription.add(
-      dialogRef.afterClosed().subscribe(_record => {
-        if (_record) {
-          this._addRecord(_record);
-        }
-      })
-    );
-  }
-
-  private async _addRecord(record: ICountryRecord) {
-    try {
-      await this.argentina.postRecord(record);
-    } catch (error) {
-      console.log(error);
     }
   }
 

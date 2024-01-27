@@ -1,0 +1,12 @@
+<div class="confirm-popup">
+
+  <h1>{{_title || 'CONFIRM_POPUP.TITLE' | translate}}</h1>
+
+  <h5>{{_msg || 'CONFIRM_POPUP.MSG' | translate}}</h5>
+
+  <bizy-confirm-buttons
+      (cancel)="cancel()"
+      (confirm)="confirm()">
+  </bizy-confirm-buttons>
+
+</div>

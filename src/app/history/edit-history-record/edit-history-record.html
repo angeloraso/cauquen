@@ -1,6 +1,10 @@
-<div class="edit-history-record">
+<bizy-toolbar>
 
-    <cauquen-title title="{{'HISTORY.EDIT_HISTORY_RECORD.TITLE'}}"></cauquen-title>
+    <h1 slot=start>{{'HISTORY.EDIT_HISTORY_RECORD.TITLE' | translate}}</h1>
+
+</bizy-toolbar>
+
+<div class="cauquen-wrapper edit-history-record">
 
     <cauquen-history-record-form
         (cancel)="goBack()"

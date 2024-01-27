@@ -29,15 +29,9 @@ export class HomeComponent implements OnInit {
       selected: false
     },
     {
-      path: `/${APP_PATH.HOME}/${HOME_PATH.INFLATION}`,
-      label: 'CORE.MENU.INFLATION',
-      icon: 'trending_up',
-      selected: false
-    },
-    {
-      path: `/${APP_PATH.HOME}/${HOME_PATH.FIXED_RATE}`,
-      label: 'CORE.MENU.FIXED_RATE',
-      icon: 'account_balance',
+      path: `/${APP_PATH.HOME}/${HOME_PATH.INFO}`,
+      label: 'CORE.MENU.INFO',
+      icon: 'newspaper',
       selected: false
     },
     {
@@ -54,7 +48,6 @@ export class HomeComponent implements OnInit {
     this.options.forEach(_option => {
       if (this.router.getURL().includes(_option.path)) {
         _option.selected = true;
-        this.toolbarTitle = _option.label;
       }
     });
   }
@@ -69,8 +62,6 @@ export class HomeComponent implements OnInit {
     });
 
     option.selected = true;
-    this.toolbarTitle = option.label;
-
     this.goTo(option.path);
   }
 

@@ -1,7 +1,5 @@
 <form class="cauquen-form" [formGroup]="form">
 
-    <cauquen-title title="Registro"></cauquen-title>
-
     <bizy-input 
         label="{{'CORE.FORM.FIELD.DATE' | translate}}"
         type="date"
@@ -14,7 +12,7 @@
     </bizy-input>
 
     <span class="cauquen-form__toggle-field">
-        <h4 class="cauquen-form__toggle-field__label">{{'CORE.FORM.FIELD.INCOME' | translate}}":</h4>
+        <h4 class="cauquen-form__toggle-field__label">{{'CORE.FORM.FIELD.INCOME' | translate}}:</h4>
         <bizy-toggle [checked]="_income.value"></bizy-toggle>
     </span>
 

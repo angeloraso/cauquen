@@ -3,3 +3,8 @@
     border-radius: 0.5em;
     padding: 0 1em;
 }
+
+.line-chart__title {
+    color: var(--info-color);
+    padding: 0.3rem 0;
+}

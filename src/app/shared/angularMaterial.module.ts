@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -22,7 +21,6 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatTabsModule,
     MatTableModule,
     MatButtonModule,
-    MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
     MatSlideToggleModule,

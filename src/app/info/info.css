@@ -1,0 +1,9 @@
+.info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.info__table__actions__delete {
+    color: var(--danger-color);
+}

@@ -55,34 +55,6 @@
     --mdc-secondary-navigation-tab-container-height: var(--bottom-bar-height) !important;
 }
 
-.cauquen-material-dialog {
-    font-size: 1em;
-    display: flex;
-    flex-direction: column;
-    row-gap: 1em;
-    min-width: 36em;
-    width: fit-content;
-    max-width: 95vw !important;
-    height: fit-content;
-}
-
-.cauquen-material-dialog::-webkit-scrollbar {
-    width: 0 !important;
-    /* Remove scrollbar space */
-    background: transparent !important;
-    /* Optional: just make scrollbar invisible */
-}
-
-.cauquen-material-dialog .mat-dialog-container {
-    padding: 1em 1.5em !important;
-}
-
-@media only screen and (max-width: 576px) {
-    .cauquen-material-dialog {
-        min-width: 26em;
-    }
-}
-
 .mat-mdc-raised-button:not(:disabled) {
     background-color: var(--primary-color) !important;
 }

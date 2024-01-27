@@ -8,8 +8,7 @@ export const locale = {
       MENU: {
         DASHBOARD: 'Panel',
         HISTORY: 'Historial',
-        INFLATION: 'Inflación',
-        FIXED_RATE: 'Tasa',
+        INFO: 'Info',
         CONFIG: 'Config'
       },
       BUTTON: {

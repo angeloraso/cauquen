@@ -1,10 +1,8 @@
-import { NoopScrollStrategy } from '@angular/cdk/overlay';
 import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { RouterService } from '@bizy/services';
-import { ConfirmAlertComponent } from '@components/confirm-alert';
+import { PopupService, RouterService } from '@bizy/services';
+import { ConfirmPopupComponent } from '@components/confirm-popup';
 import { IHistoryRecord } from '@core/model';
 import { HistoryService } from '@core/services';
 import { Subscription } from 'rxjs';
@@ -23,7 +21,7 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
   private _subscription = new Subscription();
 
   constructor(
-    @Inject(MatDialog) private dialog: MatDialog,
+    @Inject(PopupService) private popup: PopupService<ConfirmPopupComponent, boolean>,
     @Inject(RouterService) private router: RouterService,
     @Inject(HistoryService) private history: HistoryService
   ) {}
@@ -51,15 +49,14 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
     this.router.goTo({ path: String(record.id) });
   }
 
-  openAlertDialog(record: IHistoryRecord) {
-    const dialogRef = this.dialog.open(ConfirmAlertComponent, {
-      data: record,
-      scrollStrategy: new NoopScrollStrategy(),
-      panelClass: 'cauquen-material-dialog'
+  openConfirmPopup(record: IHistoryRecord) {
+    this.popup.open({
+      component: ConfirmPopupComponent,
+      data: record
     });
 
     this._subscription.add(
-      dialogRef.afterClosed().subscribe((res: boolean) => {
+      this.popup.closed$.subscribe((res: boolean) => {
         if (res) {
           this._deleteRecord(record);
         }

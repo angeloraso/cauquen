@@ -28,7 +28,7 @@ export class ConfigComponent implements OnInit {
     }
   }
 
-  openDialog(): void {
+  openPopup(): void {
     this.popup.open({ component: AboutPopupComponent });
   }
 }

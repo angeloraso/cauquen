@@ -1,3 +1,9 @@
+<bizy-toolbar>
+
+    <h1 slot=start>{{'DASHBOARD.TITLE' | translate}}</h1>
+
+</bizy-toolbar>
+
 <div class="cauquen-wrapper dashboard">
 
     <span class="cauquen-card dashboard__summary-card">
@@ -31,8 +37,22 @@
         [series]="monthProfitSeries">
     </cauquen-bar-chart>
 
-    <button mat-fab color="primary" (click)="openDialog()">
-        <mat-icon>add</mat-icon>
-    </button>
+    <cauquen-bar-chart 
+        id="inflation-dashboard"
+        title="{{'DASHBOARD.INFLATION.TITLE' | translate}}"
+        [labels]="inflationLabels"
+        [high]="30"
+        link="https://datosmacro.expansion.com/ipc-paises/argentina?sc=IPC-IG"
+        [series]="inflationSeries">
+    </cauquen-bar-chart>
+
+    <cauquen-bar-chart 
+        id="fixed-rate-dashboard"
+        title="{{'DASHBOARD.FIXED_RATE.TITLE' | translate}}"
+        [labels]="fixedRateLabels"
+        [high]="150"
+        link="https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables_datos.asp"
+        [series]="fixedRateSeries">
+    </cauquen-bar-chart>
 
 </div>

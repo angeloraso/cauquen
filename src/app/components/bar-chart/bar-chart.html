@@ -1,7 +1,8 @@
 <div class="bar-chart">
 
     <span class="bar-chart__header">
-        <cauquen-title *ngIf="title" [title]="title"></cauquen-title>
+
+        <h4 class="bar-chart__header__title">{{title}}</h4>
 
         <a *ngIf="link" [href]="link" target="_blank">{{'BAR_CHART.MORE_INFO' | translate}}</a>
     </span>

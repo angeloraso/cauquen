@@ -34,8 +34,7 @@
       "@menu/*": ["src/app/side-menu/*"],
       "@dashboard/*": ["src/app/dashboard/*"],
       "@history/*": ["src/app/history/*"],
-      "@inflation/*": ["src/app/inflation/*"],
-      "@fixed-rate/*": ["src/app/fixed-rate/*"],
+      "@info/*": ["src/app/info/*"],
       "@config/*": ["src/app/config/*"]
     }
   },

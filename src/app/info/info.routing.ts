@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FixedRateComponent } from './fixed-rate.component';
+import { InfoComponent } from './info.component';
 
 export enum PATH {
   EMPTY = ''
@@ -9,7 +9,7 @@ export enum PATH {
 const routes: Routes = [
   {
     path: PATH.EMPTY,
-    component: FixedRateComponent,
+    component: InfoComponent,
     pathMatch: 'full'
   }
 ];
@@ -18,6 +18,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class FixedRateRoutingModule {
-  static COMPONENTS = [FixedRateComponent];
+export class InfoRoutingModule {
+  static COMPONENTS = [InfoComponent];
 }

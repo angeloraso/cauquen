@@ -1,21 +1,20 @@
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ConfirmAlertComponent } from '@components/confirm-alert';
+import { PopupService } from '@bizy/services';
+import { ConfirmPopupComponent } from '@components/confirm-popup';
 import { ICountryRecord } from '@core/model';
 import { ArgentinaService } from '@core/services';
-import { CountryRecordFormComponent } from '@dashboard/components';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'cauquen-inflation',
-  templateUrl: './inflation.html',
-  styleUrls: ['./inflation.css']
+  selector: 'cauquen-info',
+  templateUrl: './info.html',
+  styleUrls: ['./info.css']
 })
-export class InflationComponent implements OnInit, OnDestroy {
+export class InfoComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort | null = null;
-  readonly DISPLAYED_COLUMNS = ['from', 'to', 'value', 'actions'];
+  readonly DISPLAYED_COLUMNS = ['from', 'to', 'ipc', 'fixedRate', 'actions'];
   dataSource = new MatTableDataSource<ICountryRecord>();
 
   inflationLabels: Array<string> = [];
@@ -25,7 +24,7 @@ export class InflationComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(ArgentinaService) private argentina: ArgentinaService,
-    @Inject(MatDialog) private dialog: MatDialog
+    @Inject(PopupService) private popup: PopupService<ConfirmPopupComponent, boolean>
   ) {}
 
   async ngOnInit() {
@@ -57,29 +56,18 @@ export class InflationComponent implements OnInit, OnDestroy {
     }
   }
 
-  openDialog(record?: ICountryRecord): void {
-    const dialogRef = this.dialog.open(CountryRecordFormComponent, {
-      data: record,
-      panelClass: 'cauquen-material-dialog'
-    });
-
-    this._subscription.add(
-      dialogRef.afterClosed().subscribe(_record => {
-        if (_record) {
-          this._editRecord(_record);
-        }
-      })
-    );
+  goToRecord(record?: ICountryRecord): void {
+    console.log(record);
   }
 
-  openAlertDialog(record: ICountryRecord) {
-    const dialogRef = this.dialog.open(ConfirmAlertComponent, {
-      data: record,
-      panelClass: 'cauquen-material-dialog'
+  openConfirmPopup(record: ICountryRecord) {
+    this.popup.open({
+      component: ConfirmPopupComponent,
+      data: record
     });
 
     this._subscription.add(
-      dialogRef.afterClosed().subscribe((res: boolean) => {
+      this.popup.closed$.subscribe((res: boolean) => {
         if (res) {
           this._deleteRecord(record);
         }
@@ -87,17 +75,8 @@ export class InflationComponent implements OnInit, OnDestroy {
     );
   }
 
-  private async _editRecord(record: ICountryRecord) {
-    try {
-      await this.argentina.putRecord(record);
-      const index = this.dataSource.data.findIndex(_record => _record.id === record.id);
-      if (index !== -1) {
-        this.dataSource.data[index] = record;
-        this.dataSource.data = [...this.dataSource.data];
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  addRecord() {
+    console.log('add');
   }
 
   private async _deleteRecord(record: ICountryRecord) {
