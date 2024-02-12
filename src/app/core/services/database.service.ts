@@ -48,7 +48,7 @@ export class DatabaseService implements OnDestroy {
     this.DB = getFirestore(app);
   }
 
-  getHistory() {
+  getHistoryRecords() {
     return new Promise<Array<IHistoryRecord>>((resolve, reject) => {
       try {
         if (typeof this.#history.value !== 'undefined') {
@@ -174,7 +174,7 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
-  getCountryData(data: { country: COUNTRY_CODE; from: number; to: number }) {
+  getCountryRecords(country: COUNTRY_CODE) {
     return new Promise<Array<ICountryRecord>>((resolve, reject) => {
       try {
         if (typeof this.#countryData.value !== 'undefined') {
@@ -184,8 +184,7 @@ export class DatabaseService implements OnDestroy {
 
         const q = query(
           collection(this.DB!, DB.COUNTRY_RECORDS),
-          where('country', OPERATOR.EQUAL, data.country),
-          where('from', OPERATOR.GREATER_OR_EQUAL, data.from),
+          where('country', OPERATOR.EQUAL, country),
           orderBy('from', 'asc')
         );
         const unsubscribe = onSnapshot(q, querySnapshot => {
@@ -243,7 +242,9 @@ export class DatabaseService implements OnDestroy {
               to: Number(record.to),
               country: record.country,
               ipc: Number(record.ipc),
-              fixedRate: Number(record.fixedRate)
+              fixedRate: Number(record.fixedRate),
+              created: Number(record.created),
+              updated: Number(record.updated)
             }
           )
         );
@@ -267,7 +268,9 @@ export class DatabaseService implements OnDestroy {
               to: Number(record.to),
               country: record.country,
               ipc: Number(record.ipc),
-              fixedRate: Number(record.fixedRate)
+              fixedRate: Number(record.fixedRate),
+              created: Number(record.created),
+              updated: Number(record.updated)
             }
           )
         );

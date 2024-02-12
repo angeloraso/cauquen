@@ -14,8 +14,8 @@
 
     --bizy-confirm-buttons-confirm-background-color: var(--accent-color);
     --bizy-confirm-buttons-confirm-color: #fff;
-    --bizy-confirm-buttons-cancel-background-color: transparent;
-    --bizy-confirm-buttons-cancel-color: var(--info-color);
+    --bizy-confirm-buttons-cancel-background-color: var(--danger-color);
+    --bizy-confirm-buttons-cancel-color: #fff;
 
     --bizy-toggle-off-color: var(--danger-color);
     --bizy-toggle-off-background-color: var(--light-danger-color);
@@ -25,7 +25,7 @@
     --bizy-input-label-color: var(--info-color);
     --bizy-input-color: var(--text-color);
     --bizy-input-error-color: var(--danger-color);
-    --bizy-input-background-color: var(--hover-color);
+    --bizy-input-background-color: #fff;
     --bizy-input-placeholder-color: var(--text-color);
     --bizy-input-date-color: var(--info-color);
     --bizy-input-date-contrast-color: #fff;
@@ -39,4 +39,5 @@
     --bizy-toolbar-height: 2.4rem;
     --bizy-toolbar-background-color: #fff;
 
+    --bizy-select-label-color: var(--info-color);
 }

@@ -8,10 +8,10 @@ import { DatabaseService } from '@core/services';
 export class HistoryService {
   constructor(@Inject(DatabaseService) private database: DatabaseService) {}
 
-  getHistory() {
+  getRecords() {
     return new Promise<Array<IHistoryRecord>>(async (resolve, reject) => {
       try {
-        const history = await this.database.getHistory();
+        const history = await this.database.getHistoryRecords();
         resolve(history ?? []);
       } catch (error) {
         reject(error);
@@ -39,7 +39,11 @@ export class HistoryService {
   }
 
   putRecord(record: IHistoryRecord): Promise<void> {
-    return this.database.putHistoryRecord(record);
+    return this.database.putHistoryRecord({
+      ...record,
+      created: record.created ?? Date.now(),
+      updated: Date.now()
+    });
   }
 
   deleteRecord(record: IHistoryRecord): Promise<void> {

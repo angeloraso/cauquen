@@ -46,6 +46,10 @@ export class EditHistoryRecordComponent implements OnInit {
 
   async confirm(record: IHistoryRecord) {
     try {
+      if (this.loading) {
+        return;
+      }
+
       this.loading = true;
       await this.history.putRecord(record);
       this.goBack();

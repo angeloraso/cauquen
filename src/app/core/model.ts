@@ -5,6 +5,8 @@ export interface IHistoryRecord {
   date: number;
   amount: number;
   balance: number;
+  created: number;
+  updated: number;
 }
 
 export class HistoryRecord implements HistoryRecord {
@@ -12,12 +14,16 @@ export class HistoryRecord implements HistoryRecord {
   date: number;
   amount: number;
   balance: number;
+  created: number;
+  updated: number;
 
-  constructor(record: Omit<IHistoryRecord, 'id'>) {
+  constructor(record: Omit<IHistoryRecord, 'id' | 'created' | 'updated'>) {
     this.id = uuid4();
     this.date = record.date;
     this.amount = record.amount;
     this.balance = record.balance;
+    this.created = Date.now();
+    this.updated = Date.now();
   }
 }
 
@@ -32,6 +38,8 @@ export interface ICountryRecord {
   to: number;
   ipc: number;
   fixedRate: number;
+  created: number;
+  updated: number;
 }
 
 export class CountryRecord implements ICountryRecord {
@@ -41,13 +49,17 @@ export class CountryRecord implements ICountryRecord {
   to: number;
   ipc: number;
   fixedRate: number;
+  created: number;
+  updated: number;
 
-  constructor(record: Omit<ICountryRecord, 'id'>) {
+  constructor(record: Omit<ICountryRecord, 'id' | 'created' | 'updated'>) {
     this.id = uuid4();
     this.country = record.country ?? COUNTRY_CODE.ARGENTINA;
     this.from = record.from;
     this.to = record.to;
     this.ipc = record.ipc;
     this.fixedRate = record.fixedRate;
+    this.created = Date.now();
+    this.updated = Date.now();
   }
 }

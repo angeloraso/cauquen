@@ -9,6 +9,8 @@ import { ArgentinaService } from '@core/services';
   styleUrls: ['./add-info-record.css']
 })
 export class AddInfoRecordComponent {
+  loading = false;
+
   constructor(
     @Inject(ArgentinaService) private argentina: ArgentinaService,
     @Inject(RouterService) private router: RouterService
@@ -20,10 +22,17 @@ export class AddInfoRecordComponent {
 
   async confirm(record: ICountryRecord) {
     try {
+      if (this.loading) {
+        return;
+      }
+
+      this.loading = true;
       await this.argentina.postRecord(record);
       this.goBack();
     } catch (error) {
       console.log(error);
+    } finally {
+      this.loading = false;
     }
   }
 }

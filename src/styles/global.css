@@ -60,3 +60,43 @@ h6 {
     width: 100%;
     text-align: center;
 }
+
+.cauquen-action {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 100ms ease;
+}
+
+.cauquen-action:hover {
+    transform: translateY(-0.1rem);
+    font-size: 1.1rem;
+}
+
+.cauquen-action--primary {
+    color: var(--primary-color) !important;
+}
+
+.cauquen-action--success {
+    color: var(--success-color) !important;
+}
+
+.cauquen-action--default {
+    color: var(--default-color) !important;
+}
+
+.cauquen-action--info {
+    color: var(--info-color) !important;
+}
+
+.cauquen-action--warning {
+    color: var(--warning-color) !important;
+}
+
+.cauquen-action--danger {
+    color: var(--danger-color) !important;
+}
+
+.cauquen-table-column-center {
+    justify-content: center;
+}

@@ -1,6 +1,4 @@
-import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { PopupService, RouterService } from '@bizy/services';
 import { ConfirmPopupComponent } from '@components/confirm-popup';
 import { IHistoryRecord } from '@core/model';
@@ -13,10 +11,11 @@ import { PATH } from './history.routing';
   templateUrl: './history.html',
   styleUrls: ['./history.css']
 })
-export class HistoryComponent implements AfterViewInit, OnDestroy {
-  @ViewChild(MatSort) sort: MatSort | null = null;
-  readonly DISPLAYED_COLUMNS = ['date', 'amount', 'balance', 'actions'];
-  dataSource = new MatTableDataSource<IHistoryRecord>();
+export class HistoryComponent implements OnInit, OnDestroy {
+  records: Array<IHistoryRecord> = [];
+  loading = false;
+  orderBy: string = 'date';
+  order: 'asc' | 'desc' | null = 'desc';
 
   private _subscription = new Subscription();
 
@@ -26,17 +25,15 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
     @Inject(HistoryService) private history: HistoryService
   ) {}
 
-  async ngAfterViewInit() {
+  async ngOnInit() {
     try {
-      const data = await this.history.getHistory();
-      if (this.sort) {
-        this.dataSource.sort = this.sort;
-        this.dataSource.sort.active = 'date';
-        this.dataSource.sort.direction = 'desc';
-      }
-      this.dataSource.data = data;
+      this.loading = true;
+      const data = await this.history.getRecords();
+      this.records = data ?? [];
     } catch (error) {
       console.log(error);
+    } finally {
+      this.loading = false;
     }
   }
 
@@ -49,6 +46,11 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
     this.router.goTo({ path: String(record.id) });
   }
 
+  onSort(property: string) {
+    this.orderBy = property;
+    this.order = this.order === 'asc' ? 'desc' : this.order === 'desc' ? null : 'asc';
+  }
+
   openConfirmPopup(record: IHistoryRecord) {
     this.popup.open({
       component: ConfirmPopupComponent,
@@ -58,19 +60,19 @@ export class HistoryComponent implements AfterViewInit, OnDestroy {
     this._subscription.add(
       this.popup.closed$.subscribe((res: boolean) => {
         if (res) {
-          this._deleteRecord(record);
+          this.#deleteRecord(record);
         }
       })
     );
   }
 
-  private async _deleteRecord(record: IHistoryRecord) {
+  async #deleteRecord(record: IHistoryRecord) {
     try {
       await this.history.deleteRecord(record);
-      const index = this.dataSource.data.findIndex(_record => _record.id === record.id);
+      const index = this.records.findIndex(_record => _record.id === record.id);
       if (index !== -1) {
-        this.dataSource.data.splice(index, 1);
-        this.dataSource.data = [...this.dataSource.data];
+        this.records.splice(index, 1);
+        this.records = [...this.records];
       }
     } catch (error) {
       console.log(error);

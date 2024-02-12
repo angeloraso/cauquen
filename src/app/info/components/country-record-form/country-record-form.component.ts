@@ -24,6 +24,22 @@ export class CountryRecordFormComponent {
     this._id.setValue(id);
   }
 
+  @Input() set created(created: string) {
+    if (!created) {
+      return;
+    }
+
+    this._created.setValue(created);
+  }
+
+  @Input() set updated(updated: string) {
+    if (!updated) {
+      return;
+    }
+
+    this._updated.setValue(updated);
+  }
+
   @Input() set country(country: COUNTRY_CODE) {
     if (!country) {
       return;
@@ -67,18 +83,29 @@ export class CountryRecordFormComponent {
   }
 
   constructor(@Inject(FormBuilder) private fb: FormBuilder) {
+    const today = new Date();
     this.form = this.fb.group({
       id: [null],
       country: [COUNTRY_CODE.ARGENTINA, [Validators.required]],
-      from: [new Date(), [Validators.required]],
-      to: [new Date(), [Validators.required]],
-      ipc: [0, [Validators.min(this.MIN_VALUE), Validators.required]],
-      fixedRate: [0, [Validators.min(this.MIN_VALUE), Validators.required]]
+      from: [today.toISOString(), [Validators.required]],
+      to: [today.toISOString(), [Validators.required]],
+      ipc: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
+      fixedRate: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
+      created: [null],
+      updated: [null]
     });
   }
 
   get _id() {
     return this.form.get('id') as FormControl;
+  }
+
+  get _created() {
+    return this.form.get('created') as FormControl;
+  }
+
+  get _updated() {
+    return this.form.get('updated') as FormControl;
   }
 
   get _country() {
@@ -115,7 +142,9 @@ export class CountryRecordFormComponent {
       from: from.getTime(),
       to: to.getTime(),
       ipc: this._ipc.value,
-      fixedRate: this._fixedRate.value
+      fixedRate: this._fixedRate.value,
+      created: this._created.value,
+      updated: this._updated.value
     });
   }
 

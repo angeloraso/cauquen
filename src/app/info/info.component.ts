@@ -1,6 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { PopupService, RouterService } from '@bizy/services';
 import { ConfirmPopupComponent } from '@components/confirm-popup';
 import { ICountryRecord } from '@core/model';
@@ -14,9 +12,10 @@ import { PATH } from './info.routing';
   styleUrls: ['./info.css']
 })
 export class InfoComponent implements OnInit, OnDestroy {
-  @ViewChild(MatSort) sort: MatSort | null = null;
-  readonly DISPLAYED_COLUMNS = ['from', 'to', 'ipc', 'fixedRate', 'actions'];
-  dataSource = new MatTableDataSource<ICountryRecord>();
+  info: Array<ICountryRecord> = [];
+  loading = false;
+  orderBy: string = 'from';
+  order: 'asc' | 'desc' | null = 'desc';
 
   private _subscription = new Subscription();
 
@@ -28,16 +27,13 @@ export class InfoComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     try {
-      const countryData = await this.argentina.getData();
-
-      if (this.sort) {
-        this.dataSource.sort = this.sort;
-        this.dataSource.sort.active = 'from';
-        this.dataSource.sort.direction = 'desc';
-      }
-      this.dataSource.data = countryData;
+      this.loading = true;
+      const countryData = await this.argentina.getRecords();
+      this.info = countryData ?? [];
     } catch (error) {
       console.debug(error);
+    } finally {
+      this.loading = false;
     }
   }
 
@@ -54,7 +50,7 @@ export class InfoComponent implements OnInit, OnDestroy {
     this._subscription.add(
       this.popup.closed$.subscribe((res: boolean) => {
         if (res) {
-          this._deleteRecord(record);
+          this.#deleteRecord(record);
         }
       })
     );
@@ -64,16 +60,24 @@ export class InfoComponent implements OnInit, OnDestroy {
     this.router.goTo({ path: PATH.ADD });
   }
 
-  private async _deleteRecord(record: ICountryRecord) {
+  onSort(property: string) {
+    this.orderBy = property;
+    this.order = this.order === 'asc' ? 'desc' : this.order === 'desc' ? null : 'asc';
+  }
+
+  async #deleteRecord(record: ICountryRecord) {
     try {
+      this.loading = true;
       await this.argentina.deleteRecord(record);
-      const index = this.dataSource.data.findIndex(_record => _record.id === record.id);
+      const index = this.info.findIndex(_record => _record.id === record.id);
       if (index !== -1) {
-        this.dataSource.data.splice(index, 1);
-        this.dataSource.data = [...this.dataSource.data];
+        this.info.splice(index, 1);
+        this.info = [...this.info];
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      this.loading = false;
     }
   }
 

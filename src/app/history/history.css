@@ -1,3 +1,7 @@
+.history {
+    --bizy-table-height: calc(100vh - var(--bizy-toolbar-height) - 7rem);
+}
+
 .history__table__income {
     font-weight: bold;
     color: var(--success-color);
@@ -17,6 +21,6 @@
     color: var(--danger-color);
 }
 
-.history__table__row--end-of-month {
-    background-color: var(--hover-color);
+::ng-deep .history__table__row--end-of-month {
+    --bizy-table-row-background-color: var(--hover-color);
 }

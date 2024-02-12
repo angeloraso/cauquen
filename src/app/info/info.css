@@ -2,8 +2,5 @@
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
-}
-
-.info__table__actions__delete {
-    color: var(--danger-color);
+    --bizy-table-height: calc(100vh - var(--bizy-toolbar-height) - 7rem);
 }

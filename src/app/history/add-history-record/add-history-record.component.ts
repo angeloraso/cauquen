@@ -9,6 +9,8 @@ import { HistoryService } from '@core/services';
   styleUrls: ['./add-history-record.css']
 })
 export class AddHistoryRecordComponent {
+  loading = false;
+
   constructor(
     @Inject(HistoryService) private history: HistoryService,
     @Inject(RouterService) private router: RouterService
@@ -20,10 +22,17 @@ export class AddHistoryRecordComponent {
 
   async confirm(record: IHistoryRecord) {
     try {
+      if (this.loading) {
+        return;
+      }
+
+      this.loading = true;
       await this.history.postRecord(record);
       this.goBack();
     } catch (error) {
       console.log(error);
+    } finally {
+      this.loading = false;
     }
   }
 }

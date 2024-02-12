@@ -19,6 +19,22 @@ export class HistoryRecordFormComponent {
     this._id.setValue(id);
   }
 
+  @Input() set created(created: string) {
+    if (!created) {
+      return;
+    }
+
+    this._created.setValue(created);
+  }
+
+  @Input() set updated(updated: string) {
+    if (!updated) {
+      return;
+    }
+
+    this._updated.setValue(updated);
+  }
+
   @Input() set date(date: number) {
     if (!date) {
       return;
@@ -55,12 +71,22 @@ export class HistoryRecordFormComponent {
       date: [today.toISOString(), [Validators.required]],
       income: [true, [Validators.required]],
       amount: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
-      balance: [null, [Validators.min(this.MIN_VALUE), Validators.required]]
+      balance: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
+      created: [null],
+      updated: [null]
     });
   }
 
   get _id() {
     return this.form.get('id') as FormControl;
+  }
+
+  get _created() {
+    return this.form.get('created') as FormControl;
+  }
+
+  get _updated() {
+    return this.form.get('updated') as FormControl;
   }
 
   get _date() {
@@ -90,7 +116,9 @@ export class HistoryRecordFormComponent {
       id: this._id.value,
       date: date.getTime(),
       amount: this._income.value ? this._amount.value : this._amount.value * -1,
-      balance: this._balance.value
+      balance: this._balance.value,
+      created: this._created.value,
+      updated: this._updated.value
     });
   }
 

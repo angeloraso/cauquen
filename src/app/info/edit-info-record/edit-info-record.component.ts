@@ -46,6 +46,10 @@ export class EditInfoRecordComponent implements OnInit {
 
   async confirm(record: ICountryRecord) {
     try {
+      if (this.loading) {
+        return;
+      }
+
       this.loading = true;
       await this.argentina.putRecord(record);
       this.goBack();

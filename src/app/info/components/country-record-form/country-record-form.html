@@ -1,11 +1,11 @@
 <form class="cauquen-form" [formGroup]="form">
 
-    <mat-form-field>
-        <mat-label>{{'CORE.FORM.FIELD.COUNTRY' | translate}}</mat-label>
-        <mat-select formControlName="country">
-            <mat-option *ngFor="let c of COUNTRIES" [value]="c.id">{{c.name | translate}}</mat-option>
-        </mat-select>
-    </mat-form-field>
+    <bizy-select
+        label="{{'CORE.FORM.FIELD.COUNTRY' | translate}}"
+        [value]="_country.value"
+        (onSelect)="_country.setValue($event)">
+        <bizy-select-option *ngFor="let c of COUNTRIES" [key]="c.id">{{c.name | translate}}</bizy-select-option>
+    </bizy-select>
 
     <bizy-input 
         label="{{'CORE.FORM.FIELD.DATE' | translate}}"
