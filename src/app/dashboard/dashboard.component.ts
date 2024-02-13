@@ -72,12 +72,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         previousBalance = lastRecord.balance;
 
-        const netBalance = lastRecord.balance - (lastRecord.balance * _countryRecord.ipc) / 100;
-
-        const difference = netBalance - periodTotal;
-
-        const profit = this.utils.roundNumber((difference * 100) / periodTotal);
-
         const date = new Date(_countryRecord.from);
         const label = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 
@@ -87,6 +81,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
         generalProfitSeries[2].push(
           periodTotal + (periodTotal * (_countryRecord.fixedRate / 12)) / 100
         );
+
+        const netBalance = lastRecord.balance - (lastRecord.balance * _countryRecord.ipc) / 100;
+        const difference = netBalance - periodTotal;
+        const profit = this.utils.roundNumber((difference * 100) / periodTotal);
 
         monthProfitLabels.push(label);
         monthProfitSeries.push(profit);
