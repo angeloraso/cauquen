@@ -35,7 +35,6 @@ export class ArgentinaService {
   putRecord(record: ICountryRecord): Promise<void> {
     return this.database.putCountryRecord({
       ...record,
-      created: record.created ?? Date.now(),
       updated: Date.now()
     });
   }
