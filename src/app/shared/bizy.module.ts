@@ -14,8 +14,7 @@ import {
 } from '@bizy/components';
 import { DirectivesModule } from '@bizy/directives';
 import { PipesModule } from '@bizy/pipes';
-import { PopupModule } from '@bizy/services';
-import { TranslateModule } from '@ngx-translate/core';
+import { PopupModule, TranslatePipeModule } from '@bizy/services';
 
 @NgModule({
   exports: [
@@ -30,11 +29,11 @@ import { TranslateModule } from '@ngx-translate/core';
     ErrorModule,
     ConfirmButtonsModule,
     TabsModule,
-    TranslateModule,
     ToolbarModule,
     SidebarModule,
     TableModule,
-    SelectModule
+    SelectModule,
+    TranslatePipeModule
   ]
 })
 export class BizyModule {}

@@ -4,9 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BizyComponentsModule } from '@bizy/components';
-import { LANGUAGE, TranslateService } from '@bizy/services';
+import { LANGUAGE, TranslateModule, TranslateService } from '@bizy/services';
 import { ENV } from '@env/environment';
-import { TranslateModule } from '@ngx-translate/core';
 import { es } from './i18n';
 
 @NgModule({
@@ -15,7 +14,7 @@ import { es } from './i18n';
     BrowserAnimationsModule,
     HttpClientModule,
     BizyComponentsModule,
-    TranslateModule.forRoot(),
+    TranslateModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: ENV.production && !ENV.mobile })
   ]
 })
