@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authCanActivateGuard } from '@core/guards';
 import { AddHistoryRecordComponent } from './add-history-record/add-history-record.component';
 import { EditHistoryRecordComponent } from './edit-history-record/edit-history-record.component';
 import { HistoryComponent } from './history.component';
@@ -13,15 +14,18 @@ const routes: Routes = [
   {
     path: PATH.EMPTY,
     component: HistoryComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [authCanActivateGuard]
   },
   {
     path: PATH.ADD,
-    component: AddHistoryRecordComponent
+    component: AddHistoryRecordComponent,
+    canActivate: [authCanActivateGuard]
   },
   {
     path: ':historyRecordId',
-    component: EditHistoryRecordComponent
+    component: EditHistoryRecordComponent,
+    canActivate: [authCanActivateGuard]
   }
 ];
 

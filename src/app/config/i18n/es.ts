@@ -5,7 +5,11 @@ export const locale = {
   translations: {
     CONFIG: {
       TITLE: 'Confguración',
-      ABOUT: 'Información'
+      ABOUT: 'Información',
+      SIGN_OUT_POPUP: {
+        TITLE: 'Cerrar sesión',
+        MSG: 'Se cerrará la sesión de'
+      }
     }
   }
 };

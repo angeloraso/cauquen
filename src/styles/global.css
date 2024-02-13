@@ -100,3 +100,27 @@ h6 {
 .cauquen-table-column-center {
     justify-content: center;
 }
+
+.cauquen-button--accent {
+    background-color: var(--accent-color) !important;
+}
+
+.cauquen-button--success {
+    background-color: var(--success-color) !important;
+}
+
+.cauquen-button--default {
+    background-color: var(--primary-color) !important;
+}
+
+.cauquen-button--info {
+    background-color: var(--info-color) !important;
+}
+
+.cauquen-button--warning {
+    background-color: var(--warning-color) !important;
+}
+
+.cauquen-button--danger {
+    background-color: var(--danger-color) !important;
+}

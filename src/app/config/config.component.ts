@@ -1,8 +1,10 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { PopupService } from '@bizy/services';
-import { ICountryRecord } from '@core/model';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { PATH as APP_PATH } from '@app/app.routing';
+import { PopupService, RouterService, TranslateService } from '@bizy/services';
+import { ConfirmPopupComponent } from '@components/confirm-popup';
+import { PATH as AUTH_PATH } from '@core/auth/auth.routing';
+import { AuthService } from '@core/auth/auth.service';
+import { Subscription } from 'rxjs';
 import { AboutPopupComponent } from './about-popup/about-popup.component';
 
 @Component({
@@ -10,15 +12,17 @@ import { AboutPopupComponent } from './about-popup/about-popup.component';
   templateUrl: './config.html',
   styleUrls: ['./config.css']
 })
-export class ConfigComponent implements OnInit {
-  @ViewChild(MatSort) sort: MatSort | null = null;
-  readonly DISPLAYED_COLUMNS = ['from', 'to', 'fixedRate', 'actions'];
-  dataSource = new MatTableDataSource<ICountryRecord>();
+export class ConfigComponent implements OnInit, OnDestroy {
+  #subscription = new Subscription();
+  loading = false;
 
-  fixedRateLabels: Array<string> = [];
-  fixedRateSeries: Array<Array<number>> = [];
-
-  constructor(@Inject(PopupService) private popup: PopupService<AboutPopupComponent, void>) {}
+  constructor(
+    @Inject(PopupService) private aboutPopup: PopupService<AboutPopupComponent, void>,
+    @Inject(PopupService) private confirmPopup: PopupService<ConfirmPopupComponent, boolean>,
+    @Inject(AuthService) private auth: AuthService,
+    @Inject(RouterService) private router: RouterService,
+    @Inject(TranslateService) private translate: TranslateService
+  ) {}
 
   async ngOnInit() {
     try {
@@ -29,6 +33,38 @@ export class ConfigComponent implements OnInit {
   }
 
   openPopup(): void {
-    this.popup.open({ component: AboutPopupComponent });
+    this.aboutPopup.open({ component: AboutPopupComponent });
+  }
+
+  onSignOut(): void {
+    if (this.loading) {
+      return;
+    }
+
+    this.confirmPopup.open({
+      component: ConfirmPopupComponent,
+      data: {
+        title: this.translate.get('CONFIG.SIGN_OUT_POPUP.TITLE'),
+        msg: `${this.translate.get('CONFIG.SIGN_OUT_POPUP.MSG')}: ${this.auth.getEmail()}`
+      }
+    });
+
+    this.#subscription.add(
+      this.confirmPopup.closed$.subscribe((res: boolean) => {
+        if (res) {
+          this.loading = true;
+          this.auth
+            .signOut()
+            .then(() => {
+              this.router.goTo({ path: `/${APP_PATH.AUTH}/${AUTH_PATH.SIGN_IN}` });
+            })
+            .finally(() => (this.loading = false));
+        }
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.#subscription.unsubscribe;
   }
 }

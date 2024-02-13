@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authCanActivateGuard } from '@core/guards';
 import { AddInfoRecordComponent } from './add-info-record/add-info-record.component';
 import { EditInfoRecordComponent } from './edit-info-record/edit-info-record.component';
 import { InfoComponent } from './info.component';
@@ -13,15 +14,18 @@ const routes: Routes = [
   {
     path: PATH.EMPTY,
     component: InfoComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [authCanActivateGuard]
   },
   {
     path: PATH.ADD,
-    component: AddInfoRecordComponent
+    component: AddInfoRecordComponent,
+    canActivate: [authCanActivateGuard]
   },
   {
     path: ':countryRecordId',
-    component: EditInfoRecordComponent
+    component: EditInfoRecordComponent,
+    canActivate: [authCanActivateGuard]
   }
 ];
 

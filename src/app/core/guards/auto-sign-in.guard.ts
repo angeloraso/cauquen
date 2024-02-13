@@ -4,10 +4,10 @@ import { PATH } from '@app/app.routing';
 import { AuthService } from '@core/auth/auth.service';
 import { map, take } from 'rxjs/operators';
 
-export const autoLoginCanLoadGuard = () => {
+export const autoSignInCanLoadGuard = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
-  return auth.isLoggedIn$.pipe(
+  return auth.signedIn$.pipe(
     take(1),
     map(isLoggedIn => {
       if (isLoggedIn) {

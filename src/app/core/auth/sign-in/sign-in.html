@@ -1,0 +1,51 @@
+<div class="sign-in-component">
+
+  <div>
+    <img class="sign-in__logo" [ngClass]="{'shrink-logo': hideLogo}" src="assets/cauquen.png" alt="logo"/>
+  </div>
+  
+  <form class="form-holder" [formGroup]="form" [bizyLoading]="loading">
+
+    <bizy-input 
+        #showHidePasswordInput
+        label="{{'CORE.FORM.FIELD.EMAIL' | translate}}"
+        type="email"
+        (onBlur)="hideLogo = false;"
+        (onFocus)="hideLogo = true;"
+        (enter)="nextInput($event)"
+        [control]="email">
+
+        <bizy-error input-error *ngIf="email.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        <bizy-error input-error *ngIf="email.hasError('email')">{{'CORE.FORM.ERROR.EMAIL' | translate}}</bizy-error>
+
+    </bizy-input>
+
+    <bizy-input 
+        #showHidePasswordInput
+        label="{{'CORE.FORM.FIELD.PASSWORD' | translate}}"
+        [type]="showPassword ? 'text' : 'password'"
+        (onBlur)="hideLogo = false;"
+        (onFocus)="hideLogo = true;"
+        [clear]="false"
+        (enter)="passwordEnter($event)"
+        [control]="password">
+
+        <cauquen-show-hide-password input-end [(show)]="showPassword"></cauquen-show-hide-password>
+
+        <bizy-error input-error *ngIf="password.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        
+    </bizy-input>
+
+    <bizy-button 
+      customClass="cauquen-button--accent"
+      type="submit"
+      [disabled]="form.touched && form.invalid"
+      (onSelect)="onSignIn()">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span>{{ 'AUTH.SIGN_IN' | translate }}</span>
+    </bizy-button>
+
+  </form>
+  
+</div>
+

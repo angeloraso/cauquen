@@ -1,18 +1,22 @@
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { PATH } from '@app/app.routing';
 import { RouterService } from '@bizy/services';
 import { AuthService } from '@core/auth/auth.service';
 
 @Component({
-  selector: 'cauquen-login',
-  templateUrl: './login.html',
-  styleUrls: ['./login.css']
+  selector: 'cauquen-sign-in',
+  templateUrl: './sign-in.html',
+  styleUrls: ['./sign-in.css']
 })
-export class LoginComponent {
+export class SignInComponent {
   @ViewChild('password') passwordInput: ElementRef | null = null;
 
-  form: UntypedFormGroup;
+  form: FormGroup<{
+    email: FormControl<string>;
+    password: FormControl<string>;
+  }>;
+
   public showError = false;
   showPassword = false;
   hideLogo = false;
@@ -30,21 +34,21 @@ export class LoginComponent {
   }
 
   get email() {
-    return this.form.get('email') as AbstractControl;
+    return this.form.get('email') as FormControl<string>;
   }
 
   get password() {
-    return this.form.get('password') as AbstractControl;
+    return this.form.get('password') as FormControl<string>;
   }
 
-  async onLogin() {
-    if (this.form.invalid) {
+  async onSignIn() {
+    if (this.form.invalid || this.loading) {
       return;
     }
 
     this.loading = true;
     this.authService
-      .login({ email: this.email?.value, password: this.password?.value })
+      .signIn({ email: this.email?.value, password: this.password?.value })
       .then(() => {
         this.router.goTo({ path: `/${PATH.HOME}` });
       })
@@ -68,7 +72,7 @@ export class LoginComponent {
 
   passwordEnter(event: any) {
     if (event.key === 'Enter') {
-      this.onLogin();
+      this.onSignIn();
     }
   }
 

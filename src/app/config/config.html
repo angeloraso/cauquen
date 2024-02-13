@@ -6,6 +6,13 @@
 
 </bizy-toolbar>
 
-<div class="cauquen-wrapper config">
+<div class="cauquen-wrapper config" [bizyLoading]="loading">
+
+    <bizy-button 
+      customClass="cauquen-button--warning"
+      (onSelect)="onSignOut()">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>{{ 'CONFIG.SIGN_OUT_POPUP.TITLE' | translate }}</span>
+    </bizy-button>
 
 </div>

@@ -1,19 +1,20 @@
-.login-component {
+.sign-in-component {
   width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: var(--background-color);
 }
 
-.login-form {
+.sign-in-form {
   display: flex;
   flex-direction: column;
   row-gap: 0.5em;
 }
 
-.login__logo {
+.sign-in__logo {
   height: 6em;
   width: 6em;
   margin-bottom: 2em;
@@ -26,7 +27,7 @@
 }
 
 .form-holder {
-  background-color: #fff;
+  background-color: transparent;
   border-radius: 0.5em;
   padding: 1em;
   display: flex;
@@ -35,7 +36,7 @@
   row-gap: 1em;
 }
 
-.login-item {
+.sign-in-item {
   min-width: 16em;
   width: 100%;
 }

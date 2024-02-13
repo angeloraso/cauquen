@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { authCanLoadGuard, autoLoginCanLoadGuard } from '@core/guards';
+import { authCanLoadGuard, autoSignInCanLoadGuard } from '@core/guards';
 
 export enum PATH {
   EMPTY = '',
@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: PATH.AUTH,
     loadChildren: () => import('@auth/auth.module').then(m => m.AuthModule),
-    canLoad: [autoLoginCanLoadGuard]
+    canLoad: [autoSignInCanLoadGuard]
   },
   {
     path: PATH.HOME,

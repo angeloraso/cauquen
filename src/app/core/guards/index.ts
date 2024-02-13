@@ -1,3 +1,3 @@
 export { authCanActivateGuard, authCanLoadGuard } from './auth.guard';
-export { autoLoginCanLoadGuard } from './auto-login.guard';
+export { autoSignInCanLoadGuard } from './auto-sign-in.guard';
 

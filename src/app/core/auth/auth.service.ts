@@ -6,7 +6,8 @@ import {
   getAuth,
   indexedDBLocalPersistence,
   setPersistence,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut
 } from 'firebase/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -16,10 +17,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   private AUTH: Auth | null = null;
   private _user: User | null = null;
-  private _isLoggedIn = new BehaviorSubject<boolean>(false);
+  #signedIn = new BehaviorSubject<boolean>(false);
 
-  get isLoggedIn$(): Observable<boolean> {
-    return this._isLoggedIn.asObservable();
+  get signedIn$(): Observable<boolean> {
+    return this.#signedIn.asObservable();
   }
 
   start(app: FirebaseApp) {
@@ -28,7 +29,7 @@ export class AuthService {
         this.AUTH = getAuth(app);
         await setPersistence(this.AUTH!, indexedDBLocalPersistence);
         this._user = this.AUTH.currentUser;
-        this._isLoggedIn.next(Boolean(this.AUTH.currentUser));
+        this.#signedIn.next(Boolean(this.AUTH.currentUser));
         if (!this._user) {
           await setPersistence(this.AUTH!, indexedDBLocalPersistence);
         }
@@ -39,7 +40,7 @@ export class AuthService {
     });
   }
 
-  login(credentials: { email: string; password: string }) {
+  signIn(credentials: { email: string; password: string }) {
     return new Promise<void>(async (resolve, reject) => {
       try {
         const userCredential = await signInWithEmailAndPassword(
@@ -48,7 +49,7 @@ export class AuthService {
           credentials.password
         );
         this._user = userCredential.user;
-        this._isLoggedIn.next(true);
+        this.#signedIn.next(true);
         resolve();
       } catch (error) {
         reject(error);
@@ -70,5 +71,18 @@ export class AuthService {
     }
 
     return null;
+  }
+
+  signOut() {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await signOut(this.AUTH!);
+        this._user = null;
+        this.#signedIn.next(false);
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 }

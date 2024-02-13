@@ -4,7 +4,7 @@ export const locale = {
   lang: LANGUAGE.SPANISH,
   translations: {
     AUTH: {
-      LOGIN: 'Iniciar sesión'
+      SIGN_IN: 'Iniciar sesión'
     }
   }
 };

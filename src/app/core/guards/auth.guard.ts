@@ -8,11 +8,11 @@ import { map, take } from 'rxjs/operators';
 export const authCanLoadGuard = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
-  return auth.isLoggedIn$.pipe(
+  return auth.signedIn$.pipe(
     take(1),
     map(isLoggedIn => {
       if (!isLoggedIn) {
-        router.navigateByUrl(`/${APP_PATH.AUTH}/${AUTH_PATH.LOGIN}`, { replaceUrl: true });
+        router.navigateByUrl(`/${APP_PATH.AUTH}/${AUTH_PATH.SIGN_IN}`, { replaceUrl: true });
         return false;
       }
 
@@ -24,11 +24,11 @@ export const authCanLoadGuard = () => {
 export const authCanActivateGuard = () => {
   const auth = inject(AuthService);
   const router = inject(Router);
-  return auth.isLoggedIn$.pipe(
+  return auth.signedIn$.pipe(
     take(1),
     map(isLoggedIn => {
       if (!isLoggedIn) {
-        router.navigateByUrl(`/${APP_PATH.AUTH}/${AUTH_PATH.LOGIN}`, { replaceUrl: true });
+        router.navigateByUrl(`/${APP_PATH.AUTH}/${AUTH_PATH.SIGN_IN}`, { replaceUrl: true });
         console.error('Not permissions');
         return false;
       }

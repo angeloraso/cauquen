@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authCanActivateGuard } from '@core/guards';
 import { DashboardComponent } from './dashboard.component';
 
 export enum PATH {
@@ -10,7 +11,8 @@ const routes: Routes = [
   {
     path: PATH.EMPTY,
     component: DashboardComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [authCanActivateGuard]
   }
 ];
 

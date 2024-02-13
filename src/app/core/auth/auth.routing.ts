@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 export enum PATH {
   EMPTY = '',
-  LOGIN = 'login'
+  SIGN_IN = 'sign-in'
 }
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: PATH.LOGIN,
+    redirectTo: PATH.SIGN_IN,
     pathMatch: 'full'
   },
   {
-    path: PATH.LOGIN,
-    component: LoginComponent
+    path: PATH.SIGN_IN,
+    component: SignInComponent
   }
 ];
 
@@ -24,5 +24,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AuthRoutingModule {
-  static COMPONENTS = [LoginComponent];
+  static COMPONENTS = [SignInComponent];
 }

@@ -6,3 +6,7 @@
   align-items: center;
   row-gap: 1rem;
 }
+
+.confirm-popup__msg {
+  text-align: center;
+}
