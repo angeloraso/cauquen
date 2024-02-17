@@ -69,7 +69,7 @@ export class HistoryRecordFormComponent {
     this.form = this.fb.group({
       id: [null],
       date: [today.toISOString(), [Validators.required]],
-      income: [true, [Validators.required]],
+      income: [false, [Validators.required]],
       amount: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
       balance: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
       created: [null],
