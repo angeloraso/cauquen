@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { PATH as APP_PATH } from '@app/app.routing';
 import { PopupService, RouterService, TranslateService } from '@bizy/services';
 import { ConfirmPopupComponent } from '@components/confirm-popup';
@@ -12,7 +12,7 @@ import { AboutPopupComponent } from './about-popup/about-popup.component';
   templateUrl: './config.html',
   styleUrls: ['./config.css']
 })
-export class ConfigComponent implements OnInit, OnDestroy {
+export class ConfigComponent implements OnDestroy {
   #subscription = new Subscription();
   loading = false;
 
@@ -23,14 +23,6 @@ export class ConfigComponent implements OnInit, OnDestroy {
     @Inject(RouterService) private router: RouterService,
     @Inject(TranslateService) private translate: TranslateService
   ) {}
-
-  async ngOnInit() {
-    try {
-      console.log('config');
-    } catch (error) {
-      console.debug(error);
-    }
-  }
 
   openPopup(): void {
     this.aboutPopup.open({ component: AboutPopupComponent });
