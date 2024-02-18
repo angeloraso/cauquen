@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { AuthService } from '@auth/auth.service';
-import { config } from '@core/firebase.config';
 import { DatabaseService, ServiceWorkerService } from '@core/services';
 import { initializeApp } from 'firebase/app';
+import { config } from '../firebase.config';
 
 @Injectable()
 export class AppInitService {
