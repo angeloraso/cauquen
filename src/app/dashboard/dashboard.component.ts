@@ -88,9 +88,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
           periodTotal + (periodTotal * (_countryRecord.fixedRate / 12)) / 100
         );
 
-        const netBalance = lastRecord.balance - (lastRecord.balance * _countryRecord.ipc) / 100;
-        const difference = netBalance - periodTotal;
-        const profit = this.utils.roundNumber((difference * 100) / periodTotal);
+        const difference = (lastRecord.balance - periodTotal) / periodTotal;
+        const profit = this.utils.roundNumber(difference * 100 - _countryRecord.ipc);
 
         monthProfitLabels.push(label);
         monthProfitSeries.push(profit);
@@ -109,6 +108,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.generalProfitLabels = generalProfitLabels;
       this.generalProfitSeries = generalProfitSeries;
 
+      this.monthProfitLabels = monthProfitLabels;
+      this.monthProfitSeries = [monthProfitSeries];
+
       this.inflationLabels = inflationLabels;
       this.inflationSeries = [inflationSeries];
 
@@ -117,11 +119,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
       this.dollarRateLabels = dollarRateLabels;
       this.dollarRateSeries = dollarRateSeries;
-
-      const total = history.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.amount,
-        0
-      );
 
       if (
         !generalProfitSeries[0] ||
@@ -132,15 +129,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.total = this.utils.roundNumber(
-        ((generalProfitSeries[0][generalProfitSeries[0].length - 1] -
-          generalProfitSeries[1][generalProfitSeries[1].length - 1]) *
-          100) /
-          total
-      );
-
-      this.monthProfitLabels = monthProfitLabels;
-      this.monthProfitSeries = [monthProfitSeries];
+      const lastBalance = generalProfitSeries[0][generalProfitSeries[0].length - 1];
+      const lastIPCBalance = generalProfitSeries[1][generalProfitSeries[1].length - 1];
+      this.total = this.utils.roundNumber(((lastBalance - lastIPCBalance) / lastBalance) * 100);
     } catch (error) {
       console.debug(error);
     } finally {
