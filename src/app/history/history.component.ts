@@ -42,7 +42,6 @@ export class HistoryComponent implements OnInit, OnDestroy {
   }
 
   editRecord(record: IHistoryRecord) {
-    console.log(record);
     this.router.goTo({ path: String(record.id) });
   }
 
