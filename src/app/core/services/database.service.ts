@@ -1,22 +1,20 @@
-import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { AuthService } from '@core/auth/auth.service';
 import { COUNTRY_CODE, ICountryRecord, IHistoryRecord } from '@core/model';
 import { FirebaseApp } from 'firebase/app';
 import {
   Firestore,
-  Unsubscribe,
   collection,
   deleteDoc,
   doc,
   getDoc,
+  getDocs,
   getFirestore,
-  onSnapshot,
   orderBy,
   query,
   setDoc,
   where
 } from 'firebase/firestore';
-import { BehaviorSubject } from 'rxjs';
 
 enum DB {
   HISTORY = 'HISTORY',
@@ -36,42 +34,31 @@ enum OPERATOR {
 @Injectable({
   providedIn: 'root'
 })
-export class DatabaseService implements OnDestroy {
-  DB: Firestore | null = null;
-  #subscriptions = new Set<Unsubscribe>();
-  #history = new BehaviorSubject<Array<IHistoryRecord> | undefined>(undefined);
-  #countryData = new BehaviorSubject<Array<ICountryRecord> | undefined>(undefined);
+export class DatabaseService {
+  #DB: Firestore | null = null;
 
   constructor(@Inject(AuthService) private auth: AuthService) {}
 
   start(app: FirebaseApp) {
-    this.DB = getFirestore(app);
+    this.#DB = getFirestore(app);
   }
 
   getHistoryRecords() {
-    return new Promise<Array<IHistoryRecord>>((resolve, reject) => {
+    return new Promise<Array<IHistoryRecord>>(async (resolve, reject) => {
       try {
-        if (typeof this.#history.value !== 'undefined') {
-          resolve(this.#history.value);
-          return;
-        }
-
         const userId = this.auth.getId();
         if (!userId) {
           throw new Error('No user id');
         }
 
-        const q = query(collection(this.DB!, `${DB.HISTORY}-${userId}`), orderBy('date', 'asc'));
-        const unsubscribe = onSnapshot(q, querySnapshot => {
-          const docs: Array<unknown> = [];
-          querySnapshot.forEach(doc => {
-            docs.push(doc.data());
-          });
-          this.#history.next(docs as Array<IHistoryRecord>);
-          resolve(this.#history.value as Array<IHistoryRecord>);
+        const q = query(collection(this.#DB!, `${DB.HISTORY}-${userId}`), orderBy('date', 'asc'));
+        const querySnapshot = await getDocs(q);
+        const docs: Array<IHistoryRecord> = [];
+        querySnapshot.forEach(doc => {
+          docs.push(doc.data() as IHistoryRecord);
         });
 
-        this.#subscriptions.add(unsubscribe);
+        resolve(docs);
       } catch (error) {
         reject(error);
       }
@@ -80,17 +67,12 @@ export class DatabaseService implements OnDestroy {
 
   getHistoryRecord(recordId: string) {
     return new Promise<IHistoryRecord | null>((resolve, reject) => {
-      if (typeof this.#history.value !== 'undefined') {
-        resolve(this.#history.value.find(_record => _record.id === recordId) || null);
-        return;
-      }
-
       const userId = this.auth.getId();
       if (!userId) {
         throw new Error('No user id');
       }
 
-      getDoc(doc(this.DB!, `${DB.HISTORY}-${userId}`, recordId))
+      getDoc(doc(this.#DB!, `${DB.HISTORY}-${userId}`, recordId))
         .then(record => {
           if (record.exists()) {
             resolve(record.data() as IHistoryRecord);
@@ -113,7 +95,7 @@ export class DatabaseService implements OnDestroy {
         }
 
         await setDoc(
-          doc(this.DB!, `${DB.HISTORY}-${userId}`, record.id),
+          doc(this.#DB!, `${DB.HISTORY}-${userId}`, record.id),
           Object.assign(
             {},
             {
@@ -140,7 +122,7 @@ export class DatabaseService implements OnDestroy {
         }
 
         await setDoc(
-          doc(this.DB!, `${DB.HISTORY}-${userId}`, record.id),
+          doc(this.#DB!, `${DB.HISTORY}-${userId}`, record.id),
           Object.assign(
             {},
             {
@@ -166,7 +148,7 @@ export class DatabaseService implements OnDestroy {
           throw new Error('No user id');
         }
 
-        await deleteDoc(doc(this.DB!, `${DB.HISTORY}-${userId}`, id));
+        await deleteDoc(doc(this.#DB!, `${DB.HISTORY}-${userId}`, id));
         resolve();
       } catch (error) {
         reject(error);
@@ -175,28 +157,20 @@ export class DatabaseService implements OnDestroy {
   }
 
   getCountryRecords(country: COUNTRY_CODE) {
-    return new Promise<Array<ICountryRecord>>((resolve, reject) => {
+    return new Promise<Array<ICountryRecord>>(async (resolve, reject) => {
       try {
-        if (typeof this.#countryData.value !== 'undefined') {
-          resolve(this.#countryData.value);
-          return;
-        }
-
         const q = query(
-          collection(this.DB!, DB.COUNTRY_RECORDS),
+          collection(this.#DB!, DB.COUNTRY_RECORDS),
           where('country', OPERATOR.EQUAL, country),
           orderBy('from', 'asc')
         );
-        const unsubscribe = onSnapshot(q, querySnapshot => {
-          const docs: Array<unknown> = [];
-          querySnapshot.forEach(doc => {
-            docs.push(doc.data());
-          });
-          this.#countryData.next(docs as Array<ICountryRecord>);
-          resolve(this.#countryData.value as Array<ICountryRecord>);
-        });
 
-        this.#subscriptions.add(unsubscribe);
+        const querySnapshot = await getDocs(q);
+        const docs: Array<ICountryRecord> = [];
+        querySnapshot.forEach(doc => {
+          docs.push(doc.data() as ICountryRecord);
+        });
+        resolve(docs);
       } catch (error) {
         reject(error);
       }
@@ -205,17 +179,12 @@ export class DatabaseService implements OnDestroy {
 
   getCountryRecord(recordId: string) {
     return new Promise<ICountryRecord | null>((resolve, reject) => {
-      if (typeof this.#countryData.value !== 'undefined') {
-        resolve(this.#countryData.value.find(_record => _record.id === recordId) || null);
-        return;
-      }
-
       const userId = this.auth.getId();
       if (!userId) {
         throw new Error('No user id');
       }
 
-      getDoc(doc(this.DB!, `${DB.COUNTRY_RECORDS}-${userId}`, recordId))
+      getDoc(doc(this.#DB!, `${DB.COUNTRY_RECORDS}-${userId}`, recordId))
         .then(record => {
           if (record.exists()) {
             resolve(record.data() as ICountryRecord);
@@ -233,7 +202,7 @@ export class DatabaseService implements OnDestroy {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await setDoc(
-          doc(this.DB!, DB.COUNTRY_RECORDS, record.id),
+          doc(this.#DB!, DB.COUNTRY_RECORDS, record.id),
           Object.assign(
             {},
             {
@@ -259,7 +228,7 @@ export class DatabaseService implements OnDestroy {
     return new Promise<void>(async (resolve, reject) => {
       try {
         await setDoc(
-          doc(this.DB!, DB.COUNTRY_RECORDS, record.id),
+          doc(this.#DB!, DB.COUNTRY_RECORDS, record.id),
           Object.assign(
             {},
             {
@@ -284,19 +253,11 @@ export class DatabaseService implements OnDestroy {
   deleteCountryRecord(id: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await deleteDoc(doc(this.DB!, DB.COUNTRY_RECORDS, id));
+        await deleteDoc(doc(this.#DB!, DB.COUNTRY_RECORDS, id));
         resolve();
       } catch (error) {
         reject(error);
       }
     });
-  }
-
-  ngOnDestroy() {
-    const subscriptions = Array.from(this.#subscriptions);
-    subscriptions.forEach(unsubscribe => {
-      unsubscribe();
-    });
-    this.#subscriptions.clear();
   }
 }
