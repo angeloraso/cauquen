@@ -8,7 +8,7 @@
     </bizy-select>
 
     <bizy-input 
-        label="{{'CORE.FORM.FIELD.DATE' | translate}}"
+        label="{{'CORE.FORM.FIELD.FROM' | translate}}"
         type="date"
         [control]="_from">
 
@@ -19,7 +19,7 @@
     </bizy-input>
 
     <bizy-input 
-        label="{{'CORE.FORM.FIELD.DATE' | translate}}"
+        label="{{'CORE.FORM.FIELD.TO' | translate}}"
         type="date"
         [control]="_to">
 
@@ -54,6 +54,34 @@
 
         <bizy-error input-error *ngIf="_fixedRate.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
         <bizy-error input-error *ngIf="_fixedRate.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
+        
+    </bizy-input>
+
+    <bizy-input 
+        label="{{'CORE.FORM.FIELD.OFFICIAL_DOLLAR_RATE' | translate}}"
+        type="number"
+        placeholder="0.00"
+        [min]="0"
+        [clear]="false"
+        [control]="_officialDollarRate">
+        <span input-start>$&nbsp;</span>
+
+        <bizy-error input-error *ngIf="_officialDollarRate.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        <bizy-error input-error *ngIf="_officialDollarRate.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
+        
+    </bizy-input>
+
+    <bizy-input 
+        label="{{'CORE.FORM.FIELD.CCL_DOLLAR_RATE' | translate}}"
+        type="number"
+        placeholder="0.00"
+        [min]="0"
+        [clear]="false"
+        [control]="_cclDollarRate">
+        <span input-start>$&nbsp;</span>
+
+        <bizy-error input-error *ngIf="_cclDollarRate.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        <bizy-error input-error *ngIf="_cclDollarRate.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
         
     </bizy-input>
 

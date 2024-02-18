@@ -82,6 +82,22 @@ export class CountryRecordFormComponent {
     this._fixedRate.setValue(fixedRate);
   }
 
+  @Input() set officialDollarRate(officialDollarRate: number) {
+    if (!officialDollarRate) {
+      return;
+    }
+
+    this._officialDollarRate.setValue(officialDollarRate);
+  }
+
+  @Input() set cclDollarRate(cclDollarRate: number) {
+    if (!cclDollarRate) {
+      return;
+    }
+
+    this._cclDollarRate.setValue(cclDollarRate);
+  }
+
   constructor(@Inject(FormBuilder) private fb: FormBuilder) {
     const today = new Date();
     this.form = this.fb.group({
@@ -91,6 +107,8 @@ export class CountryRecordFormComponent {
       to: [today.toISOString(), [Validators.required]],
       ipc: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
       fixedRate: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
+      officialDollarRate: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
+      cclDollarRate: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
       created: [null],
       updated: [null]
     });
@@ -128,6 +146,14 @@ export class CountryRecordFormComponent {
     return this.form.get('fixedRate') as FormControl;
   }
 
+  get _officialDollarRate() {
+    return this.form.get('officialDollarRate') as FormControl;
+  }
+
+  get _cclDollarRate() {
+    return this.form.get('cclDollarRate') as FormControl;
+  }
+
   _confirm() {
     if (this.form.invalid) {
       return;
@@ -143,6 +169,8 @@ export class CountryRecordFormComponent {
       to: to.getTime(),
       ipc: this._ipc.value,
       fixedRate: this._fixedRate.value,
+      officialDollarRate: this._officialDollarRate.value,
+      cclDollarRate: this._cclDollarRate.value,
       created: this._created.value,
       updated: this._updated.value
     });

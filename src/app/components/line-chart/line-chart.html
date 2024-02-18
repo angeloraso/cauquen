@@ -1,6 +1,11 @@
 <div class="line-chart">
 
-    <h4 class="line-chart__title">{{title}}</h4>
+    <span class="line-chart__header">
+
+        <h4 class="line-chart__header__title">{{title}}</h4>
+
+        <a *ngIf="link" [href]="link" target="_blank">{{'LINE_CHART.MORE_INFO' | translate}}</a>
+    </span>
 
     <span id="{{CHART_ID}}-{{id}}"></span>
 </div>

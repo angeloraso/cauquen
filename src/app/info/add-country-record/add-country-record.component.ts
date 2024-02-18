@@ -4,11 +4,11 @@ import { ICountryRecord } from '@core/model';
 import { ArgentinaService } from '@core/services';
 
 @Component({
-  selector: 'cauquen-add-info-record',
-  templateUrl: './add-info-record.html',
-  styleUrls: ['./add-info-record.css']
+  selector: 'cauquen-add-country-record',
+  templateUrl: './add-country-record.html',
+  styleUrls: ['./add-country-record.css']
 })
-export class AddInfoRecordComponent {
+export class AddCountryRecordComponent {
   loading = false;
 
   constructor(

@@ -38,6 +38,8 @@ export interface ICountryRecord {
   to: number;
   ipc: number;
   fixedRate: number;
+  officialDollarRate: number;
+  cclDollarRate: number;
   created: number;
   updated: number;
 }
@@ -49,6 +51,8 @@ export class CountryRecord implements ICountryRecord {
   to: number;
   ipc: number;
   fixedRate: number;
+  officialDollarRate: number;
+  cclDollarRate: number;
   created: number;
   updated: number;
 
@@ -59,6 +63,8 @@ export class CountryRecord implements ICountryRecord {
     this.to = record.to;
     this.ipc = record.ipc;
     this.fixedRate = record.fixedRate;
+    this.officialDollarRate = record.officialDollarRate;
+    this.cclDollarRate = record.cclDollarRate;
     this.created = Date.now();
     this.updated = Date.now();
   }

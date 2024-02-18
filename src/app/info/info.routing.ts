@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { authCanActivateGuard } from '@core/guards';
-import { AddInfoRecordComponent } from './add-info-record/add-info-record.component';
-import { EditInfoRecordComponent } from './edit-info-record/edit-info-record.component';
+import { AddCountryRecordComponent } from './add-country-record/add-country-record.component';
+import { EditCountryRecordComponent } from './edit-country-record/edit-country-record.component';
 import { InfoComponent } from './info.component';
 
 export enum PATH {
@@ -19,12 +19,12 @@ const routes: Routes = [
   },
   {
     path: PATH.ADD,
-    component: AddInfoRecordComponent,
+    component: AddCountryRecordComponent,
     canActivate: [authCanActivateGuard]
   },
   {
     path: ':countryRecordId',
-    component: EditInfoRecordComponent,
+    component: EditCountryRecordComponent,
     canActivate: [authCanActivateGuard]
   }
 ];
@@ -34,5 +34,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class InfoRoutingModule {
-  static COMPONENTS = [InfoComponent, AddInfoRecordComponent, EditInfoRecordComponent];
+  static COMPONENTS = [InfoComponent, AddCountryRecordComponent, EditCountryRecordComponent];
 }

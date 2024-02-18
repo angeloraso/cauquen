@@ -23,6 +23,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   fixedRateLabels: Array<string> = [];
   fixedRateSeries: Array<Array<number>> = [];
 
+  dollarRateLabels: Array<string> = [];
+  dollarRateSeries: Array<Array<number>> = [];
+
   loading: boolean = false;
 
   constructor(
@@ -45,6 +48,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
       const fixedRateLabels: Array<string> = [];
       const fixedRateSeries: Array<number> = [];
+
+      const dollarRateLabels: Array<string> = [];
+      const dollarRateSeries: Array<Array<number>> = [[], []];
 
       const [history, countryRecords] = await Promise.all([
         this.history.getRecords(),
@@ -94,6 +100,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         fixedRateLabels.push(label);
         fixedRateSeries.push(_countryRecord.fixedRate);
+
+        dollarRateLabels.push(label);
+        dollarRateSeries[0].push(_countryRecord.officialDollarRate);
+        dollarRateSeries[1].push(_countryRecord.cclDollarRate);
       });
 
       this.generalProfitLabels = generalProfitLabels;
@@ -104,6 +114,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
       this.fixedRateLabels = fixedRateLabels;
       this.fixedRateSeries = [fixedRateSeries];
+
+      this.dollarRateLabels = dollarRateLabels;
+      this.dollarRateSeries = dollarRateSeries;
 
       const total = history.reduce(
         (accumulator, currentValue) => accumulator + currentValue.amount,

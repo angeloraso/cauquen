@@ -31,7 +31,9 @@ export const locale = {
           INFLATION: 'Inflación',
           FIXED_RATE: 'Tasa',
           COUNTRY: 'País',
-          INCOME: 'Entrada de dinero'
+          INCOME: 'Entrada de dinero',
+          OFFICIAL_DOLLAR_RATE: 'Dolar (oficial)',
+          CCL_DOLLAR_RATE: 'Dolar (CCL)'
         },
         ERROR: {
           REQUIRED: 'Este campo es requerido',

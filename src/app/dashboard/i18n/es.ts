@@ -16,6 +16,9 @@ export const locale = {
       },
       FIXED_RATE: {
         TITLE: 'Tasa de interés (%)'
+      },
+      DOLLAR_RATE: {
+        TITLE: 'Dolar oficial x Dolar CCL'
       }
     }
   }

@@ -4,7 +4,7 @@
 
 </bizy-toolbar>
 
-<div class="cauquen-wrapper edit-info-record" [bizyLoading]="loading">
+<div class="cauquen-wrapper edit-country-record">
 
     <cauquen-country-record-form
         *ngIf="record"
@@ -14,6 +14,8 @@
         [country]="record.country"
         [ipc]="record.ipc"
         [fixedRate]="record.fixedRate"
+        [officialDollarRate]="record.officialDollarRate"
+        [cclDollarRate]="record.cclDollarRate"
         (cancel)="goBack()"
         (confirm)="confirm($event)">
     </cauquen-country-record-form>

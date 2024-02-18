@@ -10,6 +10,7 @@ import { LineChart } from 'chartist';
 export class LineChartComponent implements AfterViewInit {
   @Input() id: string = '';
   @Input() title: string = '';
+  @Input() link: string = '';
   @Input() low: number = 0;
   @Input() showArea: boolean = false;
 

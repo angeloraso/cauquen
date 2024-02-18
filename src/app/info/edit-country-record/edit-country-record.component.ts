@@ -5,11 +5,11 @@ import { ICountryRecord } from '@core/model';
 import { ArgentinaService } from '@core/services';
 
 @Component({
-  selector: 'cauquen-edit-info-record',
-  templateUrl: './edit-info-record.html',
-  styleUrls: ['./edit-info-record.css']
+  selector: 'cauquen-edit-country-record',
+  templateUrl: './edit-country-record.html',
+  styleUrls: ['./edit-country-record.css']
 })
-export class EditInfoRecordComponent implements OnInit {
+export class EditCountryRecordComponent implements OnInit {
   loading = false;
   record: ICountryRecord | null = null;
 

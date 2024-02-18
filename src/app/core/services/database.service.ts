@@ -179,12 +179,7 @@ export class DatabaseService {
 
   getCountryRecord(recordId: string) {
     return new Promise<ICountryRecord | null>((resolve, reject) => {
-      const userId = this.auth.getId();
-      if (!userId) {
-        throw new Error('No user id');
-      }
-
-      getDoc(doc(this.#DB!, `${DB.COUNTRY_RECORDS}-${userId}`, recordId))
+      getDoc(doc(this.#DB!, `${DB.COUNTRY_RECORDS}`, recordId))
         .then(record => {
           if (record.exists()) {
             resolve(record.data() as ICountryRecord);
@@ -212,6 +207,8 @@ export class DatabaseService {
               country: record.country,
               ipc: Number(record.ipc),
               fixedRate: Number(record.fixedRate),
+              officialDollarRate: Number(record.officialDollarRate),
+              cclDollarRate: Number(record.cclDollarRate),
               created: Number(record.created),
               updated: Number(record.updated)
             }
@@ -238,6 +235,8 @@ export class DatabaseService {
               country: record.country,
               ipc: Number(record.ipc),
               fixedRate: Number(record.fixedRate),
+              officialDollarRate: Number(record.officialDollarRate),
+              cclDollarRate: Number(record.cclDollarRate),
               created: Number(record.created),
               updated: Number(record.updated)
             }
