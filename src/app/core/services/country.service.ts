@@ -4,13 +4,11 @@ import { DatabaseService } from './database.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ArgentinaService {
+export class CountryService {
   constructor(@Inject(DatabaseService) private database: DatabaseService) {}
 
-  getRecords(): Promise<Array<ICountryRecord>> {
-    return this.database.getCountryRecords(COUNTRY_CODE.ARGENTINA) as Promise<
-      Array<ICountryRecord>
-    >;
+  getRecords(countryCode: COUNTRY_CODE): Promise<Array<ICountryRecord>> {
+    return this.database.getCountryRecords(countryCode) as Promise<Array<ICountryRecord>>;
   }
 
   getRecord(recordId: string) {

@@ -1,8 +1,8 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { PopupService, RouterService } from '@bizy/services';
 import { ConfirmPopupComponent } from '@components/confirm-popup';
-import { ICountryRecord } from '@core/model';
-import { ArgentinaService } from '@core/services';
+import { COUNTRY_CODE, ICountryRecord } from '@core/model';
+import { CountryService } from '@core/services';
 import { Subscription } from 'rxjs';
 import { PATH } from './info.routing';
 
@@ -20,7 +20,7 @@ export class InfoComponent implements OnInit, OnDestroy {
   private _subscription = new Subscription();
 
   constructor(
-    @Inject(ArgentinaService) private argentina: ArgentinaService,
+    @Inject(CountryService) private country: CountryService,
     @Inject(RouterService) private router: RouterService,
     @Inject(PopupService) private popup: PopupService<ConfirmPopupComponent, boolean>
   ) {}
@@ -28,7 +28,7 @@ export class InfoComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     try {
       this.loading = true;
-      const countryData = await this.argentina.getRecords();
+      const countryData = await this.country.getRecords(COUNTRY_CODE.ARGENTINA);
       this.info = countryData ?? [];
     } catch (error) {
       console.debug(error);
@@ -68,7 +68,7 @@ export class InfoComponent implements OnInit, OnDestroy {
   async #deleteRecord(record: ICountryRecord) {
     try {
       this.loading = true;
-      await this.argentina.deleteRecord(record);
+      await this.country.deleteRecord(record);
       const index = this.info.findIndex(_record => _record.id === record.id);
       if (index !== -1) {
         this.info.splice(index, 1);

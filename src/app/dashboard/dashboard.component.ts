@@ -1,5 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { ArgentinaService, HistoryService, UtilsService } from '@core/services';
+import { COUNTRY_CODE } from '@core/model';
+import { CountryService, HistoryService, UtilsService } from '@core/services';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -30,7 +31,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(HistoryService) private history: HistoryService,
-    @Inject(ArgentinaService) private argentina: ArgentinaService,
+    @Inject(CountryService) private country: CountryService,
     @Inject(UtilsService) private utils: UtilsService
   ) {}
 
@@ -54,7 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
       const [history, countryRecords] = await Promise.all([
         this.history.getRecords(),
-        this.argentina.getRecords()
+        this.country.getRecords(COUNTRY_CODE.ARGENTINA)
       ]);
 
       let previousBalance = 0;

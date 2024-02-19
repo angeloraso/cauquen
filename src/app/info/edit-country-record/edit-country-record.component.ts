@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterService } from '@bizy/services';
 import { ICountryRecord } from '@core/model';
-import { ArgentinaService } from '@core/services';
+import { CountryService } from '@core/services';
 
 @Component({
   selector: 'cauquen-edit-country-record',
@@ -14,7 +14,7 @@ export class EditCountryRecordComponent implements OnInit {
   record: ICountryRecord | null = null;
 
   constructor(
-    @Inject(ArgentinaService) private argentina: ArgentinaService,
+    @Inject(CountryService) private country: CountryService,
     @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
     @Inject(RouterService) private router: RouterService
   ) {}
@@ -29,7 +29,7 @@ export class EditCountryRecordComponent implements OnInit {
         return;
       }
 
-      const record = await this.argentina.getRecord(recordId);
+      const record = await this.country.getRecord(recordId);
 
       this.record = record;
     } catch (error) {
@@ -51,7 +51,7 @@ export class EditCountryRecordComponent implements OnInit {
       }
 
       this.loading = true;
-      await this.argentina.putRecord(record);
+      await this.country.putRecord(record);
       this.goBack();
     } catch (error) {
       console.log(error);

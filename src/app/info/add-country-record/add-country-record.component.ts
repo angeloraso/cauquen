@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { RouterService } from '@bizy/services';
 import { ICountryRecord } from '@core/model';
-import { ArgentinaService } from '@core/services';
+import { CountryService } from '@core/services';
 
 @Component({
   selector: 'cauquen-add-country-record',
@@ -12,7 +12,7 @@ export class AddCountryRecordComponent {
   loading = false;
 
   constructor(
-    @Inject(ArgentinaService) private argentina: ArgentinaService,
+    @Inject(CountryService) private country: CountryService,
     @Inject(RouterService) private router: RouterService
   ) {}
 
@@ -27,7 +27,7 @@ export class AddCountryRecordComponent {
       }
 
       this.loading = true;
-      await this.argentina.postRecord(record);
+      await this.country.postRecord(record);
       this.goBack();
     } catch (error) {
       console.log(error);

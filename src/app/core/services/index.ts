@@ -1,4 +1,4 @@
-export { ArgentinaService } from './argentina.service';
+export { CountryService } from './country.service';
 export { DatabaseService } from './database.service';
 export { HistoryService } from './history.service';
 export { MobileService } from './mobile.service';
