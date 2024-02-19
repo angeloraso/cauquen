@@ -18,6 +18,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   monthProfitLabels: Array<string> = [];
   monthProfitSeries: Array<Array<number>> = [];
 
+  dollarProfitLabels: Array<string> = [];
+  dollarProfitSeries: Array<Array<number>> = [];
+
   inflationLabels: Array<string> = [];
   inflationSeries: Array<Array<number>> = [];
 
@@ -43,6 +46,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
       const monthProfitLabels: Array<string> = [];
       const monthProfitSeries: Array<number> = [];
+
+      const dollarProfitLabels: Array<string> = [];
+      const dollarProfitSeries: Array<number> = [];
 
       const inflationLabels: Array<string> = [];
       const inflationSeries: Array<number> = [];
@@ -95,6 +101,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         monthProfitLabels.push(label);
         monthProfitSeries.push(profit);
 
+        const dollarsInPeriod = this.utils.roundNumber(
+          lastRecord.balance / _countryRecord.cclDollarRate
+        );
+        dollarProfitLabels.push(label);
+        dollarProfitSeries.push(dollarsInPeriod);
+
         inflationLabels.push(label);
         inflationSeries.push(_countryRecord.ipc);
 
@@ -111,6 +123,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
       this.monthProfitLabels = monthProfitLabels;
       this.monthProfitSeries = [monthProfitSeries];
+
+      this.dollarProfitLabels = dollarProfitLabels;
+      this.dollarProfitSeries = [dollarProfitSeries];
 
       this.inflationLabels = inflationLabels;
       this.inflationSeries = [inflationSeries];

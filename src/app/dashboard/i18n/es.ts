@@ -11,6 +11,9 @@ export const locale = {
       MONTH_PROFIT: {
         TITLE: 'Rendimiento mensual (%)'
       },
+      DOLLAR_PROFIT: {
+        TITLE: 'Rendimiento en dolares (CCL)'
+      },
       INFLATION: {
         TITLE: 'Inflación (%)'
       },
