@@ -1,5 +1,6 @@
 .history {
     --bizy-table-height: calc(100vh - var(--bizy-toolbar-height) - 7rem);
+    position: relative;
 }
 
 .history__table__income {

@@ -1,6 +1,4 @@
 .info {
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
     --bizy-table-height: calc(100vh - var(--bizy-toolbar-height) - 7rem);
+    position: relative;
 }

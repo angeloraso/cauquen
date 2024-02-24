@@ -56,7 +56,3 @@
 .home__sidebar__option--selected {
   color: var(--accent-color);
 }
-
-.home__content__tab__icon {
-  font-size: 1.2rem;
-}

@@ -19,25 +19,25 @@ export class HomeComponent implements OnInit {
     {
       path: `/${APP_PATH.HOME}/${HOME_PATH.HISTORY}`,
       label: 'CORE.MENU.HISTORY',
-      icon: 'history',
+      icon: 'fa-landmark',
       selected: false
     },
     {
       path: `/${APP_PATH.HOME}/${HOME_PATH.DASHBOARD}`,
       label: 'CORE.MENU.DASHBOARD',
-      icon: 'dashboard',
+      icon: 'fa-chart-column',
       selected: false
     },
     {
       path: `/${APP_PATH.HOME}/${HOME_PATH.INFO}`,
       label: 'CORE.MENU.INFO',
-      icon: 'newspaper',
+      icon: 'fa-newspaper',
       selected: false
     },
     {
       path: `/${APP_PATH.HOME}/${HOME_PATH.CONFIG}`,
       label: 'CORE.MENU.CONFIG',
-      icon: 'settings',
+      icon: 'fa-circle-user',
       selected: false
     }
   ];

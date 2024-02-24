@@ -15,8 +15,8 @@
 
       <span class="home__sidebar__option" [ngClass]="{'home__sidebar__option--selected': option.selected}" sidebar-option-content>
         
-        <mat-icon>{{option.icon}}</mat-icon>
-        
+        <i class="fa-solid {{option.icon}}"></i>
+
         <span>{{option.label | translate}}</span>
 
       </span>
@@ -39,7 +39,7 @@
             [selected]="option.selected"
             (onSelect)="onSelect(option)">
         
-            <mat-icon class="home__content__tab__icon" tab-icon>{{option.icon}}</mat-icon>
+            <i tab-icon class="fa-solid {{option.icon}}"></i>
         
             <span tab-label>{{option.label | translate}}</span>
         
