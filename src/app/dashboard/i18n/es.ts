@@ -6,13 +6,18 @@ export const locale = {
     DASHBOARD: {
       TITLE: 'Panel general',
       GENERAL_PROFIT: {
-        TITLE: 'Rendimiento general ($)'
+        TITLE: 'Rendimiento general ($)',
+        ACCOUNT: 'Cuenta',
+        INFLATION: 'Inflación',
+        FIXED_RATE: 'Plazo fijo'
       },
       MONTH_PROFIT: {
-        TITLE: 'Rendimiento mensual (%)'
+        TITLE: 'Rendimiento mensual (%)',
+        ACCOUNT: 'Cuenta'
       },
       DOLLAR_PROFIT: {
-        TITLE: 'Rendimiento en dolares (CCL)'
+        TITLE: 'Rendimiento en dolares (CCL)',
+        ACCOUNT: 'Cuenta'
       },
       INFLATION: {
         TITLE: 'Inflación (%)'
@@ -21,7 +26,9 @@ export const locale = {
         TITLE: 'Tasa de interés (%)'
       },
       DOLLAR_RATE: {
-        TITLE: 'Dolar oficial x Dolar CCL'
+        TITLE: 'Dolar oficial x Dolar CCL',
+        OFFICIAL: 'Oficial',
+        CCL: 'CCL'
       }
     }
   }

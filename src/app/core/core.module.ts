@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,7 +17,8 @@ import { es } from './i18n';
     BizyComponentsModule,
     TranslateModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: ENV.production && !ENV.mobile })
-  ]
+  ],
+  providers: [DatePipe]
 })
 export class CoreModule {
   /* Make sure CoreModule is imported only by one NgModule the AppModule */

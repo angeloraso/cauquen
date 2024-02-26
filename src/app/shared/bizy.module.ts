@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import {
+  BarChartModule,
   ButtonModule,
   ConfirmButtonsModule,
   ErrorModule,
   FabButtonModule,
   InputModule,
+  LineChartModule,
   SelectModule,
   SidebarModule,
   TableModule,
@@ -35,7 +37,9 @@ import { PopupModule, TranslatePipeModule } from '@bizy/services';
     SidebarModule,
     TableModule,
     SelectModule,
-    TranslatePipeModule
+    TranslatePipeModule,
+    LineChartModule,
+    BarChartModule
   ]
 })
 export class BizyModule {}

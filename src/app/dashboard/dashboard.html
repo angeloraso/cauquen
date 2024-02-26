@@ -21,53 +21,71 @@
 
     </span>
 
-    <cauquen-line-chart 
-        id="general-profit-dashboard"
-        title="{{'DASHBOARD.GENERAL_PROFIT.TITLE' | translate}}"
-        [labels]="generalProfitLabels"
-        [series]="generalProfitSeries">
-    </cauquen-line-chart>
+    
+    <span class="dashboard__chart">
 
-    <cauquen-bar-chart 
-        id="month-profit-dashboard"
-        title="{{'DASHBOARD.MONTH_PROFIT.TITLE' | translate}}"
-        [low]="-30"
-        [high]="30"
-        [labels]="monthProfitLabels"
-        [series]="monthProfitSeries">
-    </cauquen-bar-chart>
+        <h4 class="dashboard__chart__title">{{'DASHBOARD.GENERAL_PROFIT.TITLE' | translate}}</h4>
 
-    <cauquen-line-chart 
-        id="general-dollar-profit-dashboard"
-        title="{{'DASHBOARD.DOLLAR_PROFIT.TITLE' | translate}}"
-        [labels]="dollarProfitLabels"
-        [series]="dollarProfitSeries">
-    </cauquen-line-chart>
+        <bizy-line-chart 
+            [labelsX]="generalProfitLabels"
+            yLabelPrefix="$"
+            [data]="generalProfitSeries">
+        </bizy-line-chart>
+    </span>
 
-    <cauquen-line-chart 
-        id="dollar-rate-dashboard"
-        title="{{'DASHBOARD.DOLLAR_RATE.TITLE' | translate}}"
-        link="https://www.dolarito.ar/cotizaciones-historicas/dolar/ccl/2023/cotizacion-historica-del-dolar-ccl-a%C3%B1o-2023"
-        [labels]="dollarRateLabels"
-        [series]="dollarRateSeries">
-    </cauquen-line-chart>
+    <span class="dashboard__chart">
 
-    <cauquen-bar-chart 
-        id="inflation-dashboard"
-        title="{{'DASHBOARD.INFLATION.TITLE' | translate}}"
-        [labels]="inflationLabels"
-        [high]="30"
-        link="https://datosmacro.expansion.com/ipc-paises/argentina?sc=IPC-IG"
-        [series]="inflationSeries">
-    </cauquen-bar-chart>
+        <h4 class="dashboard__chart__title">{{'DASHBOARD.MONTH_PROFIT.TITLE' | translate}}</h4>
 
-    <cauquen-bar-chart 
-        id="fixed-rate-dashboard"
-        title="{{'DASHBOARD.FIXED_RATE.TITLE' | translate}}"
-        [labels]="fixedRateLabels"
-        [high]="150"
-        link="https://www.bcra.gob.ar/PublicacionesEstadisticas/Principales_variables_datos.asp?serie=1212&detalle=Tasas%20de%20inter%E9s%20por%20dep%F3sitos%20a%2030%20d%EDas%20de%20plazo%20en%20entidades%20financieras%A0(en%20%%20n.a.)"
-        [series]="fixedRateSeries">
-    </cauquen-bar-chart>
+        <bizy-bar-chart 
+            [labelsX]="monthProfitLabels"
+            yLabelSuffix="%"
+            [data]="monthProfitSeries">
+        </bizy-bar-chart>
+    </span>
+
+    <span class="dashboard__chart">
+
+        <h4 class="dashboard__chart__title">{{'DASHBOARD.DOLLAR_PROFIT.TITLE' | translate}}</h4>
+
+        <bizy-line-chart 
+            [labelsX]="dollarProfitLabels"
+            yLabelPrefix="U$D"
+            [data]="dollarProfitSeries">
+        </bizy-line-chart>
+    </span>
+
+    <span class="dashboard__chart">
+
+        <h4 class="dashboard__chart__title">{{'DASHBOARD.DOLLAR_RATE.TITLE' | translate}}</h4>
+
+        <bizy-line-chart 
+            yLabelPrefix="U$D"
+            [labelsX]="dollarRateLabels"
+            [data]="dollarRateSeries">
+        </bizy-line-chart>
+    </span>
+
+    <span class="dashboard__chart">
+
+        <h4 class="dashboard__chart__title">{{'DASHBOARD.INFLATION.TITLE' | translate}}</h4>
+
+        <bizy-bar-chart 
+            yLabelSuffix="%"
+            [labelsX]="inflationLabels"
+            [data]="inflationSeries">
+        </bizy-bar-chart>
+    </span>
+
+    <span class="dashboard__chart">
+
+        <h4 class="dashboard__chart__title">{{'DASHBOARD.FIXED_RATE.TITLE' | translate}}</h4>
+
+        <bizy-bar-chart 
+            yLabelSuffix="%"
+            [labelsX]="fixedRateLabels"
+            [data]="fixedRateSeries">
+        </bizy-bar-chart>
+    </span>
 
 </div>

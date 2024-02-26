@@ -36,3 +36,19 @@
 .dashboard__summary-card__total__value--negative {
     color: var(--danger-color);
 }
+
+.dashboard__chart {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    min-height: 20rem;
+    min-width: 100%;
+    position: relative;
+    padding: 0 0 1rem;
+}
+
+.dashboard__chart__title {
+    color: var(--info-color);
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+}

@@ -33,7 +33,7 @@
     --bizy-error-color: var(--danger-color);
 
     --bizy-tabs-background-color: #fff;
-    --bizy-tab-color: var(--text-color);
+    --bizy-tab-color: var(--default-color);
     --bizy-tab-selected-color: var(--accent-color) !important;
 
     --bizy-toolbar-height: 2.4rem;
