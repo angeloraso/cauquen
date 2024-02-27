@@ -66,23 +66,22 @@ export class DatabaseService {
   }
 
   getHistoryRecord(recordId: string) {
-    return new Promise<IHistoryRecord | null>((resolve, reject) => {
+    return new Promise<IHistoryRecord | null>(async (resolve, reject) => {
+      try {
+        const userId = this.auth.getId();
+        if (!userId) {
+          throw new Error('No user id');
+        }
+
+        const record = await getDoc(doc(this.#DB!, `${DB.HISTORY}-${userId}`, recordId));
+        resolve(record.exists() ? (record.data() as IHistoryRecord) : null);
+      } catch (error) {
+        reject(error);
+      }
       const userId = this.auth.getId();
       if (!userId) {
         throw new Error('No user id');
       }
-
-      getDoc(doc(this.#DB!, `${DB.HISTORY}-${userId}`, recordId))
-        .then(record => {
-          if (record.exists()) {
-            resolve(record.data() as IHistoryRecord);
-          } else {
-            resolve(null);
-          }
-        })
-        .catch(error => {
-          reject(error);
-        });
     });
   }
 
@@ -94,18 +93,14 @@ export class DatabaseService {
           throw new Error('No user id');
         }
 
-        await setDoc(
-          doc(this.#DB!, `${DB.HISTORY}-${userId}`, record.id),
-          Object.assign(
-            {},
-            {
-              id: record.id,
-              date: Number(record.date),
-              amount: Number(record.amount),
-              balance: Number(record.balance)
-            }
-          )
-        );
+        await setDoc(doc(this.#DB!, `${DB.HISTORY}-${userId}`, record.id), {
+          id: record.id,
+          date: Number(record.date),
+          amount: Number(record.amount),
+          balance: Number(record.balance),
+          created: Number(record.created),
+          updated: Number(record.updated)
+        });
         resolve();
       } catch (error) {
         reject(error);
@@ -121,18 +116,14 @@ export class DatabaseService {
           throw new Error('No user id');
         }
 
-        await setDoc(
-          doc(this.#DB!, `${DB.HISTORY}-${userId}`, record.id),
-          Object.assign(
-            {},
-            {
-              id: record.id,
-              date: Number(record.date),
-              amount: Number(record.amount),
-              balance: Number(record.balance)
-            }
-          )
-        );
+        await setDoc(doc(this.#DB!, `${DB.HISTORY}-${userId}`, record.id), {
+          id: record.id,
+          date: Number(record.date),
+          amount: Number(record.amount),
+          balance: Number(record.balance),
+          created: Number(record.created),
+          updated: Number(record.updated)
+        });
         resolve();
       } catch (error) {
         reject(error);
@@ -170,7 +161,7 @@ export class DatabaseService {
         querySnapshot.forEach(doc => {
           docs.push(doc.data() as ICountryRecord);
         });
-        resolve(docs);
+        resolve(docs.filter(_doc => _doc.country === country).sort((a, b) => a.from - b.from));
       } catch (error) {
         reject(error);
       }
@@ -178,42 +169,31 @@ export class DatabaseService {
   }
 
   getCountryRecord(recordId: string) {
-    return new Promise<ICountryRecord | null>((resolve, reject) => {
-      getDoc(doc(this.#DB!, `${DB.COUNTRY_RECORDS}`, recordId))
-        .then(record => {
-          if (record.exists()) {
-            resolve(record.data() as ICountryRecord);
-          } else {
-            resolve(null);
-          }
-        })
-        .catch(error => {
-          reject(error);
-        });
+    return new Promise<ICountryRecord | null>(async (resolve, reject) => {
+      try {
+        const record = await getDoc(doc(this.#DB!, `${DB.COUNTRY_RECORDS}`, recordId));
+        resolve(record.exists() ? (record.data() as ICountryRecord) : null);
+      } catch (error) {
+        reject(error);
+      }
     });
   }
 
   postCountryRecord(record: ICountryRecord): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await setDoc(
-          doc(this.#DB!, DB.COUNTRY_RECORDS, record.id),
-          Object.assign(
-            {},
-            {
-              id: record.id,
-              from: Number(record.from),
-              to: Number(record.to),
-              country: record.country,
-              ipc: Number(record.ipc),
-              fixedRate: Number(record.fixedRate),
-              officialDollarRate: Number(record.officialDollarRate),
-              cclDollarRate: Number(record.cclDollarRate),
-              created: Number(record.created),
-              updated: Number(record.updated)
-            }
-          )
-        );
+        await setDoc(doc(this.#DB!, DB.COUNTRY_RECORDS, record.id), {
+          id: record.id,
+          from: Number(record.from),
+          to: Number(record.to),
+          country: record.country,
+          ipc: Number(record.ipc),
+          fixedRate: Number(record.fixedRate),
+          officialDollarRate: Number(record.officialDollarRate),
+          cclDollarRate: Number(record.cclDollarRate),
+          created: Number(record.created),
+          updated: Number(record.updated)
+        });
         resolve();
       } catch (error) {
         reject(error);
@@ -224,24 +204,18 @@ export class DatabaseService {
   putCountryRecord(record: ICountryRecord): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await setDoc(
-          doc(this.#DB!, DB.COUNTRY_RECORDS, record.id),
-          Object.assign(
-            {},
-            {
-              id: record.id,
-              from: Number(record.from),
-              to: Number(record.to),
-              country: record.country,
-              ipc: Number(record.ipc),
-              fixedRate: Number(record.fixedRate),
-              officialDollarRate: Number(record.officialDollarRate),
-              cclDollarRate: Number(record.cclDollarRate),
-              created: Number(record.created),
-              updated: Number(record.updated)
-            }
-          )
-        );
+        await setDoc(doc(this.#DB!, DB.COUNTRY_RECORDS, record.id), {
+          id: record.id,
+          from: Number(record.from),
+          to: Number(record.to),
+          country: record.country,
+          ipc: Number(record.ipc),
+          fixedRate: Number(record.fixedRate),
+          officialDollarRate: Number(record.officialDollarRate),
+          cclDollarRate: Number(record.cclDollarRate),
+          created: Number(record.created),
+          updated: Number(record.updated)
+        });
         resolve();
       } catch (error) {
         reject(error);

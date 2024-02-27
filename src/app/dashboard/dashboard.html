@@ -22,18 +22,18 @@
     </span>
 
     
-    <span class="dashboard__chart">
+    <span class="dashboard__chart" [bizyLoading]="loading">
 
         <h4 class="dashboard__chart__title">{{'DASHBOARD.GENERAL_PROFIT.TITLE' | translate}}</h4>
 
-        <bizy-line-chart 
+        <bizy-line-chart
             [labelsX]="generalProfitLabels"
             yLabelPrefix="$"
             [data]="generalProfitSeries">
         </bizy-line-chart>
     </span>
 
-    <span class="dashboard__chart">
+    <span class="dashboard__chart" [bizyLoading]="loading">
 
         <h4 class="dashboard__chart__title">{{'DASHBOARD.MONTH_PROFIT.TITLE' | translate}}</h4>
 
@@ -44,7 +44,7 @@
         </bizy-bar-chart>
     </span>
 
-    <span class="dashboard__chart">
+    <span class="dashboard__chart" [bizyLoading]="loading">
 
         <h4 class="dashboard__chart__title">{{'DASHBOARD.DOLLAR_PROFIT.TITLE' | translate}}</h4>
 
@@ -55,7 +55,7 @@
         </bizy-line-chart>
     </span>
 
-    <span class="dashboard__chart">
+    <span class="dashboard__chart" [bizyLoading]="loading">
 
         <h4 class="dashboard__chart__title">{{'DASHBOARD.DOLLAR_RATE.TITLE' | translate}}</h4>
 
@@ -66,7 +66,7 @@
         </bizy-line-chart>
     </span>
 
-    <span class="dashboard__chart">
+    <span class="dashboard__chart" [bizyLoading]="loading">
 
         <h4 class="dashboard__chart__title">{{'DASHBOARD.INFLATION.TITLE' | translate}}</h4>
 
@@ -77,7 +77,7 @@
         </bizy-bar-chart>
     </span>
 
-    <span class="dashboard__chart">
+    <span class="dashboard__chart" [bizyLoading]="loading">
 
         <h4 class="dashboard__chart__title">{{'DASHBOARD.FIXED_RATE.TITLE' | translate}}</h4>
 

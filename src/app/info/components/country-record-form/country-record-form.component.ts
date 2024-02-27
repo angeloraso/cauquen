@@ -160,9 +160,9 @@ export class CountryRecordFormComponent {
     }
 
     const from = new Date(this._from.value);
-    from.setHours(0, 1, 0);
+    from.setHours(0, 0, 0);
     const to = new Date(this._to.value);
-    to.setHours(23, 59, 0);
+    to.setHours(23, 59, 59);
 
     this.confirm.emit({
       id: this._id.value,
