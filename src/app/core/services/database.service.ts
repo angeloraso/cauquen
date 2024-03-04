@@ -1,20 +1,23 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { AuthService } from '@core/auth/auth.service';
 import { COUNTRY_CODE, ICountryRecord, IHistoryRecord } from '@core/model';
 import { FirebaseApp } from 'firebase/app';
 import {
   Firestore,
+  Unsubscribe,
   collection,
   deleteDoc,
   doc,
   getDoc,
-  getDocs,
-  getFirestore,
+  initializeFirestore,
+  onSnapshot,
   orderBy,
+  persistentLocalCache,
   query,
   setDoc,
   where
 } from 'firebase/firestore';
+import { BehaviorSubject } from 'rxjs';
 
 enum DB {
   HISTORY = 'HISTORY',
@@ -34,31 +37,44 @@ enum OPERATOR {
 @Injectable({
   providedIn: 'root'
 })
-export class DatabaseService {
+export class DatabaseService implements OnDestroy {
   #DB: Firestore | null = null;
+  #subscriptions = new Set<Unsubscribe>();
+  #history = new BehaviorSubject<Array<IHistoryRecord> | undefined>(undefined);
+  #countryData = new BehaviorSubject<Array<ICountryRecord> | undefined>(undefined);
 
   constructor(@Inject(AuthService) private auth: AuthService) {}
 
   start(app: FirebaseApp) {
-    this.#DB = getFirestore(app);
+    this.#DB = initializeFirestore(app, {
+      localCache: persistentLocalCache({ cacheSizeBytes: 0 })
+    });
   }
 
   getHistoryRecords() {
     return new Promise<Array<IHistoryRecord>>(async (resolve, reject) => {
       try {
+        if (typeof this.#history.value !== 'undefined') {
+          resolve(this.#history.value);
+          return;
+        }
+
         const userId = this.auth.getId();
         if (!userId) {
           throw new Error('No user id');
         }
 
         const q = query(collection(this.#DB!, `${DB.HISTORY}-${userId}`), orderBy('date', 'asc'));
-        const querySnapshot = await getDocs(q);
-        const docs: Array<IHistoryRecord> = [];
-        querySnapshot.forEach(doc => {
-          docs.push(doc.data() as IHistoryRecord);
+        const unsubscribe = onSnapshot(q, querySnapshot => {
+          const docs: Array<IHistoryRecord> = [];
+          querySnapshot.forEach(doc => {
+            docs.push(doc.data() as IHistoryRecord);
+          });
+          this.#history.next(docs);
+          resolve(docs);
         });
 
-        resolve(docs);
+        this.#subscriptions.add(unsubscribe);
       } catch (error) {
         reject(error);
       }
@@ -68,6 +84,11 @@ export class DatabaseService {
   getHistoryRecord(recordId: string) {
     return new Promise<IHistoryRecord | null>(async (resolve, reject) => {
       try {
+        if (typeof this.#history.value !== 'undefined') {
+          resolve(this.#history.value.find(_record => _record.id === recordId) || null);
+          return;
+        }
+
         const userId = this.auth.getId();
         if (!userId) {
           throw new Error('No user id');
@@ -148,20 +169,29 @@ export class DatabaseService {
   }
 
   getCountryRecords(country: COUNTRY_CODE) {
-    return new Promise<Array<ICountryRecord>>(async (resolve, reject) => {
+    return new Promise<Array<ICountryRecord>>((resolve, reject) => {
       try {
+        if (typeof this.#countryData.value !== 'undefined') {
+          resolve(this.#countryData.value);
+          return;
+        }
+
         const q = query(
           collection(this.#DB!, DB.COUNTRY_RECORDS),
           where('country', OPERATOR.EQUAL, country),
           orderBy('from', 'asc')
         );
 
-        const querySnapshot = await getDocs(q);
-        const docs: Array<ICountryRecord> = [];
-        querySnapshot.forEach(doc => {
-          docs.push(doc.data() as ICountryRecord);
+        const unsubscribe = onSnapshot(q, querySnapshot => {
+          const docs: Array<ICountryRecord> = [];
+          querySnapshot.forEach(doc => {
+            docs.push(doc.data() as ICountryRecord);
+          });
+          this.#countryData.next(docs);
+          resolve(docs);
         });
-        resolve(docs.filter(_doc => _doc.country === country).sort((a, b) => a.from - b.from));
+
+        this.#subscriptions.add(unsubscribe);
       } catch (error) {
         reject(error);
       }
@@ -171,6 +201,11 @@ export class DatabaseService {
   getCountryRecord(recordId: string) {
     return new Promise<ICountryRecord | null>(async (resolve, reject) => {
       try {
+        if (typeof this.#countryData.value !== 'undefined') {
+          resolve(this.#countryData.value.find(_record => _record.id === recordId) || null);
+          return;
+        }
+
         const record = await getDoc(doc(this.#DB!, `${DB.COUNTRY_RECORDS}`, recordId));
         resolve(record.exists() ? (record.data() as ICountryRecord) : null);
       } catch (error) {
@@ -232,5 +267,13 @@ export class DatabaseService {
         reject(error);
       }
     });
+  }
+
+  ngOnDestroy() {
+    const subscriptions = Array.from(this.#subscriptions);
+    subscriptions.forEach(unsubscribe => {
+      unsubscribe();
+    });
+    this.#subscriptions.clear();
   }
 }
