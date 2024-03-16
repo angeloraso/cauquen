@@ -1,6 +1,6 @@
 {
   "name": "cauquen",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "description": "Cauquen",
   "scripts": {
     "start": "ng serve -o --configuration=development",
