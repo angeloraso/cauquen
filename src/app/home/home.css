@@ -9,6 +9,49 @@
 
 .home__sidebar {
   display: none;
+  background-color: inherit;
+  --bizy-toolbar-background-color: #ffffff;
+}
+
+.home__sidebar__header {
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.home__sidebar__header__logo {
+  height: 2rem;
+}
+
+.home__sidebar__header__name {
+  color: var(--primary-color);
+}
+
+::ng-deep .home__sidebar__option {
+  background-color: transparent;
+  width: 100% !important;
+  height: 2.6rem;
+}
+
+::ng-deep .home__sidebar__option:hover {
+  background-color: var(--hover-color) !important;
+}
+
+::ng-deep .home__sidebar__option .bizy-button__content {
+  align-items: baseline !important;
+}
+
+::ng-deep .home__sidebar__option * {
+  color: var(--text-color);
+  font-size: 1.2rem;
+}
+
+::ng-deep .home__sidebar__option--selected * {
+  color: var(--accent-color);
+}
+
+::ng-deep .home__sidebar__option--opened {
+  justify-content: flex-start !important;
 }
 
 .home__tabs {
@@ -17,14 +60,13 @@
 
 @media only screen and (min-width: 768px) {
   .home__sidebar {
-    display: block;
+    display: block !important;
   }
 
   .home__tabs {
     display: none;
   }
 }
-
 
 .home__content {
   flex: 1;
@@ -38,21 +80,7 @@
 .home__content__router-outlet {
   width: 100%;
   height: 100%;
-  min-height: 30rem;
   overflow-y: scroll;
   overflow-x: hidden;
   background-color: var(--background-color);
-}
-
-.home__sidebar__option {
-  display: flex;
-  align-items: center;
-  column-gap: 0.5rem;
-  min-height: 1.6rem;
-  min-width: 10rem;
-  cursor: pointer;
-}
-
-.home__sidebar__option--selected {
-  color: var(--accent-color);
 }

@@ -14,7 +14,7 @@ interface IOption {
   styleUrls: ['./home.css']
 })
 export class HomeComponent implements OnInit {
-  toolbarTitle: string = '';
+  openedSidebar: boolean = true;
   options: Array<IOption> = [
     {
       path: `/${APP_PATH.HOME}/${HOME_PATH.HISTORY}`,

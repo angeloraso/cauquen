@@ -1,27 +1,27 @@
 <div class="home">
 
-  <bizy-sidebar class="home__sidebar">
+  <bizy-sidebar 
+    class="home__sidebar"
+    [opened]="openedSidebar"
+    (onOpen)="openedSidebar = $event">
 
-    <bizy-sidebar-header>
-      
-      <bizy-toolbar></bizy-toolbar>
+    <bizy-toolbar sidebar-header>
 
-    </bizy-sidebar-header>
-
-    <bizy-sidebar-option 
-      *ngFor="let option of options"
-      [selected]="option.selected" 
-      (onSelect)="onSelect(option)">
-
-      <span class="home__sidebar__option" [ngClass]="{'home__sidebar__option--selected': option.selected}" sidebar-option-content>
-        
-        <i class="fa-solid {{option.icon}}"></i>
-
-        <h4>{{option.label | translate}}</h4>
-
+      <span slot=start class="home__sidebar__header">
+        <img class="home__sidebar__header__logo" src="/assets/favicons/favicon.ico" alt="logo"/>
+        <h1 class="home__sidebar__header__name" *ngIf="openedSidebar">Bizy</h1>
       </span>
 
-    </bizy-sidebar-option>
+    </bizy-toolbar>
+
+    <bizy-button 
+      *ngFor="let option of options"
+      customClass="home__sidebar__option {{option.selected ? 'home__sidebar__option--selected' : ''}} {{openedSidebar ? 'home__sidebar__option--opened' : ''}}"
+      (onSelect)="onSelect(option)">
+        <i class="fa-solid {{option.icon}}"></i>
+
+        <h4 *ngIf="openedSidebar">{{option.label | translate}}</h4>
+    </bizy-button>
 
   </bizy-sidebar>
     

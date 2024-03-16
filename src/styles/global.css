@@ -124,3 +124,23 @@ h6 {
 .cauquen-button--danger {
     background-color: var(--danger-color) !important;
 }
+
+.cauquen-logo {
+    height: 2rem;
+}
+
+@media only screen and (min-width: 768px) {
+    .cauquen-logo {
+        visibility: hidden;
+        pointer-events: none;
+        width: 0.5rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .cauquen-logo {
+        visibility: visible;
+        pointer-events: all;
+        width: 2rem;
+    }
+}
