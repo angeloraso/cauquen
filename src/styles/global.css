@@ -10,6 +10,21 @@ h6 {
     color: var(--text-color);
 }
 
+.bizy-table-row h5,
+.bizy-table-row h6,
+.bizy-table-footer h5,
+.bizy-table-footer h6 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4em;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
 .cauquen-wrapper {
     padding: 1em;
 }
@@ -142,5 +157,13 @@ h6 {
         visibility: visible;
         pointer-events: all;
         width: 2rem;
+    }
+}
+
+
+@media only screen and (max-width: 576px) {
+    .hidden-xs {
+        visibility: hidden !important;
+        display: none !important;
     }
 }

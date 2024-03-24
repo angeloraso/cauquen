@@ -10,7 +10,7 @@ export class ConfirmPopupComponent {
   _title: string = '';
   _msg: string = '';
 
-  constructor(@Inject(PopupService) private popup: PopupService<ConfirmPopupComponent, boolean>) {
+  constructor(@Inject(PopupService) private popup: PopupService) {
     const data = this.popup.getData<{ title: string; msg: string }>();
 
     if (data && data.title) {
@@ -23,10 +23,10 @@ export class ConfirmPopupComponent {
   }
 
   cancel() {
-    this.popup.close({ data: false });
+    this.popup.close({ response: false });
   }
 
   confirm() {
-    this.popup.close({ data: true });
+    this.popup.close({ response: true });
   }
 }

@@ -17,15 +17,14 @@ export class ConfigComponent implements OnDestroy {
   loading = false;
 
   constructor(
-    @Inject(PopupService) private aboutPopup: PopupService<AboutPopupComponent, void>,
-    @Inject(PopupService) private confirmPopup: PopupService<ConfirmPopupComponent, boolean>,
+    @Inject(PopupService) private popup: PopupService,
     @Inject(AuthService) private auth: AuthService,
     @Inject(RouterService) private router: RouterService,
     @Inject(TranslateService) private translate: TranslateService
   ) {}
 
   openPopup(): void {
-    this.aboutPopup.open({ component: AboutPopupComponent });
+    this.popup.open({ component: AboutPopupComponent });
   }
 
   onSignOut(): void {
@@ -33,16 +32,15 @@ export class ConfigComponent implements OnDestroy {
       return;
     }
 
-    this.confirmPopup.open({
-      component: ConfirmPopupComponent,
-      data: {
-        title: this.translate.get('CONFIG.SIGN_OUT_POPUP.TITLE'),
-        msg: `${this.translate.get('CONFIG.SIGN_OUT_POPUP.MSG')}: ${this.auth.getEmail()}`
-      }
-    });
-
-    this.#subscription.add(
-      this.confirmPopup.closed$.subscribe((res: boolean) => {
+    this.popup.open<boolean>(
+      {
+        component: ConfirmPopupComponent,
+        data: {
+          title: this.translate.get('CONFIG.SIGN_OUT_POPUP.TITLE'),
+          msg: `${this.translate.get('CONFIG.SIGN_OUT_POPUP.MSG')}: ${this.auth.getEmail()}`
+        }
+      },
+      res => {
         if (res) {
           this.loading = true;
           this.auth
@@ -52,7 +50,7 @@ export class ConfigComponent implements OnDestroy {
             })
             .finally(() => (this.loading = false));
         }
-      })
+      }
     );
   }
 

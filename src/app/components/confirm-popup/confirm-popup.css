@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   row-gap: 1rem;
+  padding: 1rem;
 }
 
 .confirm-popup__msg {

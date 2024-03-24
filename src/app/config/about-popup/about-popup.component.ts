@@ -17,7 +17,7 @@ export class AboutPopupComponent implements AfterViewInit {
     @Inject(UserAgentService) public userAgent: UserAgentService,
     @Inject(LogService) private log: LogService,
     @Inject(ChangeDetectorRef) private ref: ChangeDetectorRef,
-    @Inject(PopupService) private popup: PopupService<AboutPopupComponent, void>
+    @Inject(PopupService) private popup: PopupService
   ) {}
 
   async ngAfterViewInit() {

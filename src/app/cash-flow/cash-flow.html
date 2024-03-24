@@ -12,34 +12,34 @@
 
         <bizy-table-header>
     
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="onSort('date')">
+            <bizy-table-column [ngStyle]="{flex: 2, minWidth: '3rem'}" (onSelect)="onSort('date')">
                 <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.DATE' | translate}}</strong></h5>
                 <bizy-table-column-arrows [order]="order" [show]="orderBy === 'date'"></bizy-table-column-arrows>
             </bizy-table-column>
     
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="onSort('amount')">
+            <bizy-table-column [ngStyle]="{flex: 3, minWidth: '6rem'}" (onSelect)="onSort('amount')">
                 <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.AMOUNT' | translate}}</strong></h5>
                 <bizy-table-column-arrows [order]="order" [show]="orderBy === 'amount'"></bizy-table-column-arrows>
             </bizy-table-column>
     
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="onSort('balance')">
+            <bizy-table-column [ngStyle]="{flex: 3, minWidth: '6rem'}" (onSelect)="onSort('balance')">
                 <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.BALANCE' | translate}}</strong></h5>
                 <bizy-table-column-arrows [order]="order" [show]="orderBy === 'balance'"></bizy-table-column-arrows>
             </bizy-table-column>
     
-            <bizy-table-column [ngStyle]="{flex: 1}"></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 1, minWidth: '2rem'}"></bizy-table-column>
     
         </bizy-table-header>
     
         <bizy-table-row *ngFor="let record of records | bizyOrderBy: order : orderBy" [customClass]="!record.amount ? 'cash-flow__table__row--end-of-month' : ''">
     
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="editRecord(record)"><h6>{{record.date | date: 'dd/MM/YYYY'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 2, minWidth: '3rem'}" (onSelect)="editRecord(record)"><h6>{{record.date | date: 'dd/MM/YYYY'}}</h6></bizy-table-column>
     
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="editRecord(record)"><h6 [ngClass]="{'cash-flow__table__income': record.amount > 0, 'cash-flow__table__expense': record.amount < 0}">$ {{record.amount | number : '1.2-2'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3, minWidth: '6rem'}" (onSelect)="editRecord(record)"><h6 [ngClass]="{'cash-flow__table__income': record.amount > 0, 'cash-flow__table__expense': record.amount < 0}">$ {{record.amount | number : '1.2-2'}}</h6></bizy-table-column>
     
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="editRecord(record)"><h6>$ {{record.balance | number : '1.2-2'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3, minWidth: '6rem'}" (onSelect)="editRecord(record)"><h6>$ {{record.balance | number : '1.2-2'}}</h6></bizy-table-column>
     
-            <bizy-table-column [ngStyle]="{flex: 1}" customClass="cauquen-table-column-center" (onSelect)="openConfirmPopup(record)"><i class="fa-solid fa-trash-alt cauquen-action cauquen-action--danger"></i></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 1, minWidth: '2rem'}" (onSelect)="openConfirmPopup(record)"><i class="fa-solid fa-trash-alt cauquen-action cauquen-action--danger"></i></bizy-table-column>
     
         </bizy-table-row>
     

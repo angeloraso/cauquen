@@ -40,5 +40,5 @@
     --bizy-toolbar-background-color: var(--hover-color);
 
     --bizy-select-label-color: var(--info-color);
-    --anura-table-column-min-width: 5rem;
+    --bizy-table-column-min-width: 5rem;
 }

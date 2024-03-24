@@ -20,7 +20,7 @@ export class CashFlowComponent implements OnInit, OnDestroy {
   private _subscription = new Subscription();
 
   constructor(
-    @Inject(PopupService) private popup: PopupService<ConfirmPopupComponent, boolean>,
+    @Inject(PopupService) private popup: PopupService,
     @Inject(RouterService) private router: RouterService,
     @Inject(CashFlowService) private cashFlow: CashFlowService
   ) {}
@@ -51,17 +51,16 @@ export class CashFlowComponent implements OnInit, OnDestroy {
   }
 
   openConfirmPopup(record: ICashFlowRecord) {
-    this.popup.open({
-      component: ConfirmPopupComponent,
-      data: record
-    });
-
-    this._subscription.add(
-      this.popup.closed$.subscribe((res: boolean) => {
+    this.popup.open<boolean>(
+      {
+        component: ConfirmPopupComponent,
+        data: record
+      },
+      res => {
         if (res) {
           this.#deleteRecord(record);
         }
-      })
+      }
     );
   }
 

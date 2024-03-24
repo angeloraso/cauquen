@@ -32,17 +32,17 @@
                 <bizy-table-column-arrows [order]="order" [show]="orderBy === 'fixedRate'"></bizy-table-column-arrows>
             </bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="onSort('officialDollarRate')">
+            <bizy-table-column [ngStyle]="{flex: 3}" class="hidden-xs" (onSelect)="onSort('officialDollarRate')">
                 <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.OFFICIAL_DOLLAR_RATE' | translate}}</strong></h5>
                 <bizy-table-column-arrows [order]="order" [show]="orderBy === 'officialDollarRate'"></bizy-table-column-arrows>
             </bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="onSort('cclDollarRate')">
+            <bizy-table-column [ngStyle]="{flex: 3}" class="hidden-xs" (onSelect)="onSort('cclDollarRate')">
                 <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.CCL_DOLLAR_RATE' | translate}}</strong></h5>
                 <bizy-table-column-arrows [order]="order" [show]="orderBy === 'cclDollarRate'"></bizy-table-column-arrows>
             </bizy-table-column>
     
-            <bizy-table-column [ngStyle]="{flex: 1}"></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 1, minWidth: '1rem'}"></bizy-table-column>
     
         </bizy-table-header>
     
@@ -56,11 +56,11 @@
 
             <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.fixedRate | number : '1.2-2'}} %</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>$ {{record.officialDollarRate | number : '1.2-2'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}" class="hidden-xs" (onSelect)="goToRecord(record)"><h6>$ {{record.officialDollarRate | number : '1.2-2'}}</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>$ {{record.cclDollarRate | number : '1.2-2'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}" class="hidden-xs" (onSelect)="goToRecord(record)"><h6>$ {{record.cclDollarRate | number : '1.2-2'}}</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 1}" customClass="cauquen-table-column-center" (onSelect)="openConfirmPopup(record)"><i class="fa-solid fa-trash-alt cauquen-action cauquen-action--danger"></i></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 1, minWidth: '1rem'}" (onSelect)="openConfirmPopup(record)"><i class="fa-solid fa-trash-alt cauquen-action cauquen-action--danger"></i></bizy-table-column>
     
         </bizy-table-row>
     

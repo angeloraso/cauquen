@@ -22,7 +22,7 @@ export class InfoComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(CountryService) private country: CountryService,
     @Inject(RouterService) private router: RouterService,
-    @Inject(PopupService) private popup: PopupService<ConfirmPopupComponent, boolean>
+    @Inject(PopupService) private popup: PopupService
   ) {}
 
   async ngOnInit() {
@@ -42,17 +42,16 @@ export class InfoComponent implements OnInit, OnDestroy {
   }
 
   openConfirmPopup(record: ICountryRecord) {
-    this.popup.open({
-      component: ConfirmPopupComponent,
-      data: record
-    });
-
-    this._subscription.add(
-      this.popup.closed$.subscribe((res: boolean) => {
+    this.popup.open<boolean>(
+      {
+        component: ConfirmPopupComponent,
+        data: record
+      },
+      res => {
         if (res) {
           this.#deleteRecord(record);
         }
-      })
+      }
     );
   }
 
