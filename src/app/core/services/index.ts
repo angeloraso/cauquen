@@ -1,6 +1,6 @@
+export { CashFlowService } from './cash-flow.service';
 export { CountryService } from './country.service';
 export { DatabaseService } from './database.service';
-export { HistoryService } from './history.service';
 export { MobileService } from './mobile.service';
 export { ServiceWorkerService } from './service-worker.service';
 export { UtilsService } from './utils.service';

@@ -17,8 +17,8 @@ export class HomeComponent implements OnInit {
   openedSidebar: boolean = true;
   options: Array<IOption> = [
     {
-      path: `/${APP_PATH.HOME}/${HOME_PATH.HISTORY}`,
-      label: 'CORE.MENU.HISTORY',
+      path: `/${APP_PATH.HOME}/${HOME_PATH.CASH_FLOW}`,
+      label: 'CORE.MENU.CASH_FLOW',
       icon: 'fa-landmark',
       selected: false
     },

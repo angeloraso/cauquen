@@ -1,18 +1,18 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { PopupService, RouterService } from '@bizy/services';
 import { ConfirmPopupComponent } from '@components/confirm-popup';
-import { IHistoryRecord } from '@core/model';
-import { HistoryService } from '@core/services';
+import { ICashFlowRecord } from '@core/model';
+import { CashFlowService } from '@core/services';
 import { Subscription } from 'rxjs';
-import { PATH } from './history.routing';
+import { PATH } from './cash-flow.routing';
 
 @Component({
-  selector: 'cauquen-history',
-  templateUrl: './history.html',
-  styleUrls: ['./history.css']
+  selector: 'cauquen-cash-flow',
+  templateUrl: './cash-flow.html',
+  styleUrls: ['./cash-flow.css']
 })
-export class HistoryComponent implements OnInit, OnDestroy {
-  records: Array<IHistoryRecord> = [];
+export class CashFlowComponent implements OnInit, OnDestroy {
+  records: Array<ICashFlowRecord> = [];
   loading = false;
   orderBy: string = 'date';
   order: 'asc' | 'desc' | null = 'desc';
@@ -22,13 +22,13 @@ export class HistoryComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(PopupService) private popup: PopupService<ConfirmPopupComponent, boolean>,
     @Inject(RouterService) private router: RouterService,
-    @Inject(HistoryService) private history: HistoryService
+    @Inject(CashFlowService) private cashFlow: CashFlowService
   ) {}
 
   async ngOnInit() {
     try {
       this.loading = true;
-      const data = await this.history.getRecords();
+      const data = await this.cashFlow.getRecords();
       this.records = data ?? [];
     } catch (error) {
       console.log(error);
@@ -41,7 +41,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
     this.router.goTo({ path: PATH.ADD });
   }
 
-  editRecord(record: IHistoryRecord) {
+  editRecord(record: ICashFlowRecord) {
     this.router.goTo({ path: String(record.id) });
   }
 
@@ -50,7 +50,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
     this.order = this.order === 'asc' ? 'desc' : this.order === 'desc' ? null : 'asc';
   }
 
-  openConfirmPopup(record: IHistoryRecord) {
+  openConfirmPopup(record: ICashFlowRecord) {
     this.popup.open({
       component: ConfirmPopupComponent,
       data: record
@@ -65,9 +65,9 @@ export class HistoryComponent implements OnInit, OnDestroy {
     );
   }
 
-  async #deleteRecord(record: IHistoryRecord) {
+  async #deleteRecord(record: ICashFlowRecord) {
     try {
-      await this.history.deleteRecord(record);
+      await this.cashFlow.deleteRecord(record);
       const index = this.records.findIndex(_record => _record.id === record.id);
       if (index !== -1) {
         this.records.splice(index, 1);

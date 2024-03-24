@@ -1,30 +1,29 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { AuthService } from '@core/auth/auth.service';
-import { COUNTRY_CODE, ICountryRecord, IHistoryRecord } from '@core/model';
+import { COUNTRY_CODE, ICashFlowRecord, ICountryRecord } from '@core/model';
 import { FirebaseApp } from 'firebase/app';
 import {
   Firestore,
   Unsubscribe,
-  collection,
-  deleteDoc,
   doc,
-  getDoc,
   initializeFirestore,
   onSnapshot,
-  orderBy,
   persistentLocalCache,
-  query,
-  setDoc,
-  where
+  setDoc
 } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
 
-enum DB {
-  HISTORY = 'HISTORY',
-  COUNTRY_RECORDS = 'COUNTRY_RECORDS'
+enum COLLECTION {
+  COUNTRY = 'country'
 }
 
-enum OPERATOR {
+enum USER_DOCUMENT {
+  CASH_FLOW_RECORDS = 'cash-flow-records',
+  ROLES = 'roles',
+  PREFERENCES = 'preferences'
+}
+
+/* enum OPERATOR {
   EQUAL = '==',
   NOT_EQUAL = '!=',
   LESS = '<',
@@ -32,7 +31,7 @@ enum OPERATOR {
   GREATER = '>',
   GREATER_OR_EQUAL = '>=',
   CONTAINS = 'array-contains'
-}
+} */
 
 @Injectable({
   providedIn: 'root'
@@ -40,8 +39,8 @@ enum OPERATOR {
 export class DatabaseService implements OnDestroy {
   #DB: Firestore | null = null;
   #subscriptions = new Set<Unsubscribe>();
-  #history = new BehaviorSubject<Array<IHistoryRecord> | undefined>(undefined);
-  #countryData = new BehaviorSubject<Array<ICountryRecord> | undefined>(undefined);
+  #cashFlowRecords = new BehaviorSubject<Array<ICashFlowRecord> | undefined>(undefined);
+  #countryRecords = new BehaviorSubject<Array<ICountryRecord> | undefined>(undefined);
 
   constructor(@Inject(AuthService) private auth: AuthService) {}
 
@@ -51,11 +50,11 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
-  getHistoryRecords() {
-    return new Promise<Array<IHistoryRecord>>(async (resolve, reject) => {
+  getCashFlowRecords() {
+    return new Promise<Array<ICashFlowRecord>>(async (resolve, reject) => {
       try {
-        if (typeof this.#history.value !== 'undefined') {
-          resolve(this.#history.value);
+        if (typeof this.#cashFlowRecords.value !== 'undefined') {
+          resolve(this.#cashFlowRecords.value);
           return;
         }
 
@@ -64,15 +63,15 @@ export class DatabaseService implements OnDestroy {
           throw new Error('No user id');
         }
 
-        const q = query(collection(this.#DB!, `${DB.HISTORY}-${userId}`), orderBy('date', 'asc'));
-        const unsubscribe = onSnapshot(q, querySnapshot => {
-          const docs: Array<IHistoryRecord> = [];
-          querySnapshot.forEach(doc => {
-            docs.push(doc.data() as IHistoryRecord);
-          });
-          this.#history.next(docs);
-          resolve(docs);
-        });
+        const unsubscribe = onSnapshot(
+          doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS),
+          doc => {
+            const data = doc.data();
+            const records = data ? (data.data as Array<ICashFlowRecord>) : [];
+            this.#cashFlowRecords.next(records);
+            resolve(records);
+          }
+        );
 
         this.#subscriptions.add(unsubscribe);
       } catch (error) {
@@ -81,11 +80,11 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
-  getHistoryRecord(recordId: string) {
-    return new Promise<IHistoryRecord | null>(async (resolve, reject) => {
+  getCashFlowRecord(recordId: string) {
+    return new Promise<ICashFlowRecord | null>(async (resolve, reject) => {
       try {
-        if (typeof this.#history.value !== 'undefined') {
-          resolve(this.#history.value.find(_record => _record.id === recordId) || null);
+        if (typeof this.#cashFlowRecords.value !== 'undefined') {
+          resolve(this.#cashFlowRecords.value.find(_record => _record.id === recordId) || null);
           return;
         }
 
@@ -94,19 +93,16 @@ export class DatabaseService implements OnDestroy {
           throw new Error('No user id');
         }
 
-        const record = await getDoc(doc(this.#DB!, `${DB.HISTORY}-${userId}`, recordId));
-        resolve(record.exists() ? (record.data() as IHistoryRecord) : null);
+        const records = await this.getCashFlowRecords();
+        const record = records.find(_record => _record.id === recordId) || null;
+        resolve(record as ICashFlowRecord);
       } catch (error) {
         reject(error);
-      }
-      const userId = this.auth.getId();
-      if (!userId) {
-        throw new Error('No user id');
       }
     });
   }
 
-  postHistoryRecord(record: IHistoryRecord): Promise<void> {
+  postCashFlowRecord(record: ICashFlowRecord): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
         const userId = this.auth.getId();
@@ -114,14 +110,10 @@ export class DatabaseService implements OnDestroy {
           throw new Error('No user id');
         }
 
-        await setDoc(doc(this.#DB!, `${DB.HISTORY}-${userId}`, record.id), {
-          id: record.id,
-          date: Number(record.date),
-          amount: Number(record.amount),
-          balance: Number(record.balance),
-          created: Number(record.created),
-          updated: Number(record.updated)
-        });
+        const records = await this.getCashFlowRecords();
+        records.push(record);
+
+        await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS), { data: records });
         resolve();
       } catch (error) {
         reject(error);
@@ -129,7 +121,7 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
-  putHistoryRecord(record: IHistoryRecord): Promise<void> {
+  putCashFlowRecord(record: ICashFlowRecord): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
         const userId = this.auth.getId();
@@ -137,14 +129,13 @@ export class DatabaseService implements OnDestroy {
           throw new Error('No user id');
         }
 
-        await setDoc(doc(this.#DB!, `${DB.HISTORY}-${userId}`, record.id), {
-          id: record.id,
-          date: Number(record.date),
-          amount: Number(record.amount),
-          balance: Number(record.balance),
-          created: Number(record.created),
-          updated: Number(record.updated)
-        });
+        const records = await this.getCashFlowRecords();
+        const index = records.findIndex(_record => _record.id === record.id);
+        if (index !== -1) {
+          records[index] = record;
+          await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS), { data: records });
+        }
+
         resolve();
       } catch (error) {
         reject(error);
@@ -152,7 +143,7 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
-  deleteHistoryRecord(id: string): Promise<void> {
+  deleteCashFlowRecord(id: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
         const userId = this.auth.getId();
@@ -160,7 +151,10 @@ export class DatabaseService implements OnDestroy {
           throw new Error('No user id');
         }
 
-        await deleteDoc(doc(this.#DB!, `${DB.HISTORY}-${userId}`, id));
+        let records = await this.getCashFlowRecords();
+        records = records.filter(_record => _record.id !== id);
+
+        await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS), { data: records });
         resolve();
       } catch (error) {
         reject(error);
@@ -169,26 +163,18 @@ export class DatabaseService implements OnDestroy {
   }
 
   getCountryRecords(country: COUNTRY_CODE) {
-    return new Promise<Array<ICountryRecord>>((resolve, reject) => {
+    return new Promise<Array<ICountryRecord>>(async (resolve, reject) => {
       try {
-        if (typeof this.#countryData.value !== 'undefined') {
-          resolve(this.#countryData.value);
+        if (typeof this.#countryRecords.value !== 'undefined') {
+          resolve(this.#countryRecords.value);
           return;
         }
 
-        const q = query(
-          collection(this.#DB!, DB.COUNTRY_RECORDS),
-          where('country', OPERATOR.EQUAL, country),
-          orderBy('from', 'asc')
-        );
-
-        const unsubscribe = onSnapshot(q, querySnapshot => {
-          const docs: Array<ICountryRecord> = [];
-          querySnapshot.forEach(doc => {
-            docs.push(doc.data() as ICountryRecord);
-          });
-          this.#countryData.next(docs);
-          resolve(docs);
+        const unsubscribe = onSnapshot(doc(this.#DB!, COLLECTION.COUNTRY, country), doc => {
+          const data = doc.data();
+          const records = data ? (data.data as Array<ICountryRecord>) : [];
+          this.#countryRecords.next(records);
+          resolve(records);
         });
 
         this.#subscriptions.add(unsubscribe);
@@ -198,37 +184,30 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
-  getCountryRecord(recordId: string) {
+  getCountryRecord(data: { id: string; country: COUNTRY_CODE }) {
     return new Promise<ICountryRecord | null>(async (resolve, reject) => {
       try {
-        if (typeof this.#countryData.value !== 'undefined') {
-          resolve(this.#countryData.value.find(_record => _record.id === recordId) || null);
+        if (typeof this.#countryRecords.value !== 'undefined') {
+          resolve(this.#countryRecords.value.find(_record => _record.id === data.id) || null);
           return;
         }
 
-        const record = await getDoc(doc(this.#DB!, `${DB.COUNTRY_RECORDS}`, recordId));
-        resolve(record.exists() ? (record.data() as ICountryRecord) : null);
+        const records = await this.getCountryRecords(data.country);
+        const record = records.find(_record => _record.id === data.id) || null;
+        resolve(record as ICountryRecord);
       } catch (error) {
         reject(error);
       }
     });
   }
 
-  postCountryRecord(record: ICountryRecord): Promise<void> {
+  postCountryRecord(data: { record: ICountryRecord; country: COUNTRY_CODE }): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await setDoc(doc(this.#DB!, DB.COUNTRY_RECORDS, record.id), {
-          id: record.id,
-          from: Number(record.from),
-          to: Number(record.to),
-          country: record.country,
-          ipc: Number(record.ipc),
-          fixedRate: Number(record.fixedRate),
-          officialDollarRate: Number(record.officialDollarRate),
-          cclDollarRate: Number(record.cclDollarRate),
-          created: Number(record.created),
-          updated: Number(record.updated)
-        });
+        const records = await this.getCountryRecords(data.country);
+        records.push(data.record);
+
+        await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), { data: records });
         resolve();
       } catch (error) {
         reject(error);
@@ -236,21 +215,16 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
-  putCountryRecord(record: ICountryRecord): Promise<void> {
+  putCountryRecord(data: { record: ICountryRecord; country: COUNTRY_CODE }): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await setDoc(doc(this.#DB!, DB.COUNTRY_RECORDS, record.id), {
-          id: record.id,
-          from: Number(record.from),
-          to: Number(record.to),
-          country: record.country,
-          ipc: Number(record.ipc),
-          fixedRate: Number(record.fixedRate),
-          officialDollarRate: Number(record.officialDollarRate),
-          cclDollarRate: Number(record.cclDollarRate),
-          created: Number(record.created),
-          updated: Number(record.updated)
-        });
+        const records = await this.getCountryRecords(data.country);
+        const index = records.findIndex(_record => _record.id === data.record.id);
+        if (index !== -1) {
+          records[index] = data.record;
+          await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), { data: records });
+        }
+
         resolve();
       } catch (error) {
         reject(error);
@@ -258,10 +232,13 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
-  deleteCountryRecord(id: string): Promise<void> {
+  deleteCountryRecord(data: { id: string; country: COUNTRY_CODE }): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await deleteDoc(doc(this.#DB!, DB.COUNTRY_RECORDS, id));
+        let records = await this.getCountryRecords(data.country);
+        records = records.filter(_record => _record.id !== data.id);
+
+        await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), { data: records });
         resolve();
       } catch (error) {
         reject(error);

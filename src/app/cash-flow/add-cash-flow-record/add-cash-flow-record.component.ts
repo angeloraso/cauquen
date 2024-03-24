@@ -1,18 +1,18 @@
 import { Component, Inject } from '@angular/core';
 import { RouterService } from '@bizy/services';
-import { IHistoryRecord } from '@core/model';
-import { HistoryService } from '@core/services';
+import { ICashFlowRecord } from '@core/model';
+import { CashFlowService } from '@core/services';
 
 @Component({
-  selector: 'cauquen-add-history-record',
-  templateUrl: './add-history-record.html',
-  styleUrls: ['./add-history-record.css']
+  selector: 'cauquen-add-cash-flow-record',
+  templateUrl: './add-cash-flow-record.html',
+  styleUrls: ['./add-cash-flow-record.css']
 })
-export class AddHistoryRecordComponent {
+export class AddCashFlowRecordComponent {
   loading = false;
 
   constructor(
-    @Inject(HistoryService) private history: HistoryService,
+    @Inject(CashFlowService) private cashFlow: CashFlowService,
     @Inject(RouterService) private router: RouterService
   ) {}
 
@@ -20,14 +20,14 @@ export class AddHistoryRecordComponent {
     this.router.goBack();
   }
 
-  async confirm(record: IHistoryRecord) {
+  async confirm(record: ICashFlowRecord) {
     try {
       if (this.loading) {
         return;
       }
 
       this.loading = true;
-      await this.history.postRecord(record);
+      await this.cashFlow.postRecord(record);
       this.goBack();
     } catch (error) {
       console.log(error);

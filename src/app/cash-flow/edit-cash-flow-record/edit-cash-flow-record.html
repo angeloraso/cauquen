@@ -2,13 +2,13 @@
 
     <img slot=start class="cauquen-logo" src="/assets/favicons/favicon.ico" alt="logo"/>
     
-    <h1 slot=start>{{'HISTORY.EDIT_HISTORY_RECORD.TITLE' | translate}}</h1>
+    <h1 slot=start>{{'CASH_FLOW.EDIT_CASH_FLOW_RECORD.TITLE' | translate}}</h1>
 
 </bizy-toolbar>
 
-<div class="cauquen-wrapper edit-history-record">
+<div class="cauquen-wrapper edit-cash-flow-record">
 
-    <cauquen-history-record-form
+    <cauquen-cash-flow-record-form
         *ngIf="record"
         [id]="record.id"
         [date]="record.date"
@@ -16,6 +16,6 @@
         [balance]="record.balance"
         (cancel)="goBack()"
         (confirm)="confirm($event)">
-    </cauquen-history-record-form>
+    </cauquen-cash-flow-record-form>
 
 </div>

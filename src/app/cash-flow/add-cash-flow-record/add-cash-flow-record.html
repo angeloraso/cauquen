@@ -1,0 +1,16 @@
+<bizy-toolbar>
+
+    <img slot=start class="cauquen-logo" src="/assets/favicons/favicon.ico" alt="logo"/>
+    
+    <h1 slot=start>{{'CASH_FLOW.ADD_CASH_FLOW_RECORD.TITLE' | translate}}</h1>
+
+</bizy-toolbar>
+
+<div class="cauquen-wrapper add-cash-flow-record" [bizyLoading]="loading">
+
+    <cauquen-cash-flow-record-form
+        (cancel)="goBack()"
+        (confirm)="confirm($event)">
+    </cauquen-cash-flow-record-form>
+
+</div>

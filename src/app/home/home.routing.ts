@@ -5,7 +5,7 @@ import { HomeComponent } from './home.component';
 export enum PATH {
   EMPTY = '',
   DASHBOARD = 'dashboard',
-  HISTORY = 'history',
+  CASH_FLOW = 'cash-flow',
   INFO = 'info',
   CONFIG = 'config',
   ANY = '**'
@@ -26,8 +26,8 @@ const routes: Routes = [
         loadChildren: () => import('@dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
-        path: PATH.HISTORY,
-        loadChildren: () => import('@history/history.module').then(m => m.HistoryModule)
+        path: PATH.CASH_FLOW,
+        loadChildren: () => import('@cash-flow/cash-flow.module').then(m => m.CashFlowModule)
       },
       {
         path: PATH.INFO,

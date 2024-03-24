@@ -33,7 +33,7 @@
       "@home/*": ["src/app/home/*"],
       "@menu/*": ["src/app/side-menu/*"],
       "@dashboard/*": ["src/app/dashboard/*"],
-      "@history/*": ["src/app/history/*"],
+      "@cash-flow/*": ["src/app/cash-flow/*"],
       "@info/*": ["src/app/info/*"],
       "@config/*": ["src/app/config/*"]
     }

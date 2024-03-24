@@ -1,6 +1,6 @@
 import uuid4 from 'uuid4';
 
-export interface IHistoryRecord {
+export interface ICashFlowRecord {
   id: string;
   date: number;
   amount: number;
@@ -9,7 +9,7 @@ export interface IHistoryRecord {
   updated: number;
 }
 
-export class HistoryRecord implements HistoryRecord {
+export class CashFlowRecord implements CashFlowRecord {
   id: string;
   date: number;
   amount: number;
@@ -17,11 +17,11 @@ export class HistoryRecord implements HistoryRecord {
   created: number;
   updated: number;
 
-  constructor(record: Omit<IHistoryRecord, 'id' | 'created' | 'updated'>) {
+  constructor(record: Omit<ICashFlowRecord, 'id' | 'created' | 'updated'>) {
     this.id = uuid4();
-    this.date = record.date;
-    this.amount = record.amount;
-    this.balance = record.balance;
+    this.date = Number(record.date);
+    this.amount = Number(record.amount);
+    this.balance = Number(record.balance);
     this.created = Date.now();
     this.updated = Date.now();
   }
@@ -59,12 +59,12 @@ export class CountryRecord implements ICountryRecord {
   constructor(record: Omit<ICountryRecord, 'id' | 'created' | 'updated'>) {
     this.id = uuid4();
     this.country = record.country ?? COUNTRY_CODE.ARGENTINA;
-    this.from = record.from;
-    this.to = record.to;
-    this.ipc = record.ipc;
-    this.fixedRate = record.fixedRate;
-    this.officialDollarRate = record.officialDollarRate;
-    this.cclDollarRate = record.cclDollarRate;
+    this.from = Number(record.from);
+    this.to = Number(record.to);
+    this.ipc = Number(record.ipc);
+    this.fixedRate = Number(record.fixedRate);
+    this.officialDollarRate = Number(record.officialDollarRate);
+    this.cclDollarRate = Number(record.cclDollarRate);
     this.created = Date.now();
     this.updated = Date.now();
   }

@@ -1,20 +1,20 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterService } from '@bizy/services';
-import { IHistoryRecord } from '@core/model';
-import { HistoryService } from '@core/services';
+import { ICashFlowRecord } from '@core/model';
+import { CashFlowService } from '@core/services';
 
 @Component({
-  selector: 'cauquen-edit-history-record',
-  templateUrl: './edit-history-record.html',
-  styleUrls: ['./edit-history-record.css']
+  selector: 'cauquen-edit-cash-flow-record',
+  templateUrl: './edit-cash-flow-record.html',
+  styleUrls: ['./edit-cash-flow-record.css']
 })
-export class EditHistoryRecordComponent implements OnInit {
+export class EditCashFlowRecordComponent implements OnInit {
   loading = false;
-  record: IHistoryRecord | null = null;
+  record: ICashFlowRecord | null = null;
 
   constructor(
-    @Inject(HistoryService) private history: HistoryService,
+    @Inject(CashFlowService) private cashFlow: CashFlowService,
     @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
     @Inject(RouterService) private router: RouterService
   ) {}
@@ -22,14 +22,14 @@ export class EditHistoryRecordComponent implements OnInit {
   async ngOnInit() {
     try {
       this.loading = true;
-      const recordId = this.router.getId(this.activatedRoute, 'historyRecordId');
+      const recordId = this.router.getId(this.activatedRoute, 'cashFlowRecordId');
 
       if (!recordId) {
         this.goBack();
         return;
       }
 
-      const record = await this.history.getRecord(recordId);
+      const record = await this.cashFlow.getRecord(recordId);
 
       this.record = record;
     } catch (error) {
@@ -44,14 +44,14 @@ export class EditHistoryRecordComponent implements OnInit {
     this.router.goBack();
   }
 
-  async confirm(record: IHistoryRecord) {
+  async confirm(record: ICashFlowRecord) {
     try {
       if (this.loading) {
         return;
       }
 
       this.loading = true;
-      await this.history.putRecord(record);
+      await this.cashFlow.putRecord(record);
       this.goBack();
     } catch (error) {
       console.log(error);

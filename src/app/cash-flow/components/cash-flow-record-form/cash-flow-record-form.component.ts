@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IHistoryRecord } from '@core/model';
+import { ICashFlowRecord } from '@core/model';
 
 @Component({
-  selector: 'cauquen-history-record-form',
-  templateUrl: './history-record-form.html',
-  styleUrls: ['./history-record-form.css']
+  selector: 'cauquen-cash-flow-record-form',
+  templateUrl: './cash-flow-record-form.html',
+  styleUrls: ['./cash-flow-record-form.css']
 })
-export class HistoryRecordFormComponent {
+export class CashFlowRecordFormComponent {
   @Output() cancel = new EventEmitter<void>();
-  @Output() confirm = new EventEmitter<IHistoryRecord>();
+  @Output() confirm = new EventEmitter<ICashFlowRecord>();
 
   @Input() set id(id: string) {
     if (!id) {

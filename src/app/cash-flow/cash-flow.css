@@ -1,27 +1,27 @@
-.history {
+.cash-flow {
     --bizy-table-height: calc(100vh - var(--bizy-toolbar-height) - 7rem);
     position: relative;
 }
 
-.history__table__income {
+.cash-flow__table__income {
     font-weight: bold;
     color: var(--success-color);
 }
 
-.history__table__expense {
+.cash-flow__table__expense {
     font-weight: bold;
     color: var(--danger-color);
 }
 
-.history__table__balance {
+.cash-flow__table__balance {
     font-weight: bold;
     color: var(--info-color);
 }
 
-.history__table__actions__delete {
+.cash-flow__table__actions__delete {
     color: var(--danger-color);
 }
 
-::ng-deep .history__table__row--end-of-month {
+::ng-deep .cash-flow__table__row--end-of-month {
     --bizy-table-row-background-color: var(--hover-color);
 }

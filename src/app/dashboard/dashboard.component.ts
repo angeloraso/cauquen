@@ -3,7 +3,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { IBarChartData, ILineChartData } from '@bizy/components';
 import { TranslateService } from '@bizy/services';
 import { COUNTRY_CODE } from '@core/model';
-import { CountryService, HistoryService, UtilsService } from '@core/services';
+import { CashFlowService, CountryService, UtilsService } from '@core/services';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   loading: boolean = false;
 
   constructor(
-    @Inject(HistoryService) private history: HistoryService,
+    @Inject(CashFlowService) private cashFlow: CashFlowService,
     @Inject(CountryService) private country: CountryService,
     @Inject(UtilsService) private utils: UtilsService,
     @Inject(TranslateService) private translate: TranslateService,
@@ -106,16 +106,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       ];
 
-      const [history, countryRecords] = await Promise.all([
-        this.history.getRecords(),
+      const [cashFlowRecords, countryRecords] = await Promise.all([
+        this.cashFlow.getRecords(),
         this.country.getRecords(COUNTRY_CODE.ARGENTINA)
       ]);
 
       let previousBalance = 0;
       countryRecords.forEach(_countryRecord => {
-        const recordsByPeriod = history.filter(
-          _historyRecord =>
-            _historyRecord.date >= _countryRecord.from && _historyRecord.date <= _countryRecord.to
+        const recordsByPeriod = cashFlowRecords.filter(
+          _record => _record.date >= _countryRecord.from && _record.date <= _countryRecord.to
         );
 
         if (recordsByPeriod.length === 0) {
