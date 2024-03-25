@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { IBarChartData, ILineChartData } from '@bizy/components';
+import { OrderByPipe } from '@bizy/pipes';
 import { TranslateService } from '@bizy/services';
 import { COUNTRY_CODE } from '@core/model';
 import { CashFlowService, CountryService, UtilsService } from '@core/services';
@@ -40,7 +41,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     @Inject(CountryService) private country: CountryService,
     @Inject(UtilsService) private utils: UtilsService,
     @Inject(TranslateService) private translate: TranslateService,
-    @Inject(DatePipe) private datePipe: DatePipe
+    @Inject(DatePipe) private datePipe: DatePipe,
+    @Inject(OrderByPipe) private orderByPipe: OrderByPipe
   ) {}
 
   async ngOnInit() {
@@ -106,10 +108,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
       ];
 
-      const [cashFlowRecords, countryRecords] = await Promise.all([
+      let [cashFlowRecords, countryRecords] = await Promise.all([
         this.cashFlow.getRecords(),
         this.country.getRecords(COUNTRY_CODE.ARGENTINA)
       ]);
+
+      cashFlowRecords = this.orderByPipe.transform(cashFlowRecords, 'asc', 'date');
+      countryRecords = this.orderByPipe.transform(countryRecords, 'asc', 'from');
 
       let previousBalance = 0;
       countryRecords.forEach(_countryRecord => {

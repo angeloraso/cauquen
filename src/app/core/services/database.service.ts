@@ -111,9 +111,15 @@ export class DatabaseService implements OnDestroy {
         }
 
         const records = await this.getCashFlowRecords();
-        records.push(record);
+        const index = records.findIndex(_record => _record.id === record.id);
+        if (index !== -1) {
+          records[index] = record;
+        } else {
+          records.push(record);
+        }
 
-        await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS), { data: records });
+        const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
+        await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS), cashFlowRecords);
         resolve();
       } catch (error) {
         reject(error);
@@ -133,7 +139,8 @@ export class DatabaseService implements OnDestroy {
         const index = records.findIndex(_record => _record.id === record.id);
         if (index !== -1) {
           records[index] = record;
-          await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS), { data: records });
+          const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
+          await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS), cashFlowRecords);
         }
 
         resolve();
@@ -154,7 +161,9 @@ export class DatabaseService implements OnDestroy {
         let records = await this.getCashFlowRecords();
         records = records.filter(_record => _record.id !== id);
 
-        await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS), { data: records });
+        const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
+
+        await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS), cashFlowRecords);
         resolve();
       } catch (error) {
         reject(error);
@@ -205,9 +214,21 @@ export class DatabaseService implements OnDestroy {
     return new Promise<void>(async (resolve, reject) => {
       try {
         const records = await this.getCountryRecords(data.country);
-        records.push(data.record);
+        const index = records.findIndex(_record => _record.id === data.record.id);
+        if (index !== -1) {
+          records[index] = data.record;
+        } else {
+          records.push(data.record);
+        }
 
-        await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), { data: records });
+        const countryRecord = JSON.parse(JSON.stringify({ data: records }));
+
+        await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), countryRecord);
+
+        await setDoc(
+          doc(this.#DB!, COLLECTION.COUNTRY, data.country),
+          JSON.parse(JSON.stringify({ data: records }))
+        );
         resolve();
       } catch (error) {
         reject(error);
@@ -222,7 +243,9 @@ export class DatabaseService implements OnDestroy {
         const index = records.findIndex(_record => _record.id === data.record.id);
         if (index !== -1) {
           records[index] = data.record;
-          await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), { data: records });
+
+          const countryRecord = JSON.parse(JSON.stringify({ data: records }));
+          await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), countryRecord);
         }
 
         resolve();
@@ -238,7 +261,9 @@ export class DatabaseService implements OnDestroy {
         let records = await this.getCountryRecords(data.country);
         records = records.filter(_record => _record.id !== data.id);
 
-        await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), { data: records });
+        const countryRecord = JSON.parse(JSON.stringify({ data: records }));
+
+        await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), countryRecord);
         resolve();
       } catch (error) {
         reject(error);
