@@ -32,6 +32,7 @@ export const locale = {
           FIXED_RATE: 'Tasa',
           COUNTRY: 'País',
           INCOME: 'Entrada de dinero',
+          DOLLAR: 'Dolar',
           OFFICIAL_DOLLAR_RATE: 'Dolar (oficial)',
           CCL_DOLLAR_RATE: 'Dolar (CCL)'
         },

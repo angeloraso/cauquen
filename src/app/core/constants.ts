@@ -18,4 +18,4 @@ export const ROOT_PATHS = [
   `/${APP_PATH.AUTH}`
 ];
 
-export const COUNTRIES = [{ id: COUNTRY_CODE.ARGENTINA, name: 'CORE.COUNTRY.AR' }];
+export const COUNTRIES = [{ id: COUNTRY_CODE.ARGENTINA, value: 'CORE.COUNTRY.AR' }];

@@ -11,12 +11,8 @@ export class UserSettingsService {
   isAdmin() {
     return new Promise<boolean>(async resolve => {
       try {
-        const settings = await this.database.getUserSettings();
-        if (settings && Array.isArray(settings.roles) && settings.roles.includes(ROLE.ADMIN)) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
+        const roles = await this.database.getUserRoles();
+        resolve(roles && roles.includes(ROLE.ADMIN));
       } catch {
         resolve(false);
       }
@@ -26,8 +22,19 @@ export class UserSettingsService {
   getCountry() {
     return new Promise<COUNTRY_CODE>(async (resolve, reject) => {
       try {
-        const settings = await this.database.getUserSettings();
-        resolve(settings ? settings.country : COUNTRY_CODE.ARGENTINA);
+        const country = await this.database.getUserCountry();
+        resolve(country ?? COUNTRY_CODE.ARGENTINA);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  putCountry(country: COUNTRY_CODE) {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await this.database.putUserCountry(country);
+        resolve();
       } catch (error) {
         reject(error);
       }

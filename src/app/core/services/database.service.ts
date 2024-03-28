@@ -1,6 +1,6 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { AuthService } from '@core/auth/auth.service';
-import { COUNTRY_CODE, ICashFlowRecord, ICountryRecord, IUserSettings } from '@core/model';
+import { COUNTRY_CODE, ICashFlowRecord, ICountryRecord, IUserSettings, ROLE } from '@core/model';
 import { FirebaseApp } from 'firebase/app';
 import {
   Firestore,
@@ -291,6 +291,66 @@ export class DatabaseService implements OnDestroy {
         });
 
         this.#subscriptions.add(unsubscribe);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  getUserRoles() {
+    return new Promise<Array<ROLE>>(async (resolve, reject) => {
+      try {
+        if (typeof this.#userSettings.value !== 'undefined') {
+          resolve(this.#userSettings.value.roles ?? []);
+          return;
+        }
+
+        const settings = await this.getUserSettings();
+
+        if (settings && settings.roles) {
+          resolve(settings.roles);
+        } else {
+          resolve([]);
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  getUserCountry() {
+    return new Promise<COUNTRY_CODE>(async (resolve, reject) => {
+      try {
+        if (typeof this.#userSettings.value !== 'undefined') {
+          resolve(this.#userSettings.value.country ?? []);
+          return;
+        }
+
+        const settings = await this.getUserSettings();
+
+        if (settings && settings.country) {
+          resolve(settings.country);
+        } else {
+          resolve(COUNTRY_CODE.ARGENTINA);
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  putUserCountry(country: COUNTRY_CODE) {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        const userId = this.auth.getId();
+        if (!userId) {
+          throw new Error('No user id');
+        }
+
+        const settings = await this.getUserSettings();
+        const newSettings = JSON.parse(JSON.stringify({ ...settings, country }));
+        await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.SETTINGS), newSettings);
+        resolve();
       } catch (error) {
         reject(error);
       }

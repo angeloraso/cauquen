@@ -4,7 +4,7 @@
         label="{{'CORE.FORM.FIELD.COUNTRY' | translate}}"
         [value]="_country.value"
         (onSelect)="_country.setValue($event)">
-        <bizy-select-option *ngFor="let c of COUNTRIES" [key]="c.id">{{c.name | translate}}</bizy-select-option>
+        <bizy-select-option *ngFor="let c of COUNTRIES" [key]="c.id">{{c.value | translate}}</bizy-select-option>
     </bizy-select>
 
     <bizy-input 

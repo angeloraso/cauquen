@@ -2,6 +2,7 @@
 @import '/node_modules/@bizy/services/styles/popup.css';
 @import '/node_modules/@bizy/components/styles/normalize.css';
 @import '/node_modules/@bizy/components/styles/animations.css';
+@import '/node_modules/@bizy/components/styles/overlay.css';
 
 :root {
     --bizy-loading-color-1st-line: var(--light-primary-color);
