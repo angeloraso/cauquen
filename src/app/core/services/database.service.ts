@@ -1,6 +1,6 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { AuthService } from '@core/auth/auth.service';
-import { COUNTRY_CODE, ICashFlowRecord, ICountryRecord } from '@core/model';
+import { COUNTRY_CODE, ICashFlowRecord, ICountryRecord, IUserSettings } from '@core/model';
 import { FirebaseApp } from 'firebase/app';
 import {
   Firestore,
@@ -19,8 +19,7 @@ enum COLLECTION {
 
 enum USER_DOCUMENT {
   CASH_FLOW_RECORDS = 'cash-flow-records',
-  ROLES = 'roles',
-  PREFERENCES = 'preferences'
+  SETTINGS = 'settings'
 }
 
 /* enum OPERATOR {
@@ -41,6 +40,7 @@ export class DatabaseService implements OnDestroy {
   #subscriptions = new Set<Unsubscribe>();
   #cashFlowRecords = new BehaviorSubject<Array<ICashFlowRecord> | undefined>(undefined);
   #countryRecords = new BehaviorSubject<Array<ICountryRecord> | undefined>(undefined);
+  #userSettings = new BehaviorSubject<IUserSettings | undefined>(undefined);
 
   constructor(@Inject(AuthService) private auth: AuthService) {}
 
@@ -265,6 +265,32 @@ export class DatabaseService implements OnDestroy {
 
         await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), countryRecord);
         resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  getUserSettings() {
+    return new Promise<IUserSettings | null>(async (resolve, reject) => {
+      try {
+        if (typeof this.#userSettings.value !== 'undefined') {
+          resolve(this.#userSettings.value);
+          return;
+        }
+
+        const userId = this.auth.getId();
+        if (!userId) {
+          throw new Error('No user id');
+        }
+
+        const unsubscribe = onSnapshot(doc(this.#DB!, userId, USER_DOCUMENT.SETTINGS), doc => {
+          const settings = doc.data();
+          this.#userSettings.next(settings as IUserSettings);
+          resolve((settings as IUserSettings) ?? null);
+        });
+
+        this.#subscriptions.add(unsubscribe);
       } catch (error) {
         reject(error);
       }

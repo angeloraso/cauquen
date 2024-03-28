@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { authCanActivateGuard } from '@core/guards';
+import { adminCanActivateGuard, authCanActivateGuard } from '@core/guards';
 import { AddCountryRecordComponent } from './add-country-record/add-country-record.component';
 import { EditCountryRecordComponent } from './edit-country-record/edit-country-record.component';
 import { InfoComponent } from './info.component';
@@ -20,12 +20,12 @@ const routes: Routes = [
   {
     path: PATH.ADD,
     component: AddCountryRecordComponent,
-    canActivate: [authCanActivateGuard]
+    canActivate: [authCanActivateGuard, adminCanActivateGuard]
   },
   {
     path: ':countryRecordId',
     component: EditCountryRecordComponent,
-    canActivate: [authCanActivateGuard]
+    canActivate: [authCanActivateGuard, adminCanActivateGuard]
   }
 ];
 

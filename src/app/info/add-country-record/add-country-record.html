@@ -9,6 +9,7 @@
 <div class="cauquen-wrapper add-country-record" [bizyLoading]="loading">
 
     <cauquen-country-record-form
+        [country]="userCountry"
         (cancel)="goBack()"
         (confirm)="confirm($event)">
     </cauquen-country-record-form>

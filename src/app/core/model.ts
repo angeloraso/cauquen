@@ -69,3 +69,14 @@ export class CountryRecord implements ICountryRecord {
     this.updated = Date.now();
   }
 }
+
+export enum ROLE {
+  ADMIN = 'ADMIN',
+  MANAGER = 'MANAGER',
+  INVITED = 'INVITED'
+}
+
+export interface IUserSettings {
+  roles: Array<ROLE>;
+  country: COUNTRY_CODE;
+}

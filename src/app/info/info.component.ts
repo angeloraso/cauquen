@@ -1,8 +1,8 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { PopupService, RouterService } from '@bizy/services';
 import { ConfirmPopupComponent } from '@components/confirm-popup';
-import { COUNTRY_CODE, ICountryRecord } from '@core/model';
-import { CountryService } from '@core/services';
+import { ICountryRecord } from '@core/model';
+import { CountryService, UserSettingsService } from '@core/services';
 import { Subscription } from 'rxjs';
 import { PATH } from './info.routing';
 
@@ -16,11 +16,13 @@ export class InfoComponent implements OnInit, OnDestroy {
   loading = false;
   orderBy: string = 'from';
   order: 'asc' | 'desc' | null = 'desc';
+  isAdmin = false;
 
   private _subscription = new Subscription();
 
   constructor(
     @Inject(CountryService) private country: CountryService,
+    @Inject(UserSettingsService) private userSettings: UserSettingsService,
     @Inject(RouterService) private router: RouterService,
     @Inject(PopupService) private popup: PopupService
   ) {}
@@ -28,7 +30,13 @@ export class InfoComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     try {
       this.loading = true;
-      const countryData = await this.country.getRecords(COUNTRY_CODE.ARGENTINA);
+      const [isAdmin, userCountry] = await Promise.all([
+        this.userSettings.isAdmin(),
+        this.userSettings.getCountry()
+      ]);
+
+      this.isAdmin = isAdmin;
+      const countryData = await this.country.getRecords(userCountry);
       this.info = countryData ?? [];
     } catch (error) {
       console.debug(error);
@@ -38,10 +46,18 @@ export class InfoComponent implements OnInit, OnDestroy {
   }
 
   goToRecord(record: ICountryRecord): void {
+    if (!this.isAdmin) {
+      return;
+    }
+
     this.router.goTo({ path: record.id });
   }
 
   openConfirmPopup(record: ICountryRecord) {
+    if (!this.isAdmin) {
+      return;
+    }
+
     this.popup.open<boolean>(
       {
         component: ConfirmPopupComponent,
@@ -56,6 +72,9 @@ export class InfoComponent implements OnInit, OnDestroy {
   }
 
   addRecord() {
+    if (!this.isAdmin) {
+      return;
+    }
     this.router.goTo({ path: PATH.ADD });
   }
 
