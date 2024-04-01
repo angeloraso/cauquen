@@ -96,7 +96,8 @@ export class AuthService {
       this.#AUTH_UI.start(uiContainer, {
         signInOptions: [GoogleAuthProvider.PROVIDER_ID],
         callbacks: {
-          uiShown: resolve
+          uiShown: resolve,
+          signInSuccessWithAuthResult: () => false
         }
       });
     });
