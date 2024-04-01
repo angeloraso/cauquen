@@ -5,7 +5,7 @@ import { PopupService, RouterService, TranslateService } from '@bizy/services';
 import { ConfirmPopupComponent } from '@components/confirm-popup';
 import { PATH as AUTH_PATH } from '@core/auth/auth.routing';
 import { AuthService } from '@core/auth/auth.service';
-import { COUNTRIES } from '@core/constants';
+import { COUNTRIES, LOGO_PATH } from '@core/constants';
 import { COUNTRY_CODE } from '@core/model';
 import { UserSettingsService } from '@core/services';
 import { Subscription } from 'rxjs';
@@ -23,7 +23,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
     userCountry: FormControl<string | null>;
   }>;
 
-  profilePic = '/assets/favicons/favicon.ico';
+  profilePic = LOGO_PATH;
 
   readonly COUNTRIES = COUNTRIES;
 

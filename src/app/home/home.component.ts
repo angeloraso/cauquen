@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { PATH as APP_PATH } from '@app/app.routing';
 import { RouterService } from '@bizy/services';
+import { AuthService } from '@core/auth/auth.service';
+import { LOGO_PATH } from '@core/constants';
 import { PATH as HOME_PATH } from '@home/home.routing';
 interface IOption {
   path: string;
@@ -15,6 +17,7 @@ interface IOption {
 })
 export class HomeComponent implements OnInit {
   openedSidebar: boolean = true;
+  profilePic = LOGO_PATH;
   options: Array<IOption> = [
     {
       path: `/${APP_PATH.HOME}/${HOME_PATH.CASH_FLOW}`,
@@ -42,7 +45,15 @@ export class HomeComponent implements OnInit {
     }
   ];
 
-  constructor(@Inject(RouterService) private router: RouterService) {}
+  constructor(
+    @Inject(RouterService) private router: RouterService,
+    @Inject(AuthService) private auth: AuthService
+  ) {
+    const profilePic = this.auth.getProfilePicture();
+    if (profilePic) {
+      this.profilePic = profilePic;
+    }
+  }
 
   ngOnInit() {
     this.options.forEach(_option => {
