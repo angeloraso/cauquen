@@ -5,18 +5,18 @@ import {
   GoogleAuthProvider,
   User,
   getAuth,
+  getRedirectResult,
   indexedDBLocalPersistence,
   setPersistence,
+  signInWithRedirect,
   signOut
 } from 'firebase/auth';
-import * as firebaseui from 'firebaseui';
 import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   #AUTH: Auth | null = null;
-  #AUTH_UI: firebaseui.auth.AuthUI | null = null;
   #USER: User | null = null;
   #signedIn = new BehaviorSubject<boolean>(false);
 
@@ -45,12 +45,26 @@ export class AuthService {
     });
   }
 
-  signIn() {
-    if (!this.#AUTH_UI) {
+  async signIn() {
+    try {
+      if (!this.#AUTH) {
+        return;
+      }
+
+      const provider = new GoogleAuthProvider();
+      await signInWithRedirect(this.#AUTH, provider);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getSignInResult() {
+    if (!this.#AUTH) {
       return;
     }
 
-    this.#AUTH_UI.signIn();
+    const result = await getRedirectResult(this.#AUTH);
+    return result;
   }
 
   getEmail(): string | null {
@@ -89,17 +103,4 @@ export class AuthService {
       }
     });
   }
-
-  startUI = (uiContainer: Element) => {
-    return new Promise<void>(resolve => {
-      this.#AUTH_UI = new firebaseui.auth.AuthUI(this.#AUTH);
-      this.#AUTH_UI.start(uiContainer, {
-        signInOptions: [GoogleAuthProvider.PROVIDER_ID],
-        callbacks: {
-          uiShown: resolve,
-          signInSuccessWithAuthResult: () => false
-        }
-      });
-    });
-  };
 }

@@ -11,7 +11,7 @@ import {
   persistentLocalCache,
   setDoc
 } from 'firebase/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, filter } from 'rxjs';
 
 enum COLLECTION {
   COUNTRY = 'country'
@@ -42,7 +42,11 @@ export class DatabaseService implements OnDestroy {
   #countryRecords = new BehaviorSubject<Array<ICountryRecord> | undefined>(undefined);
   #userSettings = new BehaviorSubject<IUserSettings | undefined>(undefined);
 
-  constructor(@Inject(AuthService) private auth: AuthService) {}
+  constructor(@Inject(AuthService) private auth: AuthService) {
+    this.auth.signedIn$.pipe(filter(value => value === false)).subscribe(() => {
+      this.destroy();
+    });
+  }
 
   start(app: FirebaseApp) {
     this.#DB = initializeFirestore(app, {
@@ -357,11 +361,15 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  destroy = () => {
     const subscriptions = Array.from(this.#subscriptions);
     subscriptions.forEach(unsubscribe => {
       unsubscribe();
     });
     this.#subscriptions.clear();
+  };
+
+  ngOnDestroy() {
+    this.destroy();
   }
 }
