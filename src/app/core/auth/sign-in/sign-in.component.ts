@@ -1,6 +1,7 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { RouterService } from '@bizy/services';
 import { AuthService } from '@core/auth/auth.service';
+import { filter, take } from 'rxjs';
 
 @Component({
   selector: 'cauquen-sign-in',
@@ -15,7 +16,17 @@ export class SignInComponent implements OnInit {
   constructor(
     @Inject(AuthService) private auth: AuthService,
     @Inject(RouterService) private router: RouterService
-  ) {}
+  ) {
+    this.auth.signedIn$
+      .pipe(
+        filter(value => value === true),
+        take(1)
+      )
+      .subscribe(() => {
+        sessionStorage.setItem('signIn', 'done');
+        this.router.reload(true);
+      });
+  }
 
   async ngOnInit() {
     try {
