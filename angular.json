@@ -18,7 +18,8 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
-              "zone.js"
+              "zone.js",
+              "dialog-polyfill"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [

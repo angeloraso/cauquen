@@ -23,6 +23,8 @@ export class ConfigComponent implements OnInit, OnDestroy {
     userCountry: FormControl<string | null>;
   }>;
 
+  profilePic = '/assets/favicons/favicon.ico';
+
   readonly COUNTRIES = COUNTRIES;
 
   constructor(
@@ -36,6 +38,11 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       userCountry: ['', [Validators.required]]
     });
+
+    const profilePic = this.auth.getProfilePicture();
+    if (profilePic) {
+      this.profilePic = profilePic;
+    }
   }
 
   async ngOnInit() {
