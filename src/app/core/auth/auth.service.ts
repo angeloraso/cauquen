@@ -36,7 +36,6 @@ export class AuthService {
             await setPersistence(this.#AUTH!, indexedDBLocalPersistence);
           }
 
-          console.log(this.getId());
           this.#signedIn.next(signedIn);
         });
         resolve();
@@ -96,7 +95,6 @@ export class AuthService {
       this.#AUTH_UI = new firebaseui.auth.AuthUI(this.#AUTH);
       this.#AUTH_UI.start(uiContainer, {
         signInOptions: [GoogleAuthProvider.PROVIDER_ID],
-        signInSuccessUrl: '/',
         callbacks: {
           uiShown: resolve
         }
