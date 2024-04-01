@@ -30,6 +30,7 @@ export class AuthService {
         this.#AUTH = getAuth(app);
         await setPersistence(this.#AUTH!, indexedDBLocalPersistence);
         this.#AUTH.onAuthStateChanged(async state => {
+          console.log('USER: ', state);
           this.#USER = state;
           const signedIn = Boolean(state);
           if (signedIn !== this.#signedIn.value) {

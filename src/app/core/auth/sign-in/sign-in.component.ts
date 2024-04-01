@@ -23,6 +23,7 @@ export class SignInComponent implements OnInit {
         take(1)
       )
       .subscribe(() => {
+        console.log('SIGN IN!');
         sessionStorage.setItem('signIn', 'done');
         this.router.reload(true);
       });
@@ -34,6 +35,7 @@ export class SignInComponent implements OnInit {
       if (signIn === 'pending') {
         this.loading = true;
         const result = await this.auth.getSignInResult();
+        console.log('RESULT: ', result);
         if (result) {
           sessionStorage.setItem('signIn', 'done');
           this.router.reload(true);
