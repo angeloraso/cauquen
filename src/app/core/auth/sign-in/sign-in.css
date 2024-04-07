@@ -17,14 +17,6 @@
   min-width: 10rem;
 }
 
-.sign-in--hidden {
-  height: 0;
-  width: 0;
-  opacity: 0;
-  z-index: -1;
-  pointer-events: none;
-}
-
 .container {
   background-color: var(--background-color);
   position: absolute;

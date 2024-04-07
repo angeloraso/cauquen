@@ -5,8 +5,8 @@ import {
   GoogleAuthProvider,
   User,
   getAuth,
-  getRedirectResult,
   indexedDBLocalPersistence,
+  onAuthStateChanged,
   setPersistence,
   signInWithRedirect,
   signOut
@@ -28,8 +28,12 @@ export class AuthService {
     return new Promise<void>(async (resolve, reject) => {
       try {
         this.#AUTH = getAuth(app);
-        await setPersistence(this.#AUTH!, indexedDBLocalPersistence);
-        this.#AUTH.onAuthStateChanged(async state => {
+        if (!this.#AUTH) {
+          throw new Error('No auth');
+        }
+
+        await setPersistence(this.#AUTH, indexedDBLocalPersistence);
+        onAuthStateChanged(this.#AUTH, async state => {
           this.#USER = state;
           const signedIn = Boolean(state);
           if (signedIn !== this.#signedIn.value) {
@@ -45,26 +49,20 @@ export class AuthService {
     });
   }
 
-  async signIn() {
-    try {
-      if (!this.#AUTH) {
-        return;
+  signIn() {
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        if (!this.#AUTH) {
+          throw new Error('No auth');
+        }
+
+        const provider = new GoogleAuthProvider();
+        await signInWithRedirect(this.#AUTH, provider);
+        resolve();
+      } catch (error) {
+        reject(error);
       }
-
-      const provider = new GoogleAuthProvider();
-      await signInWithRedirect(this.#AUTH, provider);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async getSignInResult() {
-    if (!this.#AUTH) {
-      return;
-    }
-
-    const result = await getRedirectResult(this.#AUTH);
-    return result;
+    });
   }
 
   getEmail(): string | null {

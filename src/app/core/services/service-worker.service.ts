@@ -18,7 +18,7 @@ export class ServiceWorkerService implements OnDestroy {
   constructor(@Inject(SwUpdate) private swUpdate: SwUpdate) {}
 
   start() {
-    if (!ENV.production) {
+    if (!ENV.production || ENV.mobile) {
       return;
     }
 
