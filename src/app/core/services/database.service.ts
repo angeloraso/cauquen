@@ -2,15 +2,7 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { AuthService } from '@core/auth/auth.service';
 import { COUNTRY_CODE, ICashFlowRecord, ICountryRecord, IUserSettings, ROLE } from '@core/model';
 import { FirebaseApp } from 'firebase/app';
-import {
-  Firestore,
-  Unsubscribe,
-  doc,
-  initializeFirestore,
-  onSnapshot,
-  persistentLocalCache,
-  setDoc
-} from 'firebase/firestore';
+import { Firestore, Unsubscribe, doc, getFirestore, onSnapshot, setDoc } from 'firebase/firestore';
 import { BehaviorSubject, filter } from 'rxjs';
 
 enum COLLECTION {
@@ -49,9 +41,7 @@ export class DatabaseService implements OnDestroy {
   }
 
   start(app: FirebaseApp) {
-    this.#DB = initializeFirestore(app, {
-      localCache: persistentLocalCache({ cacheSizeBytes: 0 })
-    });
+    this.#DB = getFirestore(app);
   }
 
   getCashFlowRecords() {

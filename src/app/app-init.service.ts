@@ -7,8 +7,8 @@ import { config } from '../firebase.config';
 @Injectable()
 export class AppInitService {
   constructor(
-    @Inject(DatabaseService) private database: DatabaseService,
     @Inject(AuthService) private auth: AuthService,
+    @Inject(DatabaseService) private database: DatabaseService,
     @Inject(ServiceWorkerService) private serviceWorker: ServiceWorkerService
   ) {}
 
@@ -16,8 +16,8 @@ export class AppInitService {
     return new Promise<void>(async (resolve, reject) => {
       try {
         this.serviceWorker.start();
-        const app = initializeApp(config);
-        await Promise.all([this.database.start(app), this.auth.start(app)]);
+        const app = await initializeApp(config);
+        await Promise.all([this.database.start(app), this.auth.start()]);
         resolve();
       } catch (error) {
         reject(error);

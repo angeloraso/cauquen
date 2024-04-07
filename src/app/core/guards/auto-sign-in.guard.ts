@@ -9,8 +9,28 @@ export const autoSignInCanLoadGuard = () => {
   const router = inject(Router);
   return auth.signedIn$.pipe(
     take(1),
-    map(isLoggedIn => {
-      if (isLoggedIn) {
+    map(signedIn => {
+      console.log('AUTO SIGN IN CAN LOAD:', signedIn);
+      if (signedIn) {
+        console.log('Go to Home!');
+        router.navigateByUrl(`/${PATH.HOME}`, { replaceUrl: true });
+        return false;
+      }
+
+      return true;
+    })
+  );
+};
+
+export const autoSignInCanActivateGuard = () => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+  return auth.signedIn$.pipe(
+    take(1),
+    map(signedIn => {
+      console.log('AUTO SIGN IN CAN ACTIVATE:', signedIn);
+      if (signedIn) {
+        console.log('Go to Home!');
         router.navigateByUrl(`/${PATH.HOME}`, { replaceUrl: true });
         return false;
       }

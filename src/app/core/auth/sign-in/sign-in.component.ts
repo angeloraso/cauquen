@@ -11,19 +11,12 @@ export class SignInComponent {
 
   constructor(@Inject(AuthService) private auth: AuthService) {}
 
-  async onSignIn() {
-    try {
-      if (this.loading) {
-        return;
-      }
-
-      this.loading = true;
-
-      await this.auth.signIn();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      this.loading = false;
+  onSignIn() {
+    if (this.loading) {
+      return;
     }
+
+    this.loading = true;
+    this.auth.signIn();
   }
 }

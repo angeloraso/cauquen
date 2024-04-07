@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1094121137684",
+    "project_id": "cauquen-7f101",
+    "storage_bucket": "cauquen-7f101.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094121137684:android:5b500eee8d76bfd29ce901",
+        "android_client_info": {
+          "package_name": "ar.com.cauquen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094121137684-lignu3j69isai17r7ku5ono31cgg30je.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ar.com.cauquen",
+            "certificate_hash": "15fdd4a6f1707352e0efa7c91314f3861e77b51a"
+          }
+        },
+        {
+          "client_id": "1094121137684-gndq9rl4b4329upuhaojq9onemjh1hf2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO8vdWUQnzqEREBcJ4byWJpcBKj-E7h9U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094121137684-gndq9rl4b4329upuhaojq9onemjh1hf2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

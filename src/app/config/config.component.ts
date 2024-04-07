@@ -1,9 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { PATH as APP_PATH } from '@app/app.routing';
-import { PopupService, RouterService, TranslateService } from '@bizy/services';
+import { PopupService, TranslateService } from '@bizy/services';
 import { ConfirmPopupComponent } from '@components/confirm-popup';
-import { PATH as AUTH_PATH } from '@core/auth/auth.routing';
 import { AuthService } from '@core/auth/auth.service';
 import { COUNTRIES, LOGO_PATH } from '@core/constants';
 import { COUNTRY_CODE } from '@core/model';
@@ -32,7 +30,6 @@ export class ConfigComponent implements OnInit, OnDestroy {
     @Inject(AuthService) private auth: AuthService,
     @Inject(FormBuilder) private fb: FormBuilder,
     @Inject(UserSettingsService) private userSettings: UserSettingsService,
-    @Inject(RouterService) private router: RouterService,
     @Inject(TranslateService) private translate: TranslateService
   ) {
     this.form = this.fb.group({
@@ -97,12 +94,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
       res => {
         if (res) {
           this.loading = true;
-          this.auth
-            .signOut()
-            .then(() => {
-              this.router.goTo({ path: `/${APP_PATH.AUTH}/${AUTH_PATH.SIGN_IN}` });
-            })
-            .finally(() => (this.loading = false));
+          this.auth.signOut().finally(() => (this.loading = false));
         }
       }
     );
