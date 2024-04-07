@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { RouterService } from '@bizy/services';
 import { AuthService } from '@core/auth/auth.service';
 import { filter, take } from 'rxjs';
@@ -8,10 +8,8 @@ import { filter, take } from 'rxjs';
   templateUrl: './sign-in.html',
   styleUrls: ['./sign-in.css']
 })
-export class SignInComponent implements AfterViewInit {
-  @ViewChild('uiContainer') uiContainer: ElementRef | null = null;
-
-  loading = true;
+export class SignInComponent {
+  loading = false;
 
   constructor(
     @Inject(AuthService) private auth: AuthService,
@@ -27,29 +25,19 @@ export class SignInComponent implements AfterViewInit {
       });
   }
 
-  ngAfterViewInit() {
-    if (!this.uiContainer) {
-      return;
-    }
-
-    this.auth.startUI(this.uiContainer.nativeElement).finally(() => {
-      const buttons = document.getElementsByClassName('firebaseui-idp-button');
-      if (buttons && buttons[0]) {
-        this.loading = false;
+  async onSignIn() {
+    try {
+      if (this.loading) {
+        return;
       }
-    });
-  }
 
-  onSignIn() {
-    if (this.loading) {
-      return;
-    }
-
-    const buttons = document.getElementsByClassName('firebaseui-idp-button');
-    if (buttons && buttons[0]) {
-      (<HTMLButtonElement>buttons[0]).click();
       this.loading = true;
-      this.auth.signIn();
+
+      await this.auth.signIn();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.loading = false;
     }
   }
 }

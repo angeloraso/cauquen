@@ -6,17 +6,17 @@ import {
   User,
   getAuth,
   indexedDBLocalPersistence,
+  onAuthStateChanged,
   setPersistence,
+  signInWithRedirect,
   signOut
 } from 'firebase/auth';
-import * as firebaseui from 'firebaseui';
 import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   #AUTH: Auth | null = null;
-  #AUTH_UI: firebaseui.auth.AuthUI | null = null;
   #USER: User | null = null;
   #signedIn = new BehaviorSubject<boolean>(false);
 
@@ -28,8 +28,12 @@ export class AuthService {
     return new Promise<void>(async (resolve, reject) => {
       try {
         this.#AUTH = getAuth(app);
-        await setPersistence(this.#AUTH!, indexedDBLocalPersistence);
-        this.#AUTH.onAuthStateChanged(async state => {
+        if (!this.#AUTH) {
+          throw new Error('No auth');
+        }
+
+        await setPersistence(this.#AUTH, indexedDBLocalPersistence);
+        onAuthStateChanged(this.#AUTH, async state => {
           this.#USER = state;
           const signedIn = Boolean(state);
           if (signedIn !== this.#signedIn.value) {
@@ -46,11 +50,19 @@ export class AuthService {
   }
 
   signIn() {
-    if (!this.#AUTH_UI) {
-      return;
-    }
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        if (!this.#AUTH) {
+          throw new Error('No auth');
+        }
 
-    this.#AUTH_UI.signIn();
+        const provider = new GoogleAuthProvider();
+        await signInWithRedirect(this.#AUTH, provider);
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
   getEmail(): string | null {
@@ -89,16 +101,4 @@ export class AuthService {
       }
     });
   }
-
-  startUI = (uiContainer: Element) => {
-    return new Promise<void>(resolve => {
-      this.#AUTH_UI = new firebaseui.auth.AuthUI(this.#AUTH);
-      this.#AUTH_UI.start(uiContainer, {
-        signInOptions: [GoogleAuthProvider.PROVIDER_ID],
-        callbacks: {
-          uiShown: resolve
-        }
-      });
-    });
-  };
 }
