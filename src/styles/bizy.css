@@ -37,7 +37,7 @@
     --bizy-tab-color: var(--default-color);
     --bizy-tab-selected-color: var(--accent-color) !important;
 
-    --bizy-toolbar-height: 2.4rem;
+    --bizy-toolbar-height: 3.2rem;
     --bizy-toolbar-background-color: var(--hover-color);
 
     --bizy-select-label-color: var(--info-color);
