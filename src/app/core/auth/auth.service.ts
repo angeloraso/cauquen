@@ -30,6 +30,14 @@ export class AuthService {
             await FirebaseAuthentication.setPersistence({
               persistence: Persistence.IndexedDbLocal
             });
+          } else {
+            console.log('AUTH: GET CURRENT USER');
+            const res = await FirebaseAuthentication.getCurrentUser();
+            this.#USER = res.user;
+            if (res.user) {
+              console.log('AUTH: CURRENT USER:', res.user.displayName);
+              this.#signedIn.next(true);
+            }
           }
         } else {
           console.log('AUTH: GET CURRENT USER');
@@ -61,9 +69,15 @@ export class AuthService {
 
   async signIn() {
     try {
-      await FirebaseAuthentication.signInWithGoogle({
+      const res = await FirebaseAuthentication.signInWithGoogle({
         mode: 'redirect'
       });
+      console.log('AUTH: signed With Google');
+      const token = res.credential?.accessToken;
+      console.log('AUTH: TOKEN', token);
+      if (token) {
+        await FirebaseAuthentication.signInWithCustomToken({ token });
+      }
     } catch (error) {
       console.log(error);
     }

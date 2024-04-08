@@ -28,6 +28,7 @@
     "@bizy/pipes": "1.0.1",
     "@bizy/services": "1.1.0",
     "@capacitor-firebase/authentication": "5.4.1",
+    "@capacitor-firebase/firestore": "^5.4.1",
     "@capacitor/android": "5.7.4",
     "@capacitor/app": "5.0.7",
     "@capacitor/core": "5.7.4",

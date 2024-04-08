@@ -1,8 +1,7 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { FirebaseFirestore } from '@capacitor-firebase/firestore';
 import { AuthService } from '@core/auth/auth.service';
 import { COUNTRY_CODE, ICashFlowRecord, ICountryRecord, IUserSettings, ROLE } from '@core/model';
-import { FirebaseApp } from 'firebase/app';
-import { Firestore, Unsubscribe, doc, getFirestore, onSnapshot, setDoc } from 'firebase/firestore';
 import { BehaviorSubject, filter } from 'rxjs';
 
 enum COLLECTION {
@@ -28,20 +27,14 @@ enum USER_DOCUMENT {
   providedIn: 'root'
 })
 export class DatabaseService implements OnDestroy {
-  #DB: Firestore | null = null;
-  #subscriptions = new Set<Unsubscribe>();
   #cashFlowRecords = new BehaviorSubject<Array<ICashFlowRecord> | undefined>(undefined);
   #countryRecords = new BehaviorSubject<Array<ICountryRecord> | undefined>(undefined);
   #userSettings = new BehaviorSubject<IUserSettings | undefined>(undefined);
 
   constructor(@Inject(AuthService) private auth: AuthService) {
-    this.auth.signedIn$.pipe(filter(value => value === false)).subscribe(() => {
-      this.destroy();
+    this.auth.signedIn$.pipe(filter(value => value === false)).subscribe(async () => {
+      await this.destroy();
     });
-  }
-
-  start(app: FirebaseApp) {
-    this.#DB = getFirestore(app);
   }
 
   getCashFlowRecords() {
@@ -57,17 +50,18 @@ export class DatabaseService implements OnDestroy {
           throw new Error('No user id');
         }
 
-        const unsubscribe = onSnapshot(
-          doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS),
-          doc => {
-            const data = doc.data();
-            const records = data ? (data.data as Array<ICashFlowRecord>) : [];
-            this.#cashFlowRecords.next(records);
-            resolve(records);
+        await FirebaseFirestore.addDocumentSnapshotListener<{ data: Array<ICashFlowRecord> }>(
+          { reference: `${userId}/${USER_DOCUMENT.CASH_FLOW_RECORDS}` },
+          (event, error) => {
+            if (error) {
+              console.log(error);
+            } else {
+              const records = event && event.snapshot.data ? event.snapshot.data.data : [];
+              this.#cashFlowRecords.next(records);
+              resolve(records);
+            }
           }
         );
-
-        this.#subscriptions.add(unsubscribe);
       } catch (error) {
         reject(error);
       }
@@ -113,7 +107,10 @@ export class DatabaseService implements OnDestroy {
         }
 
         const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
-        await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS), cashFlowRecords);
+        await FirebaseFirestore.setDocument({
+          reference: `${userId}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
+          data: cashFlowRecords
+        });
         resolve();
       } catch (error) {
         reject(error);
@@ -134,7 +131,10 @@ export class DatabaseService implements OnDestroy {
         if (index !== -1) {
           records[index] = record;
           const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
-          await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS), cashFlowRecords);
+          await FirebaseFirestore.setDocument({
+            reference: `${userId}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
+            data: cashFlowRecords
+          });
         }
 
         resolve();
@@ -157,7 +157,10 @@ export class DatabaseService implements OnDestroy {
 
         const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
 
-        await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.CASH_FLOW_RECORDS), cashFlowRecords);
+        await FirebaseFirestore.setDocument({
+          reference: `${userId}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
+          data: cashFlowRecords
+        });
         resolve();
       } catch (error) {
         reject(error);
@@ -173,14 +176,18 @@ export class DatabaseService implements OnDestroy {
           return;
         }
 
-        const unsubscribe = onSnapshot(doc(this.#DB!, COLLECTION.COUNTRY, country), doc => {
-          const data = doc.data();
-          const records = data ? (data.data as Array<ICountryRecord>) : [];
-          this.#countryRecords.next(records);
-          resolve(records);
-        });
-
-        this.#subscriptions.add(unsubscribe);
+        await FirebaseFirestore.addDocumentSnapshotListener<{ data: Array<ICountryRecord> }>(
+          { reference: `${COLLECTION.COUNTRY}/${country}` },
+          (event, error) => {
+            if (error) {
+              console.log(error);
+            } else {
+              const records = event && event.snapshot.data ? event.snapshot.data.data : [];
+              this.#countryRecords.next(records);
+              resolve(records);
+            }
+          }
+        );
       } catch (error) {
         reject(error);
       }
@@ -217,12 +224,10 @@ export class DatabaseService implements OnDestroy {
 
         const countryRecord = JSON.parse(JSON.stringify({ data: records }));
 
-        await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), countryRecord);
-
-        await setDoc(
-          doc(this.#DB!, COLLECTION.COUNTRY, data.country),
-          JSON.parse(JSON.stringify({ data: records }))
-        );
+        await FirebaseFirestore.setDocument({
+          reference: `${COLLECTION.COUNTRY}/${data.country}`,
+          data: countryRecord
+        });
         resolve();
       } catch (error) {
         reject(error);
@@ -239,7 +244,10 @@ export class DatabaseService implements OnDestroy {
           records[index] = data.record;
 
           const countryRecord = JSON.parse(JSON.stringify({ data: records }));
-          await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), countryRecord);
+          await FirebaseFirestore.setDocument({
+            reference: `${COLLECTION.COUNTRY}/${data.country}`,
+            data: countryRecord
+          });
         }
 
         resolve();
@@ -257,7 +265,10 @@ export class DatabaseService implements OnDestroy {
 
         const countryRecord = JSON.parse(JSON.stringify({ data: records }));
 
-        await setDoc(doc(this.#DB!, COLLECTION.COUNTRY, data.country), countryRecord);
+        await FirebaseFirestore.setDocument({
+          reference: `${COLLECTION.COUNTRY}/${data.country}`,
+          data: countryRecord
+        });
         resolve();
       } catch (error) {
         reject(error);
@@ -278,13 +289,18 @@ export class DatabaseService implements OnDestroy {
           throw new Error('No user id');
         }
 
-        const unsubscribe = onSnapshot(doc(this.#DB!, userId, USER_DOCUMENT.SETTINGS), doc => {
-          const settings = doc.data();
-          this.#userSettings.next(settings as IUserSettings);
-          resolve((settings as IUserSettings) ?? null);
-        });
-
-        this.#subscriptions.add(unsubscribe);
+        await FirebaseFirestore.addDocumentSnapshotListener<IUserSettings>(
+          { reference: `${userId}/${USER_DOCUMENT.SETTINGS}` },
+          (event, error) => {
+            if (error) {
+              console.log(error);
+            } else {
+              const settings = event && event.snapshot.data ? event.snapshot.data : undefined;
+              this.#userSettings.next(settings);
+              resolve(settings ?? null);
+            }
+          }
+        );
       } catch (error) {
         reject(error);
       }
@@ -343,7 +359,11 @@ export class DatabaseService implements OnDestroy {
 
         const settings = await this.getUserSettings();
         const newSettings = JSON.parse(JSON.stringify({ ...settings, country }));
-        await setDoc(doc(this.#DB!, userId, USER_DOCUMENT.SETTINGS), newSettings);
+
+        await FirebaseFirestore.setDocument({
+          reference: `${userId}/${USER_DOCUMENT.SETTINGS}`,
+          data: newSettings
+        });
         resolve();
       } catch (error) {
         reject(error);
@@ -352,11 +372,7 @@ export class DatabaseService implements OnDestroy {
   }
 
   destroy = () => {
-    const subscriptions = Array.from(this.#subscriptions);
-    subscriptions.forEach(unsubscribe => {
-      unsubscribe();
-    });
-    this.#subscriptions.clear();
+    return FirebaseFirestore.removeAllListeners();
   };
 
   ngOnDestroy() {
