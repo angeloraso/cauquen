@@ -31,33 +31,24 @@ export class AuthService {
               persistence: Persistence.IndexedDbLocal
             });
           } else {
-            console.log('AUTH: GET CURRENT USER');
             const res = await FirebaseAuthentication.getCurrentUser();
             this.#USER = res.user;
             if (res.user) {
-              console.log('AUTH: CURRENT USER:', res.user.displayName);
               this.#signedIn.next(true);
             }
           }
         } else {
-          console.log('AUTH: GET CURRENT USER');
           const res = await FirebaseAuthentication.getCurrentUser();
           this.#USER = res.user;
           if (res.user) {
-            console.log('AUTH: CURRENT USER:', res.user.displayName);
             this.#signedIn.next(true);
           }
         }
 
-        console.log('AUTH: Remove all listeners');
         await FirebaseAuthentication.removeAllListeners();
-        console.log('AUTH: Listen changes');
         FirebaseAuthentication.addListener('authStateChange', async change => {
-          console.log('AUTH: New change!', change);
-          console.log('AUTH: User?', change?.user?.displayName);
           this.#USER = change?.user ?? null;
           const signedIn = Boolean(this.#USER);
-          console.log('AUTH: update sign in!', signedIn);
           this.#signedIn.next(signedIn);
         });
         resolve();
@@ -72,9 +63,7 @@ export class AuthService {
       const res = await FirebaseAuthentication.signInWithGoogle({
         mode: 'redirect'
       });
-      console.log('AUTH: signed With Google');
       const token = res.credential?.accessToken;
-      console.log('AUTH: TOKEN', token);
       if (token) {
         await FirebaseAuthentication.signInWithCustomToken({ token });
       }

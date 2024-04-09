@@ -32,12 +32,10 @@ export class AppComponent implements OnInit {
         this.mobile.hideSplash();
 
         this.auth.signedIn$.subscribe(signedIn => {
-          console.log('APP: SIGNED IN', signedIn);
           if (!signedIn) {
             this.database.destroy();
           }
 
-          console.log('APP: GO TO /');
           this.router.goTo({ path: '/' });
         });
       }

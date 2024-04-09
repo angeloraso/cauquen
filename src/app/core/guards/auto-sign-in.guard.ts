@@ -10,9 +10,7 @@ export const autoSignInCanLoadGuard = () => {
   return auth.signedIn$.pipe(
     take(1),
     map(signedIn => {
-      console.log('AUTO SIGN IN CAN LOAD:', signedIn);
       if (signedIn) {
-        console.log('Go to Home!');
         router.navigateByUrl(`/${PATH.HOME}`, { replaceUrl: true });
         return false;
       }
@@ -28,9 +26,7 @@ export const autoSignInCanActivateGuard = () => {
   return auth.signedIn$.pipe(
     take(1),
     map(signedIn => {
-      console.log('AUTO SIGN IN CAN ACTIVATE:', signedIn);
       if (signedIn) {
-        console.log('Go to Home!');
         router.navigateByUrl(`/${PATH.HOME}`, { replaceUrl: true });
         return false;
       }
