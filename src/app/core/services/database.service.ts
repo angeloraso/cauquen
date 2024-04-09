@@ -45,13 +45,13 @@ export class DatabaseService implements OnDestroy {
           return;
         }
 
-        const userId = this.auth.getId();
-        if (!userId) {
-          throw new Error('No user id');
+        const userEmail = this.auth.getEmail();
+        if (!userEmail) {
+          throw new Error('No user email');
         }
 
         await FirebaseFirestore.addDocumentSnapshotListener<{ data: Array<ICashFlowRecord> }>(
-          { reference: `${userId}/${USER_DOCUMENT.CASH_FLOW_RECORDS}` },
+          { reference: `${userEmail}/${USER_DOCUMENT.CASH_FLOW_RECORDS}` },
           (event, error) => {
             if (error) {
               console.log(error);
@@ -76,11 +76,6 @@ export class DatabaseService implements OnDestroy {
           return;
         }
 
-        const userId = this.auth.getId();
-        if (!userId) {
-          throw new Error('No user id');
-        }
-
         const records = await this.getCashFlowRecords();
         const record = records.find(_record => _record.id === recordId) || null;
         resolve(record as ICashFlowRecord);
@@ -93,9 +88,9 @@ export class DatabaseService implements OnDestroy {
   postCashFlowRecord(record: ICashFlowRecord): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        const userId = this.auth.getId();
-        if (!userId) {
-          throw new Error('No user id');
+        const userEmail = this.auth.getEmail();
+        if (!userEmail) {
+          throw new Error('No user email');
         }
 
         const records = await this.getCashFlowRecords();
@@ -108,7 +103,7 @@ export class DatabaseService implements OnDestroy {
 
         const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
         await FirebaseFirestore.setDocument({
-          reference: `${userId}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
+          reference: `${userEmail}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
           data: cashFlowRecords
         });
         resolve();
@@ -121,9 +116,9 @@ export class DatabaseService implements OnDestroy {
   putCashFlowRecord(record: ICashFlowRecord): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        const userId = this.auth.getId();
-        if (!userId) {
-          throw new Error('No user id');
+        const userEmail = this.auth.getEmail();
+        if (!userEmail) {
+          throw new Error('No user email');
         }
 
         const records = await this.getCashFlowRecords();
@@ -132,7 +127,7 @@ export class DatabaseService implements OnDestroy {
           records[index] = record;
           const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
           await FirebaseFirestore.setDocument({
-            reference: `${userId}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
+            reference: `${userEmail}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
             data: cashFlowRecords
           });
         }
@@ -147,9 +142,9 @@ export class DatabaseService implements OnDestroy {
   deleteCashFlowRecord(id: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        const userId = this.auth.getId();
-        if (!userId) {
-          throw new Error('No user id');
+        const userEmail = this.auth.getEmail();
+        if (!userEmail) {
+          throw new Error('No user email');
         }
 
         let records = await this.getCashFlowRecords();
@@ -158,7 +153,7 @@ export class DatabaseService implements OnDestroy {
         const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
 
         await FirebaseFirestore.setDocument({
-          reference: `${userId}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
+          reference: `${userEmail}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
           data: cashFlowRecords
         });
         resolve();
@@ -284,13 +279,13 @@ export class DatabaseService implements OnDestroy {
           return;
         }
 
-        const userId = this.auth.getId();
-        if (!userId) {
-          throw new Error('No user id');
+        const userEmail = this.auth.getEmail();
+        if (!userEmail) {
+          throw new Error('No user email');
         }
 
         await FirebaseFirestore.addDocumentSnapshotListener<IUserSettings>(
-          { reference: `${userId}/${USER_DOCUMENT.SETTINGS}` },
+          { reference: `${userEmail}/${USER_DOCUMENT.SETTINGS}` },
           (event, error) => {
             if (error) {
               console.log(error);
@@ -352,16 +347,16 @@ export class DatabaseService implements OnDestroy {
   putUserCountry(country: COUNTRY_CODE) {
     return new Promise<void>(async (resolve, reject) => {
       try {
-        const userId = this.auth.getId();
-        if (!userId) {
-          throw new Error('No user id');
+        const userEmail = this.auth.getEmail();
+        if (!userEmail) {
+          throw new Error('No user email');
         }
 
         const settings = await this.getUserSettings();
         const newSettings = JSON.parse(JSON.stringify({ ...settings, country }));
 
         await FirebaseFirestore.setDocument({
-          reference: `${userId}/${USER_DOCUMENT.SETTINGS}`,
+          reference: `${userEmail}/${USER_DOCUMENT.SETTINGS}`,
           data: newSettings
         });
         resolve();
