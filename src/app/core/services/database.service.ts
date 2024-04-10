@@ -2,7 +2,7 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { FirebaseFirestore } from '@capacitor-firebase/firestore';
 import { AuthService } from '@core/auth/auth.service';
 import { COUNTRY_CODE, ICashFlowRecord, ICountryRecord, IUserSettings, ROLE } from '@core/model';
-import { BehaviorSubject, filter } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 enum COLLECTION {
   COUNTRY = 'country'
@@ -31,11 +31,7 @@ export class DatabaseService implements OnDestroy {
   #countryRecords = new BehaviorSubject<Array<ICountryRecord> | undefined>(undefined);
   #userSettings = new BehaviorSubject<IUserSettings | undefined>(undefined);
 
-  constructor(@Inject(AuthService) private auth: AuthService) {
-    this.auth.signedIn$.pipe(filter(value => value === false)).subscribe(async () => {
-      await this.destroy();
-    });
-  }
+  constructor(@Inject(AuthService) private auth: AuthService) {}
 
   getCashFlowRecords() {
     return new Promise<Array<ICashFlowRecord>>(async (resolve, reject) => {

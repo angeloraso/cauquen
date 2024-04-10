@@ -34,9 +34,9 @@ export class AppComponent implements OnInit {
         this.auth.signedIn$.subscribe(signedIn => {
           if (!signedIn) {
             this.database.destroy();
+          } else {
+            this.router.reload(true);
           }
-
-          this.router.goTo({ path: '/' });
         });
       }
     } catch (error) {
