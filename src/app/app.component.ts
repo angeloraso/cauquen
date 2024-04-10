@@ -31,16 +31,16 @@ export class AppComponent implements OnInit {
         });
 
         this.mobile.hideSplash();
-
-        this.auth.signedIn$.subscribe(signedIn => {
-          if (!signedIn) {
-            this.database.destroy();
-            this.router.goTo({ path: `/${PATH.AUTH}` });
-          } else {
-            this.router.goTo({ path: `/${PATH.HOME}` });
-          }
-        });
       }
+
+      this.auth.signedIn$.subscribe(signedIn => {
+        if (!signedIn) {
+          this.database.destroy();
+          this.router.goTo({ path: `/${PATH.AUTH}` });
+        } else {
+          this.router.goTo({ path: `/${PATH.HOME}` });
+        }
+      });
     } catch (error) {
       console.error(error);
     }
