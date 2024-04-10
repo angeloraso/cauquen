@@ -3,6 +3,7 @@ import { RouterService } from '@bizy/services';
 import { AuthService } from '@core/auth/auth.service';
 import { ROOT_PATHS } from '@core/constants';
 import { DatabaseService, MobileService } from '@core/services';
+import { PATH } from './app.routing';
 
 @Component({
   selector: 'app-root',
@@ -34,8 +35,9 @@ export class AppComponent implements OnInit {
         this.auth.signedIn$.subscribe(signedIn => {
           if (!signedIn) {
             this.database.destroy();
+            this.router.goTo({ path: `/${PATH.AUTH}` });
           } else {
-            this.router.reload(true);
+            this.router.goTo({ path: `/${PATH.HOME}` });
           }
         });
       }
