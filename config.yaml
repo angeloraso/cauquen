@@ -5,7 +5,7 @@ vars:
     default: ar.com.cauquen
   VERSION_NAME:
   VERSION_CODE:
-    default: 21
+    default: 22
   MIN_SDK:
     default: '= 29'
   SDK:
@@ -21,18 +21,6 @@ platforms:
         target: manifest/application/activity
         attrs:
           android:screenOrientation: portrait
-
-      - file: AndroidManifest.xml
-        target: manifest/application/activity
-        inject: |
-          <intent-filter android:autoVerify="true">
-              <action android:name="android.intent.action.VIEW" />
-              <category android:name="android.intent.category.DEFAULT" />
-              <category android:name="android.intent.category.BROWSABLE" />
-              <data android:scheme="https" android:host="cauquen-7f101.firebaseapp.com" android:path="/__/auth/callback"/>
-              <data android:scheme="https" android:host="cauquen.firebaseapp.com" android:path="/__/auth/callback"/>
-              <data android:scheme="http" android:host="localhost" android:path="/__/auth/callback"/>
-          </intent-filter>
 
     gradle:
       - file: variables.gradle
