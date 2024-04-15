@@ -59,17 +59,9 @@ export class AuthService {
   }
 
   async signIn() {
-    try {
-      const res = await FirebaseAuthentication.signInWithGoogle({
-        mode: 'redirect'
-      });
-      const token = res.credential?.accessToken;
-      if (token) {
-        await FirebaseAuthentication.signInWithCustomToken({ token });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    return FirebaseAuthentication.signInWithGoogle({
+      mode: 'redirect'
+    });
   }
 
   getEmail(): string | null {
