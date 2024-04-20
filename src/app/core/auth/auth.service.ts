@@ -47,8 +47,8 @@ export class AuthService {
 
         await FirebaseAuthentication.removeAllListeners();
         FirebaseAuthentication.addListener('authStateChange', async change => {
-          this.#USER = change?.user ?? null;
-          const signedIn = Boolean(this.#USER);
+          this.#USER = change ? change.user : null;
+          const signedIn = Boolean(change.user);
           this.#signedIn.next(signedIn);
         });
         resolve();
