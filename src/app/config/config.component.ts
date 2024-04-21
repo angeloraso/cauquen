@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { PopupService, TranslateService } from '@bizy/services';
+import { BizyPopupService, TranslateService } from '@bizy/services';
 import { ConfirmPopupComponent } from '@components/confirm-popup';
 import { AuthService } from '@core/auth/auth.service';
 import { COUNTRIES, LOGO_PATH } from '@core/constants';
@@ -26,7 +26,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   readonly COUNTRIES = COUNTRIES;
 
   constructor(
-    @Inject(PopupService) private popup: PopupService,
+    @Inject(BizyPopupService) private popup: BizyPopupService,
     @Inject(AuthService) private auth: AuthService,
     @Inject(FormBuilder) private fb: FormBuilder,
     @Inject(UserSettingsService) private userSettings: UserSettingsService,

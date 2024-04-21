@@ -4,7 +4,9 @@
 
     <h1 slot=start>{{'CONFIG.TITLE' | translate}}</h1>
 
-    <i slot="end"  class="fa-solid fa-circle-info config__header__icon" (click)="openPopup()"></i>
+    <i slot="end" class="fa-solid fa-circle-info config__header__icon" (click)="openPopup()"></i>
+
+    <i slot="end" class="fa-solid fa-right-from-bracket config__header__icon" (click)="onSignOut()"></i>
 
 </bizy-toolbar>
 
@@ -12,11 +14,13 @@
 
     <form class="cauquen-form" [formGroup]="form">
 
-        <bizy-select
-            label="{{'CORE.FORM.FIELD.COUNTRY' | translate}}"
-            [value]="userCountry.value"
-            (onSelect)="setCountry($event)">
-            <bizy-select-option *ngFor="let c of COUNTRIES" [key]="c.id">{{c.value | translate}}</bizy-select-option>
+        <bizy-select label="{{'CORE.FORM.FIELD.COUNTRY' | translate}}">
+            <bizy-select-option 
+                *ngFor="let c of COUNTRIES"
+                [selected]="userCountry.value === c.id"
+                (onSelect)="userCountry.setValue(c.id)">
+                {{c.value | translate}}
+            </bizy-select-option>
         </bizy-select>
 
     </form>
@@ -48,12 +52,5 @@
         </a>
 
     </span>
-
-    <bizy-button 
-      customClass="cauquen-button--warning config__sign-out"
-      (onSelect)="onSignOut()">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span>{{ 'CONFIG.SIGN_OUT_POPUP.TITLE' | translate }}</span>
-    </bizy-button>
 
 </div>

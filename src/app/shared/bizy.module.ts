@@ -1,45 +1,45 @@
 import { NgModule } from '@angular/core';
 import {
-  BarChartModule,
-  ButtonModule,
-  ConfirmButtonsModule,
-  ErrorModule,
-  FabButtonModule,
-  InputModule,
-  LineChartModule,
-  SelectModule,
-  SidebarModule,
-  TableModule,
-  TabsModule,
-  ToggleModule,
-  ToolbarModule,
-  VirtualScrollModule
+  BizyBarChartModule,
+  BizyButtonModule,
+  BizyConfirmButtonsModule,
+  BizyErrorModule,
+  BizyFabButtonModule,
+  BizyInputModule,
+  BizyLineChartModule,
+  BizySelectModule,
+  BizySidebarModule,
+  BizyTableModule,
+  BizyTabsModule,
+  BizyToggleModule,
+  BizyToolbarModule,
+  BizyVirtualScrollModule
 } from '@bizy/components';
-import { DirectivesModule } from '@bizy/directives';
-import { PipesModule } from '@bizy/pipes';
-import { PopupModule, TranslatePipeModule } from '@bizy/services';
+import { BizyDirectivesModule } from '@bizy/directives';
+import { BizyPipesModule } from '@bizy/pipes';
+import { BizyPopupModule, TranslatePipeModule } from '@bizy/services';
 
 @NgModule({
   exports: [
-    VirtualScrollModule,
-    DirectivesModule,
-    PipesModule,
-    PopupModule,
-    ButtonModule,
-    FabButtonModule,
-    ConfirmButtonsModule,
-    ToggleModule,
-    InputModule,
-    ErrorModule,
-    ConfirmButtonsModule,
-    TabsModule,
-    ToolbarModule,
-    SidebarModule,
-    TableModule,
-    SelectModule,
+    BizyVirtualScrollModule,
+    BizyDirectivesModule,
+    BizyPipesModule,
+    BizyPopupModule,
+    BizyButtonModule,
+    BizyFabButtonModule,
+    BizyConfirmButtonsModule,
+    BizyToggleModule,
+    BizyInputModule,
+    BizyErrorModule,
+    BizyConfirmButtonsModule,
+    BizyTabsModule,
+    BizyToolbarModule,
+    BizySidebarModule,
+    BizyTableModule,
+    BizySelectModule,
     TranslatePipeModule,
-    LineChartModule,
-    BarChartModule
+    BizyLineChartModule,
+    BizyBarChartModule
   ]
 })
 export class BizyModule {}

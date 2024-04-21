@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { RouterService } from '@bizy/services';
+import { BizyRouterService } from '@bizy/services';
 import { AuthService } from '@core/auth/auth.service';
 import { ROOT_PATHS } from '@core/constants';
 import { DatabaseService, MobileService } from '@core/services';
@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
     @Inject(MobileService) private mobile: MobileService,
     @Inject(AuthService) private auth: AuthService,
     @Inject(DatabaseService) private database: DatabaseService,
-    @Inject(RouterService) private router: RouterService
+    @Inject(BizyRouterService) private router: BizyRouterService
   ) {}
 
   async ngOnInit() {

@@ -1,5 +1,8 @@
 @import '/node_modules/@bizy/directives/styles/loading.css';
+@import '/node_modules/@bizy/directives/styles/variables.css';
 @import '/node_modules/@bizy/services/styles/popup.css';
+@import '/node_modules/@bizy/services/styles/variables.css';
+@import '/node_modules/@bizy/components/styles/variables.css';
 @import '/node_modules/@bizy/components/styles/normalize.css';
 @import '/node_modules/@bizy/components/styles/animations.css';
 @import '/node_modules/@bizy/components/styles/overlay.css';
@@ -9,37 +12,13 @@
     --bizy-loading-color-2nd-line: var(--primary-color);
     --bizy-loading-color-3rd-line: var(--dark-primary-color);
 
-    --bizy-popup-background-color: #fff;
-    --bizy-popup-close-button-color: var(--text-color);
-    --bizy-popup-close-button-hover-color: var(--danger-color);
-
-    --bizy-confirm-buttons-confirm-background-color: var(--accent-color);
-    --bizy-confirm-buttons-confirm-color: #fff;
-    --bizy-confirm-buttons-cancel-background-color: var(--danger-color);
-    --bizy-confirm-buttons-cancel-color: #fff;
-
-    --bizy-toggle-off-color: var(--danger-color);
-    --bizy-toggle-off-background-color: var(--light-danger-color);
-    --bizy-toggle-on-color: var(--success-color);
-    --bizy-toggle-on-background-color: var(--light-success-color);
-
-    --bizy-input-label-color: var(--info-color);
-    --bizy-input-color: var(--text-color);
-    --bizy-input-error-color: var(--danger-color);
-    --bizy-input-background-color: #fff;
-    --bizy-input-placeholder-color: var(--text-color);
-    --bizy-input-date-color: var(--info-color);
-    --bizy-input-date-contrast-color: #fff;
-
-    --bizy-error-color: var(--danger-color);
-
-    --bizy-tabs-background-color: #fff;
-    --bizy-tab-color: var(--default-color);
-    --bizy-tab-selected-color: var(--accent-color) !important;
-
-    --bizy-toolbar-height: 3.2rem;
-    --bizy-toolbar-background-color: var(--hover-color);
-
-    --bizy-select-label-color: var(--info-color);
     --bizy-table-column-min-width: 5rem;
+
+    --bizy-sidebar-shrinked-width: 3rem;
+    --bizy-sidebar-width: 14rem;
+    --bizy-sidebar-option-hover-color: var(--light-info-color);
+
+    @media only screen and (max-width: 768px) {
+        --bizy-toolbar-padding: 0 0.5rem !important;
+    }
 }

@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { PopupService, RouterService } from '@bizy/services';
+import { BizyPopupService, BizyRouterService } from '@bizy/services';
 import { ConfirmPopupComponent } from '@components/confirm-popup';
 import { ICashFlowRecord } from '@core/model';
 import { CashFlowService } from '@core/services';
@@ -20,8 +20,8 @@ export class CashFlowComponent implements OnInit, OnDestroy {
   private _subscription = new Subscription();
 
   constructor(
-    @Inject(PopupService) private popup: PopupService,
-    @Inject(RouterService) private router: RouterService,
+    @Inject(BizyPopupService) private popup: BizyPopupService,
+    @Inject(BizyRouterService) private router: BizyRouterService,
     @Inject(CashFlowService) private cashFlow: CashFlowService
   ) {}
 

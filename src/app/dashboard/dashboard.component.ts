@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { IBarChartData, ILineChartData } from '@bizy/components';
-import { OrderByPipe } from '@bizy/pipes';
+import { BizyOrderByPipe } from '@bizy/pipes';
 import { TranslateService } from '@bizy/services';
 import { COUNTRY_CODE } from '@core/model';
 import { CashFlowService, CountryService, UtilsService } from '@core/services';
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     @Inject(UtilsService) private utils: UtilsService,
     @Inject(TranslateService) private translate: TranslateService,
     @Inject(DatePipe) private datePipe: DatePipe,
-    @Inject(OrderByPipe) private orderByPipe: OrderByPipe
+    @Inject(BizyOrderByPipe) private orderByPipe: BizyOrderByPipe
   ) {}
 
   async ngOnInit() {

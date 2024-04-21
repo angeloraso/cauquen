@@ -1,28 +1,40 @@
 <div class="home">
 
-  <bizy-sidebar 
-    class="home__sidebar"
-    [opened]="openedSidebar"
-    (onOpen)="openedSidebar = $event">
+  <bizy-sidebar class="home__sidebar" [toggle]="closedSidebar" (onToggle)="onToggle($event)">
 
-    <bizy-toolbar sidebar-header>
+    <bizy-sidebar-option slot="start" [disabled]="true">
 
-      <span slot=start class="home__sidebar__header">
-        <img class="home__sidebar__header__logo" src="{{profilePic}}" alt="logo"/>
+      <span class="home__sidebar__header" [ngClass]="{'home__sidebar__option--closed': closedSidebar}">
+        <img class="home__sidebar__header__logo" src="{{LOGO_PATH}}" alt="logo"/>
 
-        <h1 class="home__sidebar__header__name" *ngIf="openedSidebar">Bizy</h1>
+        <h1 class="home__sidebar__header__name" *ngIf="!closedSidebar">Bizy</h1>
       </span>
 
-    </bizy-toolbar>
+    </bizy-sidebar-option>
 
-    <bizy-button 
+    <bizy-sidebar-option 
       *ngFor="let option of options"
-      customClass="home__sidebar__option {{option.selected ? 'home__sidebar__option--selected' : ''}} {{openedSidebar ? 'home__sidebar__option--opened' : ''}}"
+      [(selected)]="option.selected"
       (onSelect)="onSelect(option)">
-        <i class="fa-solid {{option.icon}}"></i>
 
-        <h4 *ngIf="openedSidebar">{{option.label | translate}}</h4>
-    </bizy-button>
+      <span class="home__sidebar__option__content" [ngClass]="{'home__sidebar__option--closed': closedSidebar}">
+        <i class="fa-solid {{option.icon}} home__sidebar__option__icon" [ngClass]="{'home__sidebar__option--selected': option.selected}"></i>
+  
+        <h4 class="home__sidebar__option__label" [ngClass]="{'home__sidebar__option--selected': option.selected}" *ngIf="!closedSidebar">{{option.label | translate}}</h4>
+      </span>
+
+    </bizy-sidebar-option>
+
+    <bizy-sidebar-option slot="end" [disabled]="true">
+  
+      <span class="home__sidebar__option__content" [ngClass]="{'home__sidebar__option--closed': closedSidebar}">
+        <i *ngIf="!profilePic" class="fa-solid fa-user-circle"></i>
+        <img *ngIf="profilePic" class="home__sidebar__option__profile-pic" src="{{profilePic}}" alt="profile_pic"/>
+  
+        <h6 class="home__sidebar__option__label" *ngIf="!closedSidebar">{{email}}</h6>
+      </span>
+
+    </bizy-sidebar-option>
 
   </bizy-sidebar>
     
@@ -35,14 +47,14 @@
       <bizy-tabs class="home__tabs">
 
           <bizy-tab 
+            class="home__tabs__tab"
             *ngFor="let option of options"
-            [id]="option.path"
-            [selected]="option.selected"
+            [(selected)]="option.selected"
             (onSelect)="onSelect(option)">
         
-            <i tab-icon class="fa-solid {{option.icon}}"></i>
+            <i class="fa-solid {{option.icon}}" [ngClass]="{'home__tabs__tab--selected': option.selected}"></i>
         
-            <span tab-label>{{option.label | translate}}</span>
+            <h5 [ngClass]="{'home__tabs__tab--selected': option.selected}">{{option.label | translate}}</h5>
         
           </bizy-tab>
         

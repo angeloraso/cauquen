@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PopupService, RouterService } from '@bizy/services';
+import { BizyPopupService, BizyRouterService } from '@bizy/services';
 import { ConfirmPopupComponent } from '@components/confirm-popup';
 import { ICountryRecord } from '@core/model';
 import { CountryService } from '@core/services';
@@ -20,8 +20,8 @@ export class EditCountryRecordComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(CountryService) private country: CountryService,
     @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
-    @Inject(RouterService) private router: RouterService,
-    @Inject(PopupService) private popup: PopupService
+    @Inject(BizyRouterService) private router: BizyRouterService,
+    @Inject(BizyPopupService) private popup: BizyPopupService
   ) {}
 
   async ngOnInit() {

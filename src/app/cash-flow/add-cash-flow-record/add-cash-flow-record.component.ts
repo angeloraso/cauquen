@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { RouterService } from '@bizy/services';
+import { BizyRouterService } from '@bizy/services';
 import { ICashFlowRecord } from '@core/model';
 import { CashFlowService } from '@core/services';
 
@@ -13,7 +13,7 @@ export class AddCashFlowRecordComponent {
 
   constructor(
     @Inject(CashFlowService) private cashFlow: CashFlowService,
-    @Inject(RouterService) private router: RouterService
+    @Inject(BizyRouterService) private router: BizyRouterService
   ) {}
 
   goBack() {

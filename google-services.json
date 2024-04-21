@@ -14,11 +14,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "1094121137684-b7gj19s5t60h68iqc411f0pgpvdplb8j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ar.com.cauquen",
+            "certificate_hash": "62a6eb0bb20b59ec1753e11f707f49038898d508"
+          }
+        },
+        {
           "client_id": "1094121137684-lignu3j69isai17r7ku5ono31cgg30je.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "ar.com.cauquen",
             "certificate_hash": "15fdd4a6f1707352e0efa7c91314f3861e77b51a"
+          }
+        },
+        {
+          "client_id": "1094121137684-uc0a6f03o2crt5f8e5i16jha6tfv4t4t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ar.com.cauquen",
+            "certificate_hash": "cfea5800f8c128558683974e8367eb25bfd7a8cc"
           }
         },
         {

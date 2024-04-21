@@ -6,6 +6,7 @@
 
 .config__header__icon {
     font-size: 1.2rem;
+    margin-left: 1rem;
     color: var(--primary-color);
 }
 
@@ -34,8 +35,4 @@
 
 .config__cards__card__label {
     color: var(--info-color);
-}
-
-::ng-deep .config__sign-out {
-    width: 100% !important;
 }

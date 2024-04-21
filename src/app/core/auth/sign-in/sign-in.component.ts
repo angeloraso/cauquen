@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { BizyToastService } from '@bizy/services';
 import { AuthService } from '@core/auth/auth.service';
 
 @Component({
@@ -9,14 +10,21 @@ import { AuthService } from '@core/auth/auth.service';
 export class SignInComponent {
   loading = false;
 
-  constructor(@Inject(AuthService) private auth: AuthService) {}
+  constructor(
+    @Inject(AuthService) private auth: AuthService,
+    @Inject(BizyToastService) private toast: BizyToastService
+  ) {}
 
-  onSignIn() {
-    if (this.loading) {
-      return;
+  async onSignIn() {
+    try {
+      if (this.loading) {
+        return;
+      }
+      this.loading = true;
+      await this.auth.signIn();
+    } catch (error) {
+      this.toast.danger({ msg: String(error) });
+      this.loading = false;
     }
-
-    this.loading = true;
-    this.auth.signIn();
   }
 }

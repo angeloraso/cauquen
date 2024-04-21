@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { RouterService } from '@bizy/services';
+import { BizyRouterService } from '@bizy/services';
 import { COUNTRY_CODE, ICountryRecord } from '@core/model';
 import { CountryService, UserSettingsService } from '@core/services';
 
@@ -15,7 +15,7 @@ export class AddCountryRecordComponent implements OnInit {
   constructor(
     @Inject(CountryService) private country: CountryService,
     @Inject(UserSettingsService) private userSettings: UserSettingsService,
-    @Inject(RouterService) private router: RouterService
+    @Inject(BizyRouterService) private router: BizyRouterService
   ) {}
 
   async ngOnInit() {

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { PopupService } from '@bizy/services';
+import { BizyPopupService } from '@bizy/services';
 
 @Component({
   selector: 'cauquen-confirm-popup',
@@ -10,7 +10,7 @@ export class ConfirmPopupComponent {
   _title: string = '';
   _msg: string = '';
 
-  constructor(@Inject(PopupService) private popup: PopupService) {
+  constructor(@Inject(BizyPopupService) private popup: BizyPopupService) {
     const data = this.popup.getData<{ title: string; msg: string }>();
 
     if (data && data.title) {

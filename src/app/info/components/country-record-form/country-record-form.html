@@ -1,10 +1,12 @@
 <form class="cauquen-form" [formGroup]="form">
 
-    <bizy-select
-        label="{{'CORE.FORM.FIELD.COUNTRY' | translate}}"
-        [value]="_country.value"
-        (onSelect)="_country.setValue($event)">
-        <bizy-select-option *ngFor="let c of COUNTRIES" [key]="c.id">{{c.value | translate}}</bizy-select-option>
+    <bizy-select label="{{'CORE.FORM.FIELD.COUNTRY' | translate}}">
+        <bizy-select-option 
+            *ngFor="let c of COUNTRIES"
+            [selected]="_country.value === c.id"
+            (onSelect)="_country.setValue(c.id)">
+            {{c.value | translate}}
+        </bizy-select-option>
     </bizy-select>
 
     <bizy-input 

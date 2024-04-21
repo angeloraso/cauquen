@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RouterService } from '@bizy/services';
+import { BizyRouterService } from '@bizy/services';
 import { ICashFlowRecord } from '@core/model';
 import { CashFlowService } from '@core/services';
 
@@ -16,7 +16,7 @@ export class EditCashFlowRecordComponent implements OnInit {
   constructor(
     @Inject(CashFlowService) private cashFlow: CashFlowService,
     @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
-    @Inject(RouterService) private router: RouterService
+    @Inject(BizyRouterService) private router: BizyRouterService
   ) {}
 
   async ngOnInit() {

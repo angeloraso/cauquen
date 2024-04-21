@@ -7,7 +7,7 @@ export const locale = {
       EMPTY: 'Sin elementos',
       MENU: {
         DASHBOARD: 'Panel',
-        CASH_FLOW: 'Flujo de caja',
+        CASH_FLOW: 'Transacciones',
         INFO: 'Info',
         CONFIG: 'Config'
       },
