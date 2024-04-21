@@ -1,5 +1,5 @@
 import { Inject, NgModule } from '@angular/core';
-import { TranslateService } from '@bizy/services';
+import { BizyTranslateService } from '@bizy/services';
 import { ConfirmPopupModule } from '@components/confirm-popup';
 import { SharedModule } from '@shared/shared.module';
 import { CountryRecordFormComponent } from './components';
@@ -14,7 +14,7 @@ const COMPONENTS: Array<any> = [CountryRecordFormComponent];
   exports: InfoRoutingModule.COMPONENTS
 })
 export class InfoModule {
-  constructor(@Inject(TranslateService) private translate: TranslateService) {
+  constructor(@Inject(BizyTranslateService) private translate: BizyTranslateService) {
     this.translate.loadTranslations(es);
   }
 }

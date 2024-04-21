@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Inject } from '@angular/core';
-import { BizyLogService, BizyPopupService, UserAgentService } from '@bizy/services';
+import { BizyLogService, BizyPopupService, BizyUserAgentService } from '@bizy/services';
 import pkg from '../../../../package.json';
 
 @Component({
@@ -14,7 +14,7 @@ export class AboutPopupComponent implements AfterViewInit {
   loading: boolean = true;
 
   constructor(
-    @Inject(UserAgentService) public userAgent: UserAgentService,
+    @Inject(BizyUserAgentService) public userAgent: BizyUserAgentService,
     @Inject(BizyLogService) private log: BizyLogService,
     @Inject(ChangeDetectorRef) private ref: ChangeDetectorRef,
     @Inject(BizyPopupService) private popup: BizyPopupService

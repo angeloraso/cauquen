@@ -1,5 +1,5 @@
 import { Inject, NgModule } from '@angular/core';
-import { TranslateService } from '@bizy/services';
+import { BizyTranslateService } from '@bizy/services';
 import { ConfirmPopupModule } from '@components/confirm-popup';
 import { SharedModule } from '@shared/shared.module';
 import { CashFlowRoutingModule } from './cash-flow.routing';
@@ -13,7 +13,7 @@ const COMPONENTS: Array<any> = [CashFlowRecordFormComponent];
   exports: CashFlowRoutingModule.COMPONENTS
 })
 export class CashFlowModule {
-  constructor(@Inject(TranslateService) private translate: TranslateService) {
+  constructor(@Inject(BizyTranslateService) private translate: BizyTranslateService) {
     this.translate.loadTranslations(es);
   }
 }

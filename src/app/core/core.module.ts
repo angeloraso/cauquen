@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BizyComponentsModule } from '@bizy/components';
-import { LANGUAGE, TranslateModule, TranslateService } from '@bizy/services';
+import { BizyTranslateModule, BizyTranslateService, LANGUAGE } from '@bizy/services';
 import { ENV } from '@env/environment';
 import { es } from './i18n';
 
@@ -15,7 +15,7 @@ import { es } from './i18n';
     BrowserAnimationsModule,
     HttpClientModule,
     BizyComponentsModule,
-    TranslateModule,
+    BizyTranslateModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: ENV.production && !ENV.mobile })
   ],
   providers: [DatePipe]
@@ -24,7 +24,7 @@ export class CoreModule {
   /* Make sure CoreModule is imported only by one NgModule the AppModule */
   constructor(
     @Optional() @SkipSelf() parentModule: CoreModule,
-    @Inject(TranslateService) private translate: TranslateService
+    @Inject(BizyTranslateService) private translate: BizyTranslateService
   ) {
     if (parentModule) {
       throw new Error('CoreModule is already loaded. Import only in AppModule');

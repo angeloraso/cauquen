@@ -1,5 +1,5 @@
 import { Inject, NgModule } from '@angular/core';
-import { TranslateService } from '@bizy/services';
+import { BizyTranslateService } from '@bizy/services';
 import { SharedModule } from '@shared/shared.module';
 import { DashboardRoutingModule } from './dashboard.routing';
 import { es } from './i18n';
@@ -10,7 +10,7 @@ import { es } from './i18n';
   exports: DashboardRoutingModule.COMPONENTS
 })
 export class DashboardModule {
-  constructor(@Inject(TranslateService) private translate: TranslateService) {
+  constructor(@Inject(BizyTranslateService) private translate: BizyTranslateService) {
     this.translate.loadTranslations(es);
   }
 }

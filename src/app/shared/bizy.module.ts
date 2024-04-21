@@ -17,7 +17,7 @@ import {
 } from '@bizy/components';
 import { BizyDirectivesModule } from '@bizy/directives';
 import { BizyPipesModule } from '@bizy/pipes';
-import { BizyPopupModule, TranslatePipeModule } from '@bizy/services';
+import { BizyPopupModule, BizyToastModule, BizyTranslatePipeModule } from '@bizy/services';
 
 @NgModule({
   exports: [
@@ -25,6 +25,7 @@ import { BizyPopupModule, TranslatePipeModule } from '@bizy/services';
     BizyDirectivesModule,
     BizyPipesModule,
     BizyPopupModule,
+    BizyToastModule,
     BizyButtonModule,
     BizyFabButtonModule,
     BizyConfirmButtonsModule,
@@ -37,7 +38,7 @@ import { BizyPopupModule, TranslatePipeModule } from '@bizy/services';
     BizySidebarModule,
     BizyTableModule,
     BizySelectModule,
-    TranslatePipeModule,
+    BizyTranslatePipeModule,
     BizyLineChartModule,
     BizyBarChartModule
   ]
