@@ -80,3 +80,7 @@ export interface IUserSettings {
   roles: Array<ROLE>;
   country: COUNTRY_CODE;
 }
+
+export interface IUserPreferences {
+  country: COUNTRY_CODE;
+}

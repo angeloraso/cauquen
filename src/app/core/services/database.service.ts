@@ -1,7 +1,14 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { FirebaseFirestore } from '@capacitor-firebase/firestore';
 import { AuthService } from '@core/auth/auth.service';
-import { COUNTRY_CODE, ICashFlowRecord, ICountryRecord, IUserSettings, ROLE } from '@core/model';
+import {
+  COUNTRY_CODE,
+  ICashFlowRecord,
+  ICountryRecord,
+  IUserPreferences,
+  IUserSettings,
+  ROLE
+} from '@core/model';
 import { BehaviorSubject } from 'rxjs';
 
 enum COLLECTION {
@@ -10,7 +17,8 @@ enum COLLECTION {
 
 enum USER_DOCUMENT {
   CASH_FLOW_RECORDS = 'cash-flow-records',
-  SETTINGS = 'settings'
+  SETTINGS = 'settings',
+  PREFERENCES = 'preferences'
 }
 
 /* enum OPERATOR {
@@ -30,6 +38,7 @@ export class DatabaseService implements OnDestroy {
   #cashFlowRecords = new BehaviorSubject<Array<ICashFlowRecord> | undefined>(undefined);
   #countryRecords = new BehaviorSubject<Array<ICountryRecord> | undefined>(undefined);
   #userSettings = new BehaviorSubject<IUserSettings | undefined>(undefined);
+  #userPreferences = new BehaviorSubject<IUserPreferences | undefined>(undefined);
 
   constructor(@Inject(AuthService) private auth: AuthService) {}
 
@@ -298,6 +307,37 @@ export class DatabaseService implements OnDestroy {
     });
   }
 
+  getUserPreferences() {
+    return new Promise<IUserPreferences | null>(async (resolve, reject) => {
+      try {
+        if (typeof this.#userPreferences.value !== 'undefined') {
+          resolve(this.#userPreferences.value);
+          return;
+        }
+
+        const userEmail = this.auth.getEmail();
+        if (!userEmail) {
+          throw new Error('No user email');
+        }
+
+        await FirebaseFirestore.addDocumentSnapshotListener<IUserPreferences>(
+          { reference: `${userEmail}/${USER_DOCUMENT.PREFERENCES}` },
+          (event, error) => {
+            if (error) {
+              console.log(error);
+            } else {
+              const preferences = event && event.snapshot.data ? event.snapshot.data : undefined;
+              this.#userPreferences.next(preferences);
+              resolve(preferences ?? null);
+            }
+          }
+        );
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   getUserRoles() {
     return new Promise<Array<ROLE>>(async (resolve, reject) => {
       try {
@@ -322,15 +362,15 @@ export class DatabaseService implements OnDestroy {
   getUserCountry() {
     return new Promise<COUNTRY_CODE>(async (resolve, reject) => {
       try {
-        if (typeof this.#userSettings.value !== 'undefined') {
-          resolve(this.#userSettings.value.country ?? []);
+        if (typeof this.#userPreferences.value !== 'undefined') {
+          resolve(this.#userPreferences.value.country ?? []);
           return;
         }
 
-        const settings = await this.getUserSettings();
+        const preferences = await this.getUserPreferences();
 
-        if (settings && settings.country) {
-          resolve(settings.country);
+        if (preferences && preferences.country) {
+          resolve(preferences.country);
         } else {
           resolve(COUNTRY_CODE.ARGENTINA);
         }
@@ -348,12 +388,12 @@ export class DatabaseService implements OnDestroy {
           throw new Error('No user email');
         }
 
-        const settings = await this.getUserSettings();
-        const newSettings = JSON.parse(JSON.stringify({ ...settings, country }));
+        const preferences = await this.getUserPreferences();
+        const newPreferences = JSON.parse(JSON.stringify({ ...preferences, country }));
 
         await FirebaseFirestore.setDocument({
-          reference: `${userEmail}/${USER_DOCUMENT.SETTINGS}`,
-          data: newSettings
+          reference: `${userEmail}/${USER_DOCUMENT.PREFERENCES}`,
+          data: newPreferences
         });
         resolve();
       } catch (error) {
