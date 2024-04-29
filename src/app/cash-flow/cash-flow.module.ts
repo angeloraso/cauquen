@@ -1,6 +1,5 @@
 import { Inject, NgModule } from '@angular/core';
 import { BizyTranslateService } from '@bizy/services';
-import { ConfirmPopupModule } from '@components/confirm-popup';
 import { SharedModule } from '@shared/shared.module';
 import { CashFlowRoutingModule } from './cash-flow.routing';
 import { CashFlowRecordFormComponent } from './components';
@@ -8,7 +7,7 @@ import { es } from './i18n';
 
 const COMPONENTS: Array<any> = [CashFlowRecordFormComponent];
 @NgModule({
-  imports: [SharedModule, CashFlowRoutingModule, ConfirmPopupModule],
+  imports: [SharedModule, CashFlowRoutingModule],
   declarations: CashFlowRoutingModule.COMPONENTS.concat(COMPONENTS),
   exports: CashFlowRoutingModule.COMPONENTS
 })

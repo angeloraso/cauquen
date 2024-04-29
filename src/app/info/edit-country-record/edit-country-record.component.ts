@@ -1,9 +1,9 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BizyPopupService, BizyRouterService } from '@bizy/services';
-import { ConfirmPopupComponent } from '@components/confirm-popup';
 import { ICountryRecord } from '@core/model';
 import { CountryService } from '@core/services';
+import { PopupComponent } from '@shared/components';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -52,7 +52,7 @@ export class EditCountryRecordComponent implements OnInit, OnDestroy {
   openConfirmPopup() {
     this.popup.open<boolean>(
       {
-        component: ConfirmPopupComponent,
+        component: PopupComponent,
         data: this.record
       },
       async res => {

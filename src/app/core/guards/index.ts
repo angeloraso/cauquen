@@ -1,4 +1,4 @@
 export { adminGuard } from './admin.guard';
-export { authCanActivateGuard, authCanLoadGuard } from './auth.guard';
-export { autoSignInCanLoadGuard } from './auto-sign-in.guard';
+export { authGuard } from './auth.guard';
+export { autoSignInGuard } from './auto-sign-in.guard';
 

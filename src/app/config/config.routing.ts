@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { authCanActivateGuard } from '@core/guards';
+import { authGuard } from '@core/guards';
 import { ConfigComponent } from './config.component';
 
 export enum PATH {
@@ -12,7 +12,7 @@ const routes: Routes = [
     path: PATH.EMPTY,
     component: ConfigComponent,
     pathMatch: 'full',
-    canActivate: [authCanActivateGuard]
+    canActivate: [authGuard]
   }
 ];
 

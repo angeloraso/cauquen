@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { TitleComponent } from './title/title.component';
+import { BizyModule } from '@shared/bizy.module';
+import { PopupComponent } from './popup/popup.component';
 
-const COMPONENTS = [TitleComponent];
+const COMPONENTS = [PopupComponent];
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, BizyModule],
   declarations: COMPONENTS,
   exports: COMPONENTS
 })

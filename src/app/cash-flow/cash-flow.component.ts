@@ -1,8 +1,8 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { BizyPopupService, BizyRouterService } from '@bizy/services';
-import { ConfirmPopupComponent } from '@components/confirm-popup';
 import { ICashFlowRecord } from '@core/model';
 import { CashFlowService } from '@core/services';
+import { PopupComponent } from '@shared/components';
 import { Subscription } from 'rxjs';
 import { PATH } from './cash-flow.routing';
 
@@ -53,7 +53,7 @@ export class CashFlowComponent implements OnInit, OnDestroy {
   openConfirmPopup(record: ICashFlowRecord) {
     this.popup.open<boolean>(
       {
-        component: ConfirmPopupComponent,
+        component: PopupComponent,
         data: record
       },
       res => {

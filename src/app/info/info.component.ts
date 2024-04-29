@@ -1,8 +1,8 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { BizyPopupService, BizyRouterService } from '@bizy/services';
-import { ConfirmPopupComponent } from '@components/confirm-popup';
 import { ICountryRecord } from '@core/model';
 import { CountryService, UserSettingsService } from '@core/services';
+import { PopupComponent } from '@shared/components';
 import { Subscription } from 'rxjs';
 import { PATH } from './info.routing';
 
@@ -60,7 +60,7 @@ export class InfoComponent implements OnInit, OnDestroy {
 
     this.popup.open<boolean>(
       {
-        component: ConfirmPopupComponent,
+        component: PopupComponent,
         data: record
       },
       res => {

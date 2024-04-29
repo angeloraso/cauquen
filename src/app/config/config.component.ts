@@ -1,11 +1,11 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BizyPopupService, BizyTranslateService } from '@bizy/services';
-import { ConfirmPopupComponent } from '@components/confirm-popup';
 import { AuthService } from '@core/auth/auth.service';
 import { COUNTRIES, LOGO_PATH } from '@core/constants';
 import { COUNTRY_CODE } from '@core/model';
 import { UserSettingsService } from '@core/services';
+import { PopupComponent } from '@shared/components';
 import { Subscription } from 'rxjs';
 import { AboutPopupComponent } from './about-popup/about-popup.component';
 
@@ -85,7 +85,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
     this.popup.open<boolean>(
       {
-        component: ConfirmPopupComponent,
+        component: PopupComponent,
         data: {
           title: this.translate.get('CONFIG.SIGN_OUT_POPUP.TITLE'),
           msg: `${this.translate.get('CONFIG.SIGN_OUT_POPUP.MSG')}: ${this.auth.getEmail()}`
