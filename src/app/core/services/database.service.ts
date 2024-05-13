@@ -403,6 +403,10 @@ export class DatabaseService implements OnDestroy {
   }
 
   destroy = () => {
+    this.#cashFlowRecords.next(undefined);
+    this.#countryRecords.next(undefined);
+    this.#userPreferences.next(undefined);
+    this.#userSettings.next(undefined);
     return FirebaseFirestore.removeAllListeners();
   };
 
