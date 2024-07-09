@@ -47,7 +47,7 @@
 
     <span *ngIf="records.length === 0" class="cauquen__table--empty">{{'CORE.EMPTY' | translate}}</span>
 
-    <bizy-fab-button (onSelect)="addRecord()">
+    <bizy-fab-button style="position: absolute; right: 1rem; bottom: 1rem;" (onSelect)="addRecord()">
         <i class="fa-solid fa-plus"></i>
     </bizy-fab-button>
 </div>

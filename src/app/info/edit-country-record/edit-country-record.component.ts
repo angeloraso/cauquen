@@ -71,14 +71,18 @@ export class EditCountryRecordComponent implements OnInit, OnDestroy {
     );
   }
 
-  async confirm(record: ICountryRecord) {
+  async confirm(record: Omit<ICountryRecord, 'id' | 'country' | 'created' | 'updated'>) {
     try {
-      if (this.loading) {
+      if (this.loading || !this.record) {
         return;
       }
 
       this.loading = true;
-      await this.country.putRecord(record);
+      await this.country.putRecord({
+        ...record,
+        id: this.record.id,
+        created: this.record.created
+      });
       this.goBack();
     } catch (error) {
       console.log(error);

@@ -29,24 +29,26 @@ export class CountryService {
     });
   }
 
-  postRecord(record: ICountryRecord) {
+  postRecord(record: Omit<ICountryRecord, 'id' | 'country' | 'created' | 'updated'>) {
     return this.database.postCountryRecord({
       record: new CountryRecord(record),
       country: COUNTRY_CODE.ARGENTINA
     });
   }
 
-  putRecord(record: ICountryRecord): Promise<void> {
+  putRecord(record: Omit<ICountryRecord, 'country' | 'updated'>): Promise<void> {
     return this.database.putCountryRecord({
       record: {
         id: record.id,
-        country: record.country ?? COUNTRY_CODE.ARGENTINA,
+        country: COUNTRY_CODE.ARGENTINA,
         from: Number(record.from),
         to: Number(record.to),
         ipc: Number(record.ipc),
         fixedRate: Number(record.fixedRate),
-        officialDollarRate: Number(record.officialDollarRate),
-        cclDollarRate: Number(record.cclDollarRate),
+        retailDollar: Number(record.retailDollar),
+        mepDollar: Number(record.mepDollar),
+        cclDollar: Number(record.cclDollar),
+        cryptoDollar: Number(record.cryptoDollar),
         created: Number(record.created) || Date.now(),
         updated: Date.now()
       },

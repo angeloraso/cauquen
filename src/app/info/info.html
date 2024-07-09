@@ -32,14 +32,14 @@
                 <bizy-table-column-arrows [order]="order" [show]="orderBy === 'fixedRate'"></bizy-table-column-arrows>
             </bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" class="hidden-xs" (onSelect)="onSort('officialDollarRate')">
-                <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.OFFICIAL_DOLLAR_RATE' | translate}}</strong></h5>
-                <bizy-table-column-arrows [order]="order" [show]="orderBy === 'officialDollarRate'"></bizy-table-column-arrows>
+            <bizy-table-column [ngStyle]="{flex: 3}" class="hidden-xs" (onSelect)="onSort('retailDollar')">
+                <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.RETAIL_DOLLAR' | translate}}</strong></h5>
+                <bizy-table-column-arrows [order]="order" [show]="orderBy === 'retailDollar'"></bizy-table-column-arrows>
             </bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" class="hidden-xs" (onSelect)="onSort('cclDollarRate')">
-                <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.CCL_DOLLAR_RATE' | translate}}</strong></h5>
-                <bizy-table-column-arrows [order]="order" [show]="orderBy === 'cclDollarRate'"></bizy-table-column-arrows>
+            <bizy-table-column [ngStyle]="{flex: 3}" class="hidden-xs" (onSelect)="onSort('cclDollar')">
+                <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.CCL_DOLLAR' | translate}}</strong></h5>
+                <bizy-table-column-arrows [order]="order" [show]="orderBy === 'cclDollar'"></bizy-table-column-arrows>
             </bizy-table-column>
     
             <bizy-table-column *ngIf="isAdmin" [ngStyle]="{flex: 1, minWidth: '1rem'}"></bizy-table-column>
@@ -56,9 +56,9 @@
 
             <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.fixedRate | number : '1.2-2'}} %</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" class="hidden-xs" (onSelect)="goToRecord(record)"><h6>$ {{record.officialDollarRate | number : '1.2-2'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}" class="hidden-xs" (onSelect)="goToRecord(record)"><h6>$ {{record.retailDollar | number : '1.2-2'}}</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" class="hidden-xs" (onSelect)="goToRecord(record)"><h6>$ {{record.cclDollarRate | number : '1.2-2'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}" class="hidden-xs" (onSelect)="goToRecord(record)"><h6>$ {{record.cclDollar | number : '1.2-2'}}</h6></bizy-table-column>
 
             <bizy-table-column *ngIf="isAdmin" [ngStyle]="{flex: 1, minWidth: '1rem'}" (onSelect)="openConfirmPopup(record)"><i class="fa-solid fa-trash-alt cauquen-action cauquen-action--danger"></i></bizy-table-column>
     
@@ -68,7 +68,7 @@
 
     <span *ngIf="info.length === 0" class="cauquen__table--empty">{{'CORE.EMPTY' | translate}}</span>
 
-    <bizy-fab-button (onSelect)="addRecord()" *ngIf="isAdmin">
+    <bizy-fab-button style="position: absolute; right: 1rem; bottom: 1rem;" (onSelect)="addRecord()" *ngIf="isAdmin">
         <i class="fa-solid fa-plus"></i>
     </bizy-fab-button>
     

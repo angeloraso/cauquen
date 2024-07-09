@@ -12,14 +12,7 @@
 
     <cauquen-country-record-form
         *ngIf="record"
-        [id]="record.id"
-        [from]="record.from"
-        [to]="record.to"
-        [country]="record.country"
-        [ipc]="record.ipc"
-        [fixedRate]="record.fixedRate"
-        [officialDollarRate]="record.officialDollarRate"
-        [cclDollarRate]="record.cclDollarRate"
+        [date]="record.from"
         (cancel)="goBack()"
         (confirm)="confirm($event)">
     </cauquen-country-record-form>

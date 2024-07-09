@@ -16,8 +16,11 @@ export const locale = {
         ACCOUNT: 'Cuenta'
       },
       DOLLAR_PROFIT: {
-        TITLE: 'Rendimiento en dolares (CCL)',
-        ACCOUNT: 'Cuenta'
+        TITLE: 'Rendimiento en dolares',
+        RETAIL_ACCOUNT: 'Oficial',
+        CCL_ACCOUNT: 'CCL',
+        MEP_ACCOUNT: 'MEP',
+        CRYPTO_ACCOUNT: 'Cripto'
       },
       INFLATION: {
         TITLE: 'Inflación (%)'

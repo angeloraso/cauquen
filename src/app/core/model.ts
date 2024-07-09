@@ -38,8 +38,10 @@ export interface ICountryRecord {
   to: number;
   ipc: number;
   fixedRate: number;
-  officialDollarRate: number;
-  cclDollarRate: number;
+  retailDollar: number;
+  mepDollar: number;
+  cclDollar: number;
+  cryptoDollar: number;
   created: number;
   updated: number;
 }
@@ -51,20 +53,24 @@ export class CountryRecord implements ICountryRecord {
   to: number;
   ipc: number;
   fixedRate: number;
-  officialDollarRate: number;
-  cclDollarRate: number;
+  retailDollar: number;
+  mepDollar: number;
+  cclDollar: number;
+  cryptoDollar: number;
   created: number;
   updated: number;
 
-  constructor(record: Omit<ICountryRecord, 'id' | 'created' | 'updated'>) {
+  constructor(record: Omit<ICountryRecord, 'id' | 'country' | 'created' | 'updated'>) {
     this.id = uuid4();
-    this.country = record.country ?? COUNTRY_CODE.ARGENTINA;
+    this.country = COUNTRY_CODE.ARGENTINA;
     this.from = Number(record.from);
     this.to = Number(record.to);
     this.ipc = Number(record.ipc);
     this.fixedRate = Number(record.fixedRate);
-    this.officialDollarRate = Number(record.officialDollarRate);
-    this.cclDollarRate = Number(record.cclDollarRate);
+    this.retailDollar = Number(record.retailDollar);
+    this.mepDollar = Number(record.mepDollar);
+    this.cclDollar = Number(record.cclDollar);
+    this.cryptoDollar = Number(record.cryptoDollar);
     this.created = Date.now();
     this.updated = Date.now();
   }
@@ -83,4 +89,28 @@ export interface IUserSettings {
 
 export interface IUserPreferences {
   country: COUNTRY_CODE;
+}
+
+export interface IBCRAModel {
+  idVariable: number;
+  fecha: string; // dd/MM/yyyy
+  valor: number;
+}
+
+export interface IBCRAResponse {
+  results: Array<IBCRAModel>;
+  status: 200 | 400;
+  errorMessages: [];
+}
+
+export enum CURRENCY_NAME {
+  CCL = 'contadoconliqui',
+  MEP = 'bolsa',
+  CRYPTO = 'cripto'
+}
+export interface ICurrencyRecord {
+  casa: CURRENCY_NAME;
+  compra: number;
+  venta: number;
+  fecha: string; // YYYY-MM-dd
 }

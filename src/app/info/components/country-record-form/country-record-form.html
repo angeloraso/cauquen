@@ -1,91 +1,78 @@
 <form class="cauquen-form" [formGroup]="form">
 
-    <bizy-select label="{{'CORE.FORM.FIELD.COUNTRY' | translate}}">
-        <bizy-select-option 
-            *ngFor="let c of COUNTRIES"
-            [selected]="_country.value === c.id"
-            (onSelect)="_country.setValue(c.id)">
-            {{c.value | translate}}
-        </bizy-select-option>
-    </bizy-select>
+    <span class="country-record-form__header"> 
 
-    <bizy-input 
-        label="{{'CORE.FORM.FIELD.FROM' | translate}}"
-        type="date"
-        [control]="_from">
-
-        <span input-end><i class="fa-solid fa-calendar"></i></span>
-
-        <bizy-error input-error *ngIf="_from.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+        <bizy-input 
+            label="{{'CORE.FORM.FIELD.DATE' | translate}}"
+            type="month-year"
+            [control]="_date">
         
-    </bizy-input>
-
-    <bizy-input 
-        label="{{'CORE.FORM.FIELD.TO' | translate}}"
-        type="date"
-        [control]="_to">
-
-        <span input-end><i class="fa-solid fa-calendar"></i></span>
-
-        <bizy-error input-error *ngIf="_to.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+            <span input-end><i class="fa-solid fa-calendar"></i></span>
         
-    </bizy-input>
+            <bizy-error input-error *ngIf="_date.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
+            
+        </bizy-input>
 
-    <bizy-input 
-        label="{{'CORE.FORM.FIELD.INFLATION' | translate}}"
-        type="number"
-        placeholder="0.00"
-        [min]="0"
-        [clear]="false"
-        [control]="_ipc">
-        <span input-end>%</span>
+        <bizy-button (onSelect)="onSearch()">{{'CORE.FORM.FIELD.SEARCH' | translate}}</bizy-button>
 
-        <bizy-error input-error *ngIf="_ipc.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
-        <bizy-error input-error *ngIf="_ipc.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
-        
-    </bizy-input>
+    </span>
+    
+    
+    <bizy-card>
+    
+        <span class="country-record-form__card">
+    
+            <span class="country-record-form__card__section">
+    
+                <h4 class="country-record-form__card__section__title">{{'CORE.FORM.FIELD.INFLATION' | translate}} (%)</h4>
+    
+                <h4 class="country-record-form__card__section__value" [bizyLoading]="loading">{{ipc | number : '1.2-2'}}</h4>
+    
+            </span>
+    
+            <span class="country-record-form__card__section">
+    
+                <h4 class="country-record-form__card__section__title">{{'CORE.FORM.FIELD.FIXED_RATE' | translate}} (%)</h4>
+    
+                <h4 class="country-record-form__card__section__value" [bizyLoading]="loading">{{fixedRate | number : '1.2-2'}}</h4>
+    
+            </span>
+    
+            <span class="country-record-form__card__section">
+    
+                <h4 class="country-record-form__card__section__title">{{'CORE.FORM.FIELD.RETAIL_DOLLAR' | translate}} ($)</h4>
+    
+                <h4 class="country-record-form__card__section__value" [bizyLoading]="loading">{{retailDollar | number : '1.2-2'}}</h4>
+    
+            </span>
+    
+            <span class="country-record-form__card__section">
+    
+                <h4 class="country-record-form__card__section__title">{{'CORE.FORM.FIELD.MEP_DOLLAR' | translate}} ($)</h4>
+    
+                <h4 class="country-record-form__card__section__value" [bizyLoading]="loading">{{mepDollar | number : '1.2-2'}}</h4>
+    
+            </span>
+    
+            <span class="country-record-form__card__section">
+    
+                <h4 class="country-record-form__card__section__title">{{'CORE.FORM.FIELD.CCL_DOLLAR' | translate}} ($)</h4>
+    
+                <h4 class="country-record-form__card__section__value" [bizyLoading]="loading">{{cclDollar | number : '1.2-2'}}</h4>
+    
+            </span>
 
-    <bizy-input 
-        label="{{'CORE.FORM.FIELD.FIXED_RATE' | translate}}"
-        type="number"
-        placeholder="0.00"
-        [min]="0"
-        [clear]="false"
-        [control]="_fixedRate">
-        <span input-end>%</span>
-
-        <bizy-error input-error *ngIf="_fixedRate.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
-        <bizy-error input-error *ngIf="_fixedRate.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
-        
-    </bizy-input>
-
-    <bizy-input 
-        label="{{'CORE.FORM.FIELD.OFFICIAL_DOLLAR_RATE' | translate}}"
-        type="number"
-        placeholder="0.00"
-        [min]="0"
-        [clear]="false"
-        [control]="_officialDollarRate">
-        <span input-start>$&nbsp;</span>
-
-        <bizy-error input-error *ngIf="_officialDollarRate.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
-        <bizy-error input-error *ngIf="_officialDollarRate.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
-        
-    </bizy-input>
-
-    <bizy-input 
-        label="{{'CORE.FORM.FIELD.CCL_DOLLAR_RATE' | translate}}"
-        type="number"
-        placeholder="0.00"
-        [min]="0"
-        [clear]="false"
-        [control]="_cclDollarRate">
-        <span input-start>$&nbsp;</span>
-
-        <bizy-error input-error *ngIf="_cclDollarRate.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
-        <bizy-error input-error *ngIf="_cclDollarRate.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
-        
-    </bizy-input>
+            <span class="country-record-form__card__section">
+    
+                <h4 class="country-record-form__card__section__title">{{'CORE.FORM.FIELD.CRYPTO_DOLLAR' | translate}} ($)</h4>
+    
+                <h4 class="country-record-form__card__section__value" [bizyLoading]="loading">{{cryptoDollar | number : '1.2-2'}}</h4>
+    
+            </span>
+    
+        </span>
+    
+    </bizy-card>
 
     <bizy-confirm-buttons
         (cancel)="_cancel()"

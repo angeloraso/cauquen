@@ -21,6 +21,7 @@ export const locale = {
       },
       FORM: {
         FIELD: {
+          SEARCH: 'Buscar',
           DATE: 'Fecha',
           AMOUNT: 'Monto',
           BALANCE: 'Balance',
@@ -32,9 +33,11 @@ export const locale = {
           FIXED_RATE: 'Tasa',
           COUNTRY: 'País',
           INCOME: 'Entrada de dinero',
-          DOLLAR: 'Dolar',
-          OFFICIAL_DOLLAR_RATE: 'Dolar (oficial)',
-          CCL_DOLLAR_RATE: 'Dolar (CCL)'
+          DOLLAR: 'Dólar',
+          RETAIL_DOLLAR: 'Dólar (minorista)',
+          MEP_DOLLAR: 'Dólar (MEP)',
+          CCL_DOLLAR: 'Dólar (CCL)',
+          CRYPTO_DOLLAR: 'Dólar (Cripto)'
         },
         ERROR: {
           REQUIRED: 'Este campo es requerido',

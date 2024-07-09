@@ -1,7 +1,7 @@
 import { Inject, NgModule } from '@angular/core';
 import { BizyTranslateService } from '@bizy/services';
 import { SharedModule } from '@shared/shared.module';
-import { CountryRecordFormComponent } from './components';
+import { CountryRecordFormComponent } from './components/country-record-form/country-record-form.component';
 import { es } from './i18n';
 import { InfoRoutingModule } from './info.routing';
 

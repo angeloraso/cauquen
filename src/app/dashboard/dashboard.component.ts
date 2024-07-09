@@ -75,7 +75,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
       const dollarProfitLabels: Array<string> = [];
       const dollarProfitSeries: Array<ILineChartData> = [
         {
-          name: this.translate.get('DASHBOARD.DOLLAR_PROFIT.ACCOUNT'),
+          name: this.translate.get('DASHBOARD.DOLLAR_PROFIT.RETAIL_ACCOUNT'),
+          values: []
+        },
+        {
+          name: this.translate.get('DASHBOARD.DOLLAR_PROFIT.CCL_ACCOUNT'),
+          values: []
+        },
+        {
+          name: this.translate.get('DASHBOARD.DOLLAR_PROFIT.MEP_ACCOUNT'),
+          values: []
+        },
+        {
+          name: this.translate.get('DASHBOARD.DOLLAR_PROFIT.CRYPTO_ACCOUNT'),
           values: []
         }
       ];
@@ -151,11 +163,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
         monthProfitLabels.push(label);
         monthProfitSeries[0].values.push(profit);
 
-        const dollarsInPeriod = this.utils.roundNumber(
-          lastRecord.balance / _countryRecord.cclDollarRate
+        const cclDollarInPeriod = this.utils.roundNumber(
+          lastRecord.balance / _countryRecord.cclDollar
         );
+        const mepDollarInPeriod = this.utils.roundNumber(
+          lastRecord.balance / _countryRecord.mepDollar
+        );
+        const retailDollarInPeriod = this.utils.roundNumber(
+          lastRecord.balance / _countryRecord.retailDollar
+        );
+        const cryptoDollarInPeriod = this.utils.roundNumber(
+          lastRecord.balance / _countryRecord.cryptoDollar
+        );
+
         dollarProfitLabels.push(label);
-        dollarProfitSeries[0].values.push(dollarsInPeriod);
+        dollarProfitSeries[0].values.push(retailDollarInPeriod);
+        dollarProfitSeries[1].values.push(cclDollarInPeriod);
+        dollarProfitSeries[2].values.push(mepDollarInPeriod);
+        dollarProfitSeries[3].values.push(cryptoDollarInPeriod);
 
         inflationLabels.push(label);
         inflationSeries[0].values.push(_countryRecord.ipc);
@@ -164,8 +189,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         fixedRateSeries[0].values.push(_countryRecord.fixedRate);
 
         dollarRateLabels.push(label);
-        dollarRateSeries[0].values.push(_countryRecord.officialDollarRate);
-        dollarRateSeries[1].values.push(_countryRecord.cclDollarRate);
+        dollarRateSeries[0].values.push(_countryRecord.retailDollar);
+        dollarRateSeries[1].values.push(_countryRecord.cclDollar);
       });
 
       this.generalProfitLabels = generalProfitLabels;
