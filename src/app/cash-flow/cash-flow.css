@@ -1,5 +1,5 @@
 .cash-flow {
-    --bizy-table-height: calc(100vh - var(--bizy-toolbar-height) - 7rem);
+    --bizy-table-height: calc(100vh - var(--bizy-toolbar-height) - 4rem);
     position: relative;
 }
 

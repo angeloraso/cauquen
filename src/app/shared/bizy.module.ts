@@ -1,13 +1,10 @@
 import { NgModule } from '@angular/core';
 import {
-  BizyBarChartModule,
+  BizyBarLineChartModule,
   BizyButtonModule,
   BizyCardModule,
-  BizyConfirmButtonsModule,
-  BizyErrorModule,
-  BizyFabButtonModule,
+  BizyDatePickerModule,
   BizyInputModule,
-  BizyLineChartModule,
   BizySelectModule,
   BizySidebarModule,
   BizyTableModule,
@@ -28,21 +25,17 @@ import { BizyPopupModule, BizyToastModule, BizyTranslatePipeModule } from '@bizy
     BizyPopupModule,
     BizyToastModule,
     BizyButtonModule,
-    BizyFabButtonModule,
-    BizyConfirmButtonsModule,
     BizyToggleModule,
     BizyInputModule,
-    BizyErrorModule,
-    BizyConfirmButtonsModule,
     BizyTabsModule,
     BizyToolbarModule,
     BizySidebarModule,
     BizyTableModule,
     BizySelectModule,
     BizyTranslatePipeModule,
-    BizyLineChartModule,
-    BizyBarChartModule,
-    BizyCardModule
+    BizyCardModule,
+    BizyDatePickerModule,
+    BizyBarLineChartModule
   ]
 })
 export class BizyModule {}

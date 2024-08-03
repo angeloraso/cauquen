@@ -8,91 +8,104 @@
 
 <div class="cauquen-wrapper dashboard">
 
-    <span class="cauquen-card dashboard__summary-card">
+    <span class="dashboard__charts" #dashboard>
 
-        <span class="dashboard__summary-card__total" [bizyLoading]="loading">
+        <span class="dashboard__charts__chart-wrapper">
 
-            <h1 class="dashboard__summary-card__total__label">Total: </h1>
+            <h3 class="cauquen-title"><strong>{{'DASHBOARD.GENERAL_PROFIT.TITLE' | translate}}</strong></h3>
 
-            <h2 
-                class="dashboard__summary-card__total__value"
-                [ngClass]="{'dashboard__summary-card__total__value--negative': total < 0, 'dashboard__summary-card__total__value--positive': total > 0}">{{total}} %</h2>
+            <bizy-bar-line-chart 
+                class="dashboard__charts__chart-wrapper__chart"
+                name="{{'DASHBOARD.GENERAL_PROFIT.TITLE' | translate}}"
+                [resizeRef]="dashboard"
+                [tooltip]="!isMobile"
+                downloadLabel="{{'CORE.BUTTON.DOWNLOAD' | translate}}"
+                [xAxisLabels]="generalProfitLabels"
+                [data]="generalProfitSeries">
+            </bizy-bar-line-chart>
 
         </span>
 
-    </span>
+        <span class="dashboard__charts__chart-wrapper">
 
-    
-    <span class="dashboard__chart" [bizyLoading]="loading">
+            <h3 class="cauquen-title"><strong>{{'DASHBOARD.MONTH_PROFIT.TITLE' | translate}}</strong></h3>
+        
+            <bizy-bar-line-chart 
+                class="dashboard__charts__chart-wrapper__chart"
+                name="{{'DASHBOARD.MONTH_PROFIT.TITLE' | translate}}"
+                [resizeRef]="dashboard"
+                [tooltip]="!isMobile"
+                downloadLabel="{{'CORE.BUTTON.DOWNLOAD' | translate}}"
+                [xAxisLabels]="monthProfitLabels"
+                [data]="monthProfitSeries">
+            </bizy-bar-line-chart>
 
-        <h4 class="dashboard__chart__title">{{'DASHBOARD.GENERAL_PROFIT.TITLE' | translate}}</h4>
+        </span>
 
-        <bizy-line-chart
-            [labelsX]="generalProfitLabels"
-            yLabelPrefix="$"
-            [tooltip]="false"
-            [data]="generalProfitSeries">
-        </bizy-line-chart>
-    </span>
+        <span class="dashboard__charts__chart-wrapper">
 
-    <span class="dashboard__chart" [bizyLoading]="loading">
+            <h3 class="cauquen-title"><strong>{{'DASHBOARD.DOLLAR_PROFIT.TITLE' | translate}}</strong></h3>
+        
+            <bizy-bar-line-chart 
+                class="dashboard__charts__chart-wrapper__chart"
+                name="{{'DASHBOARD.DOLLAR_PROFIT.TITLE' | translate}}"
+                [resizeRef]="dashboard"
+                [tooltip]="!isMobile"
+                downloadLabel="{{'CORE.BUTTON.DOWNLOAD' | translate}}"
+                [xAxisLabels]="dollarProfitLabels"
+                [data]="dollarProfitSeries">
+            </bizy-bar-line-chart>
 
-        <h4 class="dashboard__chart__title">{{'DASHBOARD.MONTH_PROFIT.TITLE' | translate}}</h4>
+        </span>
 
-        <bizy-bar-chart 
-            [labelsX]="monthProfitLabels"
-            yLabelSuffix="%"
-            [tooltip]="false"
-            [data]="monthProfitSeries">
-        </bizy-bar-chart>
-    </span>
+        <span class="dashboard__charts__chart-wrapper">
 
-    <span class="dashboard__chart" [bizyLoading]="loading">
+            <h3 class="cauquen-title"><strong>{{'DASHBOARD.DOLLAR_RATE.TITLE' | translate}}</strong></h3>
+        
+            <bizy-bar-line-chart 
+                class="dashboard__charts__chart-wrapper__chart"
+                name="{{'DASHBOARD.DOLLAR_RATE.TITLE' | translate}}"
+                [resizeRef]="dashboard"
+                [tooltip]="!isMobile"
+                downloadLabel="{{'CORE.BUTTON.DOWNLOAD' | translate}}"
+                [xAxisLabels]="dollarRateLabels"
+                [data]="dollarRateSeries">
+            </bizy-bar-line-chart>
 
-        <h4 class="dashboard__chart__title">{{'DASHBOARD.DOLLAR_PROFIT.TITLE' | translate}}</h4>
+        </span>
 
-        <bizy-line-chart 
-            [labelsX]="dollarProfitLabels"
-            yLabelPrefix="U$D"
-            [tooltip]="false"
-            [data]="dollarProfitSeries">
-        </bizy-line-chart>
-    </span>
+        <span class="dashboard__charts__chart-wrapper">
 
-    <span class="dashboard__chart" [bizyLoading]="loading">
+            <h3 class="cauquen-title"><strong>{{'DASHBOARD.INFLATION.TITLE' | translate}}</strong></h3>
+        
+            <bizy-bar-line-chart 
+                class="dashboard__charts__chart-wrapper__chart"
+                name="{{'DASHBOARD.INFLATION.TITLE' | translate}}"
+                [resizeRef]="dashboard"
+                [tooltip]="!isMobile"
+                downloadLabel="{{'CORE.BUTTON.DOWNLOAD' | translate}}"
+                [xAxisLabels]="inflationLabels"
+                [data]="inflationSeries">
+            </bizy-bar-line-chart>
 
-        <h4 class="dashboard__chart__title">{{'DASHBOARD.DOLLAR_RATE.TITLE' | translate}}</h4>
+        </span>
 
-        <bizy-line-chart 
-            yLabelPrefix="U$D"
-            [tooltip]="false"
-            [labelsX]="dollarRateLabels"
-            [data]="dollarRateSeries">
-        </bizy-line-chart>
-    </span>
+        <span class="dashboard__charts__chart-wrapper">
 
-    <span class="dashboard__chart" [bizyLoading]="loading">
+            <h3 class="cauquen-title"><strong>{{'DASHBOARD.FIXED_RATE.TITLE' | translate}}</strong></h3>
+        
+            <bizy-bar-line-chart 
+                class="dashboard__charts__chart-wrapper__chart"
+                name="{{'DASHBOARD.FIXED_RATE.TITLE' | translate}}"
+                [resizeRef]="dashboard"
+                [tooltip]="!isMobile"
+                downloadLabel="{{'CORE.BUTTON.DOWNLOAD' | translate}}"
+                [xAxisLabels]="fixedRateLabels"
+                [data]="fixedRateSeries">
+            </bizy-bar-line-chart>
 
-        <h4 class="dashboard__chart__title">{{'DASHBOARD.INFLATION.TITLE' | translate}}</h4>
+        </span>
 
-        <bizy-bar-chart 
-            yLabelSuffix="%"
-            [tooltip]="false"
-            [labelsX]="inflationLabels"
-            [data]="inflationSeries">
-        </bizy-bar-chart>
-    </span>
-
-    <span class="dashboard__chart" [bizyLoading]="loading">
-
-        <h4 class="dashboard__chart__title">{{'DASHBOARD.FIXED_RATE.TITLE' | translate}}</h4>
-
-        <bizy-bar-chart 
-            yLabelSuffix="%"
-            [tooltip]="false"
-            [labelsX]="fixedRateLabels"
-            [data]="fixedRateSeries">
-        </bizy-bar-chart>
     </span>
 
 </div>

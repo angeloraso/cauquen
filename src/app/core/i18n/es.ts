@@ -7,14 +7,15 @@ export const locale = {
       EMPTY: 'Sin elementos',
       MENU: {
         DASHBOARD: 'Panel',
-        CASH_FLOW: 'Transacciones',
+        CASH_FLOW: 'Caja',
         INFO: 'Info',
         CONFIG: 'Config'
       },
       BUTTON: {
         CANCEL: 'Cancelar',
         SAVE: 'Guardar',
-        CONFIRM: 'Confirmar'
+        CONFIRM: 'Confirmar',
+        DOWNLOAD: 'Descargar'
       },
       COUNTRY: {
         AR: 'Argentina'

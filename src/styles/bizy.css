@@ -1,13 +1,19 @@
 @import '/node_modules/@bizy/directives/styles/loading.css';
+@import '/node_modules/@bizy/directives/styles/tooltip.css';
 @import '/node_modules/@bizy/directives/styles/variables.css';
 @import '/node_modules/@bizy/services/styles/popup.css';
 @import '/node_modules/@bizy/services/styles/variables.css';
+@import '/node_modules/@bizy/services/styles/toast.css';
+@import '/node_modules/@bizy/components/styles/date-picker.css';
 @import '/node_modules/@bizy/components/styles/variables.css';
 @import '/node_modules/@bizy/components/styles/normalize.css';
 @import '/node_modules/@bizy/components/styles/animations.css';
 @import '/node_modules/@bizy/components/styles/overlay.css';
 
 :root {
+    --bizy-input-min-width: 8rem;
+    --bizy-input-max-width: 20rem;
+
     --bizy-loading-color-1st-line: var(--light-primary-color);
     --bizy-loading-color-2nd-line: var(--primary-color);
     --bizy-loading-color-3rd-line: var(--dark-primary-color);
@@ -19,8 +25,10 @@
     --bizy-sidebar-shrinked-width: 3rem;
     --bizy-sidebar-width: 14rem;
     --bizy-sidebar-option-hover-color: var(--light-info-color);
+    --bizy-sidebar-option-selected-color: var(--accent-color);
 
-    @media only screen and (max-width: 768px) {
-        --bizy-toolbar-padding: 0 0.5rem !important;
-    }
+    --bizy-tab-border-top: none;
+    --bizy-tab-border-right: none;
+    --bizy-tab-border-left: none;
+    --bizy-tab-border-bottom: none;
 }

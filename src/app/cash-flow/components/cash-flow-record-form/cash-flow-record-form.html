@@ -1,50 +1,54 @@
 <form class="cauquen-form" [formGroup]="form">
 
-    <bizy-input 
-        label="{{'CORE.FORM.FIELD.DATE' | translate}}"
+    <bizy-date-picker
         type="date"
-        [control]="_date">
-
-        <span input-end><i class="fa-solid fa-calendar"></i></span>
-
-        <bizy-error input-error *ngIf="_date.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
-        
-    </bizy-input>
+        [date]="_date.value"
+        (onChange)="_date.setValue($event)">
+        <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.DATE' | translate}}</strong></h6>
+    </bizy-date-picker>
 
     <span class="cauquen-form__toggle-field">
         <h4 class="cauquen-form__toggle-field__label">{{'CORE.FORM.FIELD.INCOME' | translate}}:</h4>
-        <bizy-toggle [checked]="_income.value" (onSelect)="_income.setValue($event)"></bizy-toggle>
+        <bizy-toggle 
+            [selected]="_income.value"
+            (onSelect)="_income.setValue($event)">
+        </bizy-toggle>
     </span>
 
-    <bizy-input 
-        label="{{'CORE.FORM.FIELD.AMOUNT' | translate}}"
+    <bizy-input
+        #amountInput
+        [value]="_amount.value"
         type="number"
-        placeholder="0.00"
-        [min]="0"
-        [control]="_amount">
-        <span input-start>$&nbsp;</span>
-
-        <bizy-error input-error *ngIf="_amount.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
-        <bizy-error input-error *ngIf="_amount.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
-        
+        (onChange)="_amount.setValue($event)">
+        <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.AMOUNT' | translate}}</strong></h6>
+        <h6 slot="prefix">$</h6>
+        <h6 slot="error" *ngIf="_amount.hasError('min') && amountInput.touched">{{'CORE.FORM.ERROR.MIN' | translate}}: {{MIN_VALUE}}</h6>
+        <h6 slot="error" *ngIf="_amount.hasError('bizyNumber') && amountInput.touched">{{'CORE.FORM.ERROR.ONLY_NUMBERS' | translate}}</h6>
     </bizy-input>
 
-    <bizy-input 
-        label="{{'CORE.FORM.FIELD.BALANCE' | translate}}"
+    <bizy-input
+        #balanceInput
+        [value]="_balance.value"
         type="number"
-        placeholder="0.00"
-        [min]="0"
-        [control]="_balance">
-        <span input-start>$&nbsp;</span>
-
-        <bizy-error input-error *ngIf="_balance.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
-        <bizy-error input-error *ngIf="_balance.hasError('min')">{{'CORE.FORM.ERROR.MIN' | translate}} {{MIN_VALUE}}</bizy-error>
-        
+        (onChange)="_balance.setValue($event)">
+        <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.BALANCE' | translate}}</strong></h6>
+        <h6 slot="prefix">$</h6>
+        <h6 slot="error" *ngIf="_balance.hasError('min') && balanceInput.touched">{{'CORE.FORM.ERROR.MIN' | translate}}: {{MIN_VALUE}}</h6>
+        <h6 slot="error" *ngIf="_balance.hasError('bizyNumber') && balanceInput.touched">{{'CORE.FORM.ERROR.ONLY_NUMBERS' | translate}}</h6>
     </bizy-input>
 
-    <bizy-confirm-buttons
-        (cancel)="_cancel()"
-        (confirm)="_confirm()">
-    </bizy-confirm-buttons>
+    <span class="cauquen-confirm-buttons">
+
+        <bizy-button class="cauquen-confirm-buttons__cancel" (onSelect)="_cancel()">
+            <h5><i class="fa-solid fa-xmark"></i></h5>
+            <h5>{{'CORE.BUTTON.CANCEL' | translate}}</h5>
+        </bizy-button>
+
+        <bizy-button class="cauquen-confirm-buttons__confirm" (onSelect)="_confirm()">
+            <h5>{{'CORE.BUTTON.CONFIRM' | translate}}</h5>
+            <h5><i class="fa-solid fa-check"></i></h5>
+        </bizy-button>
+
+    </span>
 
 </form>

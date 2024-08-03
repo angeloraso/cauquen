@@ -2,16 +2,13 @@
 
     <span class="country-record-form__header"> 
 
-        <bizy-input 
-            label="{{'CORE.FORM.FIELD.DATE' | translate}}"
-            type="month-year"
-            [control]="_date">
-        
-            <span input-end><i class="fa-solid fa-calendar"></i></span>
-        
-            <bizy-error input-error *ngIf="_date.hasError('required')">{{'CORE.FORM.ERROR.REQUIRED' | translate}}</bizy-error>
-            
-        </bizy-input>
+        <bizy-date-picker
+            type="date"
+            [disabled]="loading"
+            [date]="_date.value"
+            (onChange)="_date.setValue($event); onSearch()">
+            <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.DATE' | translate}}</strong></h6>
+        </bizy-date-picker>
 
         <bizy-button (onSelect)="onSearch()">{{'CORE.FORM.FIELD.SEARCH' | translate}}</bizy-button>
 
@@ -74,9 +71,18 @@
     
     </bizy-card>
 
-    <bizy-confirm-buttons
-        (cancel)="_cancel()"
-        (confirm)="_confirm()">
-    </bizy-confirm-buttons>
+    <span class="cauquen-confirm-buttons">
+
+        <bizy-button class="cauquen-confirm-buttons__cancel" (onSelect)="_cancel()">
+            <h5><i class="fa-solid fa-xmark"></i></h5>
+            <h5>{{'CORE.BUTTON.CANCEL' | translate}}</h5>
+        </bizy-button>
+
+        <bizy-button class="cauquen-confirm-buttons__confirm" (onSelect)="_confirm()">
+            <h5>{{'CORE.BUTTON.CONFIRM' | translate}}</h5>
+            <h5><i class="fa-solid fa-check"></i></h5>
+        </bizy-button>
+
+    </span>
 
 </form>

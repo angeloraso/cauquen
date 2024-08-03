@@ -20,6 +20,9 @@
             "polyfills": [
               "zone.js"
             ],
+            "allowedCommonJsDependencies": [
+              "flatpickr/dist/l10n/es.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {

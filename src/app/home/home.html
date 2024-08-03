@@ -2,7 +2,7 @@
 
   <bizy-sidebar class="home__sidebar" [toggle]="closedSidebar" (onToggle)="onToggle($event)">
 
-    <bizy-sidebar-option slot="start" [disabled]="true">
+    <bizy-sidebar-option slot="start">
 
       <span class="home__sidebar__header" [ngClass]="{'home__sidebar__option--closed': closedSidebar}">
         <img class="home__sidebar__header__logo" src="{{LOGO_PATH}}" alt="logo"/>
@@ -25,7 +25,7 @@
 
     </bizy-sidebar-option>
 
-    <bizy-sidebar-option slot="end" [disabled]="true">
+    <bizy-sidebar-option slot="end">
   
       <span class="home__sidebar__option__content" [ngClass]="{'home__sidebar__option--closed': closedSidebar}">
         <i *ngIf="!profilePic" class="fa-solid fa-user-circle"></i>
@@ -40,26 +40,27 @@
     
   <div class="home__content">
 
-      <span class="home__content__router-outlet">
-          <router-outlet></router-outlet>
-      </span>
+    <span class="home__content__router-outlet">
+        <router-outlet></router-outlet>
+    </span>
 
-      <bizy-tabs class="home__tabs">
+    <bizy-tabs class="home__tabs">
 
-          <bizy-tab 
-            class="home__tabs__tab"
-            *ngFor="let option of options"
-            [(selected)]="option.selected"
-            (onSelect)="onSelect(option)">
-        
-            <i class="fa-solid {{option.icon}}" [ngClass]="{'home__tabs__tab--selected': option.selected}"></i>
-        
-            <h5 [ngClass]="{'home__tabs__tab--selected': option.selected}">{{option.label | translate}}</h5>
-        
-          </bizy-tab>
-        
-      </bizy-tabs>
-  
-  </div>
+        <bizy-tab 
+          class="home__tabs__tab"
+          *ngFor="let option of options"
+          linePosition="top"
+          [(selected)]="option.selected"
+          (onSelect)="onSelect(option)">
+
+          <h5 [ngClass]="{'home__tabs__tab--selected': option.selected}"><i class="fa-solid {{option.icon}}"></i></h5>
+      
+          <h5 [ngClass]="{'home__tabs__tab--selected': option.selected}">{{option.label | translate}}</h5>
+      
+        </bizy-tab>
+      
+    </bizy-tabs>
+
+</div>
 
 </div>

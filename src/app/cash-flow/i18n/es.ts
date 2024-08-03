@@ -4,7 +4,7 @@ export const locale = {
   lang: LANGUAGE.SPANISH,
   translations: {
     CASH_FLOW: {
-      TITLE: 'Transacciones',
+      TITLE: 'Caja',
       ADD_CASH_FLOW_RECORD: {
         TITLE: 'Crear registro'
       },

@@ -4,51 +4,23 @@
     row-gap: 0.5em;
 }
 
-.dashboard__summary-card {
+.dashboard__charts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.dashboard__charts__chart-wrapper {
+    background-color: #fff;
+    border-radius: 0.3rem;
+    flex: 1;
+    align-self: flex-start;
     display: flex;
     flex-direction: column;
-    row-gap: 1em;
-    height: fit-content;
-    justify-content: center;
-    align-items: center;
+    padding: 0.3rem;
 }
 
-.dashboard__summary-card__total {
-    display: flex;
-    align-items: center;
-    column-gap: 1em;
-    height: fit-content;
-}
-
-.dashboard__summary-card__total__label {
-    font-size: 1.2em;
-    color: var(--default-color);
-}
-
-.dashboard__summary-card__total__value {
-    font-size: 2em;
-}
-
-.dashboard__summary-card__total__value--positive {
-    color: var(--success-color);
-}
-
-.dashboard__summary-card__total__value--negative {
-    color: var(--danger-color);
-}
-
-.dashboard__chart {
-    background-color: #fff;
-    border-radius: 0.5rem;
-    min-height: 20rem;
-    min-width: 100%;
-    position: relative;
-    padding: 0 0 1rem;
-}
-
-.dashboard__chart__title {
-    color: var(--info-color);
-    position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
+.dashboard__charts__chart-wrapper__chart {
+    min-height: min(34rem, 80vw);
+    min-width: min(34rem, 80vw);
 }
