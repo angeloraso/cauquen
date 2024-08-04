@@ -4,23 +4,49 @@
     row-gap: 0.5em;
 }
 
+.dashboard__profit__content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.dashboard__profit__content__wrapper {
+    flex: 1;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.dashboard__profit__content__section {
+    display: flex;
+    flex-direction: column;
+    min-width: 7rem;
+    flex: 1;
+}
+
 .dashboard__charts {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
-.dashboard__charts__chart-wrapper {
-    background-color: #fff;
-    border-radius: 0.3rem;
+.dashboard__charts__chart {
     flex: 1;
-    align-self: flex-start;
+}
+
+.dashboard__charts__chart-wrapper {
+    flex: 1;
     display: flex;
-    flex-direction: column;
-    padding: 0.3rem;
+    justify-content: center;
+    min-height: min(34rem, 80vw);
+    min-width: min(34rem, 80vw);
 }
 
 .dashboard__charts__chart-wrapper__chart {
-    min-height: min(34rem, 80vw);
-    min-width: min(34rem, 80vw);
+    flex: 1;
 }

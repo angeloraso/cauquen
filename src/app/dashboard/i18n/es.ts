@@ -5,19 +5,17 @@ export const locale = {
   translations: {
     DASHBOARD: {
       TITLE: 'Panel general',
-      GENERAL_PROFIT: {
-        TITLE: 'Rendimiento general ($)',
-        ACCOUNT: 'Cuenta',
-        INFLATION: 'Inflación',
-        FIXED_RATE: 'Plazo fijo'
+      PROFIT: 'Ganancia acumulada',
+      IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT: {
+        TITLE: 'Ganancia ajustada por inflación (U$D)',
+        RETAIL_DOLLAR: 'Minorista',
+        CCL_DOLLAR: 'CCL',
+        MEP_DOLLAR: 'MEP',
+        CRYPTO_DOLLAR: 'Cripto'
       },
-      MONTH_PROFIT: {
-        TITLE: 'Rendimiento mensual (%)',
-        ACCOUNT: 'Cuenta'
-      },
-      DOLLAR_PROFIT: {
-        TITLE: 'Rendimiento en dolares',
-        RETAIL_ACCOUNT: 'Oficial',
+      ACCOUNT_EVOLUTION: {
+        TITLE: 'Evolución de cuenta (U$D)',
+        RETAIL_ACCOUNT: 'Minorista',
         CCL_ACCOUNT: 'CCL',
         MEP_ACCOUNT: 'MEP',
         CRYPTO_ACCOUNT: 'Cripto'
@@ -29,9 +27,11 @@ export const locale = {
         TITLE: 'Tasa de interés (%)'
       },
       DOLLAR_RATE: {
-        TITLE: 'Dolar oficial x Dolar CCL',
-        OFFICIAL: 'Oficial',
-        CCL: 'CCL'
+        TITLE: 'Dolar ($)',
+        RETAIL: 'Minorista',
+        CCL: 'CCL',
+        MEP: 'MEP',
+        CRYPTO: 'Cripto'
       }
     }
   }

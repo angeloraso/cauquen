@@ -1,26 +1,29 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { IBizyBarLineChartData } from '@bizy/components';
 import { BizyOrderByPipe } from '@bizy/pipes';
 import { BizyTranslateService } from '@bizy/services';
 import { COUNTRY_CODE } from '@core/model';
 import { CashFlowService, CountryService, MobileService, UtilsService } from '@core/services';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'cauquen-dashboard',
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
-  private _subscription = new Subscription();
-  total: number = 0.0;
+export class DashboardComponent implements OnInit {
+  profit = {
+    retail: 0,
+    ccl: 0,
+    mep: 0,
+    crypto: 0
+  };
 
-  generalProfitLabels: Array<string> = [];
-  generalProfitSeries: Array<IBizyBarLineChartData> = [];
+  ipcAdjustAccountDollarProfitLabels: Array<string> = [];
+  ipcAdjustAccountDollarProfitSeries: Array<IBizyBarLineChartData> = [];
 
-  monthProfitLabels: Array<string> = [];
-  monthProfitSeries: Array<IBizyBarLineChartData> = [];
+  periodProfitLabels: Array<string> = [];
+  periodProfitSeries: Array<IBizyBarLineChartData> = [];
 
   dollarProfitLabels: Array<string> = [];
   dollarProfitSeries: Array<IBizyBarLineChartData> = [];
@@ -53,72 +56,114 @@ export class DashboardComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     try {
       this.loading = true;
-      const generalProfitLabels: Array<string> = [];
-      const generalProfitSeries: Array<IBizyBarLineChartData> = [
+      let retailProfit = 0;
+      let cclProfit = 0;
+      let mepProfit = 0;
+      let cryptoProfit = 0;
+
+      const ipcAdjustAccountDollarProfitLabels: Array<string> = [];
+      const ipcAdjustAccountDollarProfitSeries: Array<IBizyBarLineChartData> = [
         {
+          type: 'bar',
+          values: [],
           xAxi: {
-            name: this.translate.get('DASHBOARD.GENERAL_PROFIT.ACCOUNT')
+            name: this.translate.get('DASHBOARD.IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.RETAIL_DOLLAR')
           },
           yAxi: {
-            position: 'right',
-            name: '$',
+            name: 'U$D',
             onValueFormatter: (value: number): string =>
-              `$${this.decimalPipe.transform(value, '1.2-2')}`
-          },
-          values: [],
-          type: 'bar'
-        },
-        {
-          values: [],
-          type: 'line',
-          xAxi: {
-            name: this.translate.get('DASHBOARD.GENERAL_PROFIT.INFLATION')
-          },
-          yAxi: {
-            name: '$',
-            hide: true,
-            onValueFormatter: (value: number): string =>
-              `$${this.decimalPipe.transform(value, '1.2-2')}`
+              `U$D ${this.decimalPipe.transform(value, '1.2-2')}`
           }
         },
         {
+          type: 'bar',
           values: [],
-          type: 'line',
           xAxi: {
-            name: this.translate.get('DASHBOARD.GENERAL_PROFIT.FIXED_RATE')
+            name: this.translate.get('DASHBOARD.IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.CCL_DOLLAR')
           },
           yAxi: {
             hide: true,
-            name: '$',
+            name: 'U$D',
             onValueFormatter: (value: number): string =>
-              `$${this.decimalPipe.transform(value, '1.2-2')}`
+              `U$D ${this.decimalPipe.transform(value, '1.2-2')}`
+          }
+        },
+        {
+          type: 'bar',
+          values: [],
+          xAxi: {
+            name: this.translate.get('DASHBOARD.IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.MEP_DOLLAR')
+          },
+          yAxi: {
+            hide: true,
+            name: 'U$D',
+            onValueFormatter: (value: number): string =>
+              `U$D ${this.decimalPipe.transform(value, '1.2-2')}`
+          }
+        },
+        {
+          type: 'bar',
+          values: [],
+          xAxi: {
+            name: this.translate.get('DASHBOARD.IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.CRYPTO_DOLLAR')
+          },
+          yAxi: {
+            hide: true,
+            name: 'U$D',
+            onValueFormatter: (value: number): string =>
+              `U$D ${this.decimalPipe.transform(value, '1.2-2')}`
           }
         }
       ];
 
-      const monthProfitLabels: Array<string> = [];
-      const monthProfitSeries: Array<IBizyBarLineChartData> = [
+      const periodProfitLabels: Array<string> = [];
+      const periodProfitSeries: Array<IBizyBarLineChartData> = [
         {
-          label: this.translate.get('DASHBOARD.MONTH_PROFIT.ACCOUNT'),
-          type: 'line',
+          type: 'bar',
+          values: [],
           xAxi: {
-            name: this.translate.get('DASHBOARD.MONTH_PROFIT.ACCOUNT')
+            name: this.translate.get('DASHBOARD.PERIOD_PROFIT.ACCOUNT')
+          },
+          yAxi: {
+            position: 'right',
+            name: '%',
+            onValueFormatter: (value: number): string =>
+              `${this.decimalPipe.transform(value, '1.2-2')}%`
+          }
+        },
+        {
+          type: 'line',
+          values: [],
+          xAxi: {
+            name: this.translate.get('DASHBOARD.PERIOD_PROFIT.INFLATION')
           },
           yAxi: {
             name: '%',
-            position: 'right',
+            hide: true,
             onValueFormatter: (value: number): string =>
-              `${this.decimalPipe.transform(value, '1.0-0')}%`
+              `${this.decimalPipe.transform(value, '1.2-2')}%`
+          }
+        },
+        {
+          type: 'line',
+          values: [],
+          xAxi: {
+            name: this.translate.get('DASHBOARD.PERIOD_PROFIT.FIXED_RATE')
           },
-          values: []
+          yAxi: {
+            hide: true,
+            name: '%',
+            onValueFormatter: (value: number): string =>
+              `${this.decimalPipe.transform(value, '1.2-2')}%`
+          }
         }
       ];
 
-      const dollarProfitLabels: Array<string> = [];
-      const dollarProfitSeries: Array<IBizyBarLineChartData> = [
+      const accountEvolutionLabels: Array<string> = [];
+      const accountEvolutionSeries: Array<IBizyBarLineChartData> = [
         {
           xAxi: {
-            name: this.translate.get('DASHBOARD.DOLLAR_PROFIT.RETAIL_ACCOUNT')
+            name: this.translate.get('DASHBOARD.ACCOUNT_EVOLUTION.RETAIL_ACCOUNT')
           },
           yAxi: {
             position: 'right',
@@ -131,7 +176,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         },
         {
           xAxi: {
-            name: this.translate.get('DASHBOARD.DOLLAR_PROFIT.CCL_ACCOUNT')
+            name: this.translate.get('DASHBOARD.ACCOUNT_EVOLUTION.CCL_ACCOUNT')
           },
           yAxi: {
             hide: true,
@@ -144,7 +189,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         },
         {
           xAxi: {
-            name: this.translate.get('DASHBOARD.DOLLAR_PROFIT.MEP_ACCOUNT')
+            name: this.translate.get('DASHBOARD.ACCOUNT_EVOLUTION.MEP_ACCOUNT')
           },
           yAxi: {
             hide: true,
@@ -157,7 +202,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         },
         {
           xAxi: {
-            name: this.translate.get('DASHBOARD.DOLLAR_PROFIT.CRYPTO_ACCOUNT')
+            name: this.translate.get('DASHBOARD.ACCOUNT_EVOLUTION.CRYPTO_ACCOUNT')
           },
           yAxi: {
             hide: true,
@@ -174,13 +219,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       const dollarRateSeries: Array<IBizyBarLineChartData> = [
         {
           xAxi: {
-            name: this.translate.get('DASHBOARD.DOLLAR_RATE.OFFICIAL')
+            name: this.translate.get('DASHBOARD.DOLLAR_RATE.RETAIL')
           },
           yAxi: {
             position: 'right',
-            name: 'U$D',
+            name: '$',
             onValueFormatter: (value: number): string =>
-              `U$D ${this.decimalPipe.transform(value, '1.2-2')}`
+              `$ ${this.decimalPipe.transform(value, '1.2-2')}`
           },
           type: 'line',
           values: []
@@ -191,9 +236,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
           },
           yAxi: {
             hide: true,
-            name: 'U$D',
+            name: '$',
             onValueFormatter: (value: number): string =>
-              `U$D ${this.decimalPipe.transform(value, '1.2-2')}`
+              `$ ${this.decimalPipe.transform(value, '1.2-2')}`
+          },
+          type: 'line',
+          values: []
+        },
+        {
+          xAxi: {
+            name: this.translate.get('DASHBOARD.DOLLAR_RATE.MEP')
+          },
+          yAxi: {
+            hide: true,
+            name: '$',
+            onValueFormatter: (value: number): string =>
+              `$ ${this.decimalPipe.transform(value, '1.2-2')}`
+          },
+          type: 'line',
+          values: []
+        },
+        {
+          xAxi: {
+            name: this.translate.get('DASHBOARD.DOLLAR_RATE.CRYPTO')
+          },
+          yAxi: {
+            hide: true,
+            name: '$',
+            onValueFormatter: (value: number): string =>
+              `$ ${this.decimalPipe.transform(value, '1.2-2')}`
           },
           type: 'line',
           values: []
@@ -252,7 +323,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
           return;
         }
 
-        const periodTotal =
+        const label = this.datePipe.transform(_countryRecord.from, 'dd/MM/yyyy') as string;
+
+        const periodCashFlow =
           previousBalance +
           recordsByPeriod.reduce((accumulator, record) => accumulator + record.amount, 0);
 
@@ -262,20 +335,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         previousBalance = lastRecord.balance;
 
-        const label = this.datePipe.transform(_countryRecord.from, 'dd/MM/yyyy') as string;
+        const ipcAdjustPeriodCashFlow =
+          periodCashFlow + periodCashFlow * (_countryRecord.ipc / 100);
+        const difference = lastRecord.balance - ipcAdjustPeriodCashFlow;
 
-        generalProfitLabels.push(label);
-        generalProfitSeries[0].values!.push(lastRecord.balance);
-        generalProfitSeries[1].values!.push(periodTotal + (periodTotal * _countryRecord.ipc) / 100);
-        generalProfitSeries[2].values!.push(
-          periodTotal + (periodTotal * (_countryRecord.fixedRate / 12)) / 100
+        retailProfit += difference / _countryRecord.retailDollar;
+        cclProfit += difference / _countryRecord.cclDollar;
+        mepProfit += difference / _countryRecord.mepDollar;
+        cryptoProfit += difference / _countryRecord.cryptoDollar;
+
+        ipcAdjustAccountDollarProfitLabels.push(label);
+        ipcAdjustAccountDollarProfitSeries[0].values!.push(
+          this.utils.roundNumber(difference / _countryRecord.retailDollar)
+        );
+        ipcAdjustAccountDollarProfitSeries[1].values!.push(
+          this.utils.roundNumber(difference / _countryRecord.cclDollar)
+        );
+        ipcAdjustAccountDollarProfitSeries[2].values!.push(
+          this.utils.roundNumber(difference / _countryRecord.mepDollar)
+        );
+        ipcAdjustAccountDollarProfitSeries[3].values!.push(
+          this.utils.roundNumber(difference / _countryRecord.cryptoDollar)
         );
 
-        const difference = (lastRecord.balance - periodTotal) / periodTotal;
-        const profit = this.utils.roundNumber(difference * 100 - _countryRecord.ipc);
+        const periodProfit = this.utils.roundNumber(
+          ((lastRecord.balance - periodCashFlow) / periodCashFlow) * 100
+        );
 
-        monthProfitLabels.push(label);
-        monthProfitSeries[0].values!.push(profit);
+        periodProfitLabels.push(label);
+        periodProfitSeries[0].values!.push(periodProfit);
+        periodProfitSeries[1].values!.push(_countryRecord.ipc);
+        periodProfitSeries[2].values!.push(this.utils.roundNumber(_countryRecord.fixedRate / 12));
 
         const cclDollarInPeriod = this.utils.roundNumber(
           lastRecord.balance / _countryRecord.cclDollar
@@ -290,11 +380,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
           lastRecord.balance / _countryRecord.cryptoDollar
         );
 
-        dollarProfitLabels.push(label);
-        dollarProfitSeries[0].values!.push(retailDollarInPeriod);
-        dollarProfitSeries[1].values!.push(cclDollarInPeriod);
-        dollarProfitSeries[2].values!.push(mepDollarInPeriod);
-        dollarProfitSeries[3].values!.push(cryptoDollarInPeriod);
+        accountEvolutionLabels.push(label);
+        accountEvolutionSeries[0].values!.push(retailDollarInPeriod);
+        accountEvolutionSeries[1].values!.push(cclDollarInPeriod);
+        accountEvolutionSeries[2].values!.push(mepDollarInPeriod);
+        accountEvolutionSeries[3].values!.push(cryptoDollarInPeriod);
 
         inflationLabels.push(label);
         inflationSeries[0].values!.push(_countryRecord.ipc);
@@ -305,16 +395,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
         dollarRateLabels.push(label);
         dollarRateSeries[0].values!.push(_countryRecord.retailDollar);
         dollarRateSeries[1].values!.push(_countryRecord.cclDollar);
+        dollarRateSeries[2].values!.push(_countryRecord.mepDollar);
+        dollarRateSeries[3].values!.push(_countryRecord.cryptoDollar);
       });
 
-      this.generalProfitLabels = generalProfitLabels;
-      this.generalProfitSeries = generalProfitSeries;
+      this.profit.retail += this.utils.roundNumber(retailProfit);
+      this.profit.ccl += this.utils.roundNumber(cclProfit);
+      this.profit.mep += this.utils.roundNumber(mepProfit);
+      this.profit.crypto += this.utils.roundNumber(cryptoProfit);
 
-      this.monthProfitLabels = monthProfitLabels;
-      this.monthProfitSeries = monthProfitSeries;
+      this.ipcAdjustAccountDollarProfitLabels = ipcAdjustAccountDollarProfitLabels;
+      this.ipcAdjustAccountDollarProfitSeries = ipcAdjustAccountDollarProfitSeries;
 
-      this.dollarProfitLabels = dollarProfitLabels;
-      this.dollarProfitSeries = dollarProfitSeries;
+      this.periodProfitLabels = periodProfitLabels;
+      this.periodProfitSeries = periodProfitSeries;
+
+      this.dollarProfitLabels = accountEvolutionLabels;
+      this.dollarProfitSeries = accountEvolutionSeries;
 
       this.dollarRateLabels = dollarRateLabels;
       this.dollarRateSeries = dollarRateSeries;
@@ -324,20 +421,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
       this.fixedRateLabels = fixedRateLabels;
       this.fixedRateSeries = fixedRateSeries;
-
-      if (
-        !generalProfitSeries[0] ||
-        generalProfitSeries[0].values!.length === 0 ||
-        !generalProfitSeries[1] ||
-        generalProfitSeries[1].values!.length === 0
-      ) {
-        return;
-      }
-
-      const lastBalance = generalProfitSeries[0].values![generalProfitSeries[0].values!.length - 1];
-      const lastIPCBalance =
-        generalProfitSeries[1].values![generalProfitSeries[1].values!.length - 1];
-      this.total = this.utils.roundNumber(((lastBalance - lastIPCBalance) / lastBalance) * 100);
     } catch (error) {
       console.debug(error);
     } finally {
@@ -345,7 +428,48 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this._subscription.unsubscribe();
-  }
+  ipcAdjustAccountDollarProfitTooltipFormatter = (params: Array<any>): string => {
+    let tooltip = params[0].name;
+    const barParams = params.filter(_param => _param.componentSubType === 'bar');
+    barParams.forEach(_param => {
+      const bullet = `<span style="color: ${_param.color}; font-size: 2rem; position: relative; top: 0.3rem;">&#8226;</span>`;
+      tooltip += `<br/>${bullet} ${_param.seriesName}: U$D ${_param.value}`;
+    });
+
+    return tooltip;
+  };
+
+  onPercentageTooltipFormatter = (params: Array<any>): string => {
+    let tooltip = params[0].name;
+    const lineParams = params.filter(_param => _param.componentSubType === 'line');
+    lineParams.forEach(_param => {
+      const line = `<span style="color: ${_param.color}; font-size: 2rem; position: relative; top: 0.3rem;">-</span>`;
+      tooltip += `<br/>${line} ${_param.seriesName}: ${_param.value}%`;
+    });
+
+    const barParams = params.filter(_param => _param.componentSubType === 'bar');
+    barParams.forEach(_param => {
+      const bullet = `<span style="color: ${_param.color}; font-size: 2rem; position: relative; top: 0.3rem;">&#8226;</span>`;
+      tooltip += `<br/>${bullet} ${_param.seriesName}: ${_param.value}%`;
+    });
+
+    return tooltip;
+  };
+
+  onDollarTooltipFormatter = (params: Array<any>): string => {
+    let tooltip = params[0].name;
+    const lineParams = params.filter(_param => _param.componentSubType === 'line');
+    lineParams.forEach(_param => {
+      const line = `<span style="color: ${_param.color}; font-size: 2rem; position: relative; top: 0.3rem;">-</span>`;
+      tooltip += `<br/>${line} ${_param.seriesName}: U$D ${this.decimalPipe.transform(_param.value, '1.2-2')}`;
+    });
+
+    const barParams = params.filter(_param => _param.componentSubType === 'bar');
+    barParams.forEach(_param => {
+      const bullet = `<span style="color: ${_param.color}; font-size: 2rem; position: relative; top: 0.3rem;">&#8226;</span>`;
+      tooltip += `<br/>${bullet} ${_param.seriesName}: U$D ${this.decimalPipe.transform(_param.value, '1.2-2')}%`;
+    });
+
+    return tooltip;
+  };
 }
