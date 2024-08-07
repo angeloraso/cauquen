@@ -19,6 +19,9 @@ export class DashboardComponent implements OnInit {
     crypto: 0
   };
 
+  accumulatedIPCAdjustAccountDollarProfitLabels: Array<string> = [];
+  accumulatedIPCAdjustAccountDollarProfitSeries: Array<IBizyBarLineChartData> = [];
+
   ipcAdjustAccountDollarProfitLabels: Array<string> = [];
   ipcAdjustAccountDollarProfitSeries: Array<IBizyBarLineChartData> = [];
 
@@ -60,6 +63,69 @@ export class DashboardComponent implements OnInit {
       let cclProfit = 0;
       let mepProfit = 0;
       let cryptoProfit = 0;
+
+      const accumulatedIPCAdjustAccountDollarProfitLabels: Array<string> = [];
+      const accumulatedIPCAdjustAccountDollarProfitSeries: Array<IBizyBarLineChartData> = [
+        {
+          type: 'line',
+          values: [],
+          xAxi: {
+            name: this.translate.get(
+              'DASHBOARD.ACCUMULATED_IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.RETAIL_DOLLAR'
+            )
+          },
+          yAxi: {
+            name: 'U$D',
+            onValueFormatter: (value: number): string =>
+              `U$D ${this.decimalPipe.transform(value, '1.2-2')}`
+          }
+        },
+        {
+          type: 'line',
+          values: [],
+          xAxi: {
+            name: this.translate.get(
+              'DASHBOARD.ACCUMULATED_IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.CCL_DOLLAR'
+            )
+          },
+          yAxi: {
+            hide: true,
+            name: 'U$D',
+            onValueFormatter: (value: number): string =>
+              `U$D ${this.decimalPipe.transform(value, '1.2-2')}`
+          }
+        },
+        {
+          type: 'line',
+          values: [],
+          xAxi: {
+            name: this.translate.get(
+              'DASHBOARD.ACCUMULATED_IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.MEP_DOLLAR'
+            )
+          },
+          yAxi: {
+            hide: true,
+            name: 'U$D',
+            onValueFormatter: (value: number): string =>
+              `U$D ${this.decimalPipe.transform(value, '1.2-2')}`
+          }
+        },
+        {
+          type: 'line',
+          values: [],
+          xAxi: {
+            name: this.translate.get(
+              'DASHBOARD.ACCUMULATED_IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.CRYPTO_DOLLAR'
+            )
+          },
+          yAxi: {
+            hide: true,
+            name: 'U$D',
+            onValueFormatter: (value: number): string =>
+              `U$D ${this.decimalPipe.transform(value, '1.2-2')}`
+          }
+        }
+      ];
 
       const ipcAdjustAccountDollarProfitLabels: Array<string> = [];
       const ipcAdjustAccountDollarProfitSeries: Array<IBizyBarLineChartData> = [
@@ -344,6 +410,12 @@ export class DashboardComponent implements OnInit {
         mepProfit += difference / _countryRecord.mepDollar;
         cryptoProfit += difference / _countryRecord.cryptoDollar;
 
+        accumulatedIPCAdjustAccountDollarProfitLabels.push(label);
+        accumulatedIPCAdjustAccountDollarProfitSeries[0].values!.push(retailProfit);
+        accumulatedIPCAdjustAccountDollarProfitSeries[1].values!.push(cclProfit);
+        accumulatedIPCAdjustAccountDollarProfitSeries[2].values!.push(mepProfit);
+        accumulatedIPCAdjustAccountDollarProfitSeries[3].values!.push(cryptoProfit);
+
         ipcAdjustAccountDollarProfitLabels.push(label);
         ipcAdjustAccountDollarProfitSeries[0].values!.push(
           this.utils.roundNumber(difference / _countryRecord.retailDollar)
@@ -403,6 +475,11 @@ export class DashboardComponent implements OnInit {
       this.profit.ccl += this.utils.roundNumber(cclProfit);
       this.profit.mep += this.utils.roundNumber(mepProfit);
       this.profit.crypto += this.utils.roundNumber(cryptoProfit);
+
+      this.accumulatedIPCAdjustAccountDollarProfitLabels =
+        accumulatedIPCAdjustAccountDollarProfitLabels;
+      this.accumulatedIPCAdjustAccountDollarProfitSeries =
+        accumulatedIPCAdjustAccountDollarProfitSeries;
 
       this.ipcAdjustAccountDollarProfitLabels = ipcAdjustAccountDollarProfitLabels;
       this.ipcAdjustAccountDollarProfitSeries = ipcAdjustAccountDollarProfitSeries;

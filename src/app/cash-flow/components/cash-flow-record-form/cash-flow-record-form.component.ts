@@ -40,8 +40,7 @@ export class CashFlowRecordFormComponent {
       return;
     }
 
-    const _date = new Date(date);
-    this._date.setValue(_date.toISOString());
+    this._date.setValue(date);
   }
 
   @Input() set amount(amount: number) {
@@ -68,7 +67,7 @@ export class CashFlowRecordFormComponent {
     const today = new Date();
     this.form = this.fb.group({
       id: [null],
-      date: [today.toISOString(), [Validators.required]],
+      date: [today.getTime(), [Validators.required]],
       income: [false, [Validators.required]],
       amount: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
       balance: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
@@ -110,11 +109,9 @@ export class CashFlowRecordFormComponent {
       return;
     }
 
-    const date = new Date(this._date.value);
-
     this.confirm.emit({
       id: this._id.value,
-      date: date.getTime(),
+      date: this._date.value,
       amount: this._income.value ? this._amount.value : this._amount.value * -1,
       balance: this._balance.value,
       created: this._created.value,

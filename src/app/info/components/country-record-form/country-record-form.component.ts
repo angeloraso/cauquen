@@ -31,8 +31,7 @@ export class CountryRecordFormComponent implements OnDestroy {
       return;
     }
 
-    const _date = new Date(date);
-    this._date.setValue(_date.toISOString());
+    this._date.setValue(date);
     this.onSearch();
   }
 
@@ -43,7 +42,7 @@ export class CountryRecordFormComponent implements OnDestroy {
     const today = new Date();
     today.setMonth(today.getMonth() - 1);
     this.form = this.fb.group({
-      date: [today.toISOString(), [Validators.required]]
+      date: [today.getTime(), [Validators.required]]
     });
     this.#subscription.add(
       this._date.valueChanges.subscribe(() => {
@@ -94,11 +93,11 @@ export class CountryRecordFormComponent implements OnDestroy {
 
     const from = new Date(this._date.value);
     from.setDate(1);
-    from.setHours(0, 0, 0);
+    from.setHours(0, 0, 0, 0);
     const to = new Date(this._date.value);
     to.setMonth(to.getMonth() + 1);
     to.setDate(0);
-    to.setHours(23, 59, 59);
+    to.setHours(23, 59, 59, 999);
 
     this.confirm.emit({
       from: from.getTime(),

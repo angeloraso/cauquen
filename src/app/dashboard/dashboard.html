@@ -50,6 +50,27 @@
 
         <bizy-card class="dashboard__charts__chart">
 
+            <h4 slot="header-start" class="cauquen-title"><strong>{{'DASHBOARD.ACCUMULATED_IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate}}</strong></h4>
+
+            <span class="dashboard__charts__chart-wrapper">
+
+                <bizy-bar-line-chart 
+                    class="dashboard__charts__chart-wrapper__chart"
+                    [bizyLoading]="loading"
+                    [resizeRef]="dashboard"
+                    [onTooltipFormatter]="ipcAdjustAccountDollarProfitTooltipFormatter"
+                    [tooltip]="!isMobile"
+                    [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.ACCUMULATED_IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate)}"
+                    [xAxisLabels]="accumulatedIPCAdjustAccountDollarProfitLabels"
+                    [data]="accumulatedIPCAdjustAccountDollarProfitSeries">
+                </bizy-bar-line-chart>
+
+            </span>
+
+        </bizy-card>
+
+        <bizy-card class="dashboard__charts__chart">
+
             <h4 slot="header-start" class="cauquen-title"><strong>{{'DASHBOARD.IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate}}</strong></h4>
 
             <span class="dashboard__charts__chart-wrapper">
@@ -57,11 +78,10 @@
                 <bizy-bar-line-chart 
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
-                    name="{{'DASHBOARD.IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate}}"
                     [resizeRef]="dashboard"
                     [onTooltipFormatter]="ipcAdjustAccountDollarProfitTooltipFormatter"
                     [tooltip]="!isMobile"
-                    downloadLabel="{{'CORE.BUTTON.DOWNLOAD' | translate}}"
+                    [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate)}"
                     [xAxisLabels]="ipcAdjustAccountDollarProfitLabels"
                     [data]="ipcAdjustAccountDollarProfitSeries">
                 </bizy-bar-line-chart>
@@ -79,11 +99,10 @@
                 <bizy-bar-line-chart 
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
-                    name="{{'DASHBOARD.ACCOUNT_EVOLUTION.TITLE' | translate}}"
                     [resizeRef]="dashboard"
                     [onTooltipFormatter]="onDollarTooltipFormatter"
                     [tooltip]="!isMobile"
-                    downloadLabel="{{'CORE.BUTTON.DOWNLOAD' | translate}}"
+                    [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.ACCOUNT_EVOLUTION.TITLE' | translate)}"
                     [xAxisLabels]="dollarProfitLabels"
                     [data]="dollarProfitSeries">
                 </bizy-bar-line-chart>
@@ -101,10 +120,9 @@
                 <bizy-bar-line-chart 
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
-                    name="{{'DASHBOARD.DOLLAR_RATE.TITLE' | translate}}"
                     [resizeRef]="dashboard"
                     [tooltip]="!isMobile"
-                    downloadLabel="{{'CORE.BUTTON.DOWNLOAD' | translate}}"
+                    [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.DOLLAR_RATE.TITLE' | translate)}"
                     [xAxisLabels]="dollarRateLabels"
                     [data]="dollarRateSeries">
                 </bizy-bar-line-chart>
@@ -122,10 +140,9 @@
                 <bizy-bar-line-chart 
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
-                    name="{{'DASHBOARD.INFLATION.TITLE' | translate}}"
                     [resizeRef]="dashboard"
                     [tooltip]="!isMobile"
-                    downloadLabel="{{'CORE.BUTTON.DOWNLOAD' | translate}}"
+                    [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.INFLATION.TITLE' | translate)}"
                     [xAxisLabels]="inflationLabels"
                     [data]="inflationSeries">
                 </bizy-bar-line-chart>
@@ -143,10 +160,9 @@
                 <bizy-bar-line-chart 
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
-                    name="{{'DASHBOARD.FIXED_RATE.TITLE' | translate}}"
                     [resizeRef]="dashboard"
                     [tooltip]="!isMobile"
-                    downloadLabel="{{'CORE.BUTTON.DOWNLOAD' | translate}}"
+                    [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.FIXED_RATE.TITLE' | translate)}"
                     [xAxisLabels]="fixedRateLabels"
                     [data]="fixedRateSeries">
                 </bizy-bar-line-chart>

@@ -3,7 +3,6 @@
     <span class="country-record-form__header"> 
 
         <bizy-date-picker
-            type="date"
             [disabled]="loading"
             [date]="_date.value"
             (onChange)="_date.setValue($event); onSearch()">
