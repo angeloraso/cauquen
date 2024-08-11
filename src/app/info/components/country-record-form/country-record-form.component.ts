@@ -1,20 +1,21 @@
-import { Component, EventEmitter, Inject, Input, OnDestroy, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ICountryRecord } from '@core/model';
 import { ArgentinaService } from '@core/services';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'cauquen-country-record-form',
   templateUrl: './country-record-form.html',
   styleUrls: ['./country-record-form.css']
 })
-export class CountryRecordFormComponent implements OnDestroy {
+export class CountryRecordFormComponent {
   @Output() cancel = new EventEmitter<void>();
   @Output() confirm = new EventEmitter<
     Omit<ICountryRecord, 'id' | 'country' | 'created' | 'updated'>
   >();
-  form: FormGroup;
+  form: FormGroup<{
+    date: FormControl<any>;
+  }>;
   loading: boolean = false;
 
   ipc: number = 0;
@@ -23,8 +24,6 @@ export class CountryRecordFormComponent implements OnDestroy {
   mepDollar: number = 0;
   cclDollar: number = 0;
   cryptoDollar: number = 0;
-
-  #subscription = new Subscription();
 
   @Input() set date(date: number) {
     if (!date) {
@@ -44,11 +43,6 @@ export class CountryRecordFormComponent implements OnDestroy {
     this.form = this.fb.group({
       date: [today.getTime(), [Validators.required]]
     });
-    this.#subscription.add(
-      this._date.valueChanges.subscribe(() => {
-        this.onSearch();
-      })
-    );
   }
 
   async onSearch() {
@@ -82,8 +76,8 @@ export class CountryRecordFormComponent implements OnDestroy {
     }
   }
 
-  get _date() {
-    return this.form.get('date') as FormControl;
+  get _date(): AbstractControl<any | number> {
+    return this.form.get('date')!;
   }
 
   _confirm() {
@@ -113,9 +107,5 @@ export class CountryRecordFormComponent implements OnDestroy {
 
   _cancel() {
     this.cancel.emit();
-  }
-
-  ngOnDestroy() {
-    this.#subscription.unsubscribe();
   }
 }
