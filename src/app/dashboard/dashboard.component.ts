@@ -1,6 +1,7 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { IBizyBarLineChartData } from '@bizy/components';
+import { LOADING_TYPE } from '@bizy/directives';
 import { BizyOrderByPipe } from '@bizy/pipes';
 import { BizyTranslateService } from '@bizy/services';
 import { COUNTRY_CODE } from '@core/model';
@@ -12,6 +13,7 @@ import { CashFlowService, CountryService, MobileService, UtilsService } from '@c
   styleUrls: ['./dashboard.css']
 })
 export class DashboardComponent implements OnInit {
+  readonly LOADING_TYPE = LOADING_TYPE;
   profit = {
     retail: 0,
     ccl: 0,
@@ -76,6 +78,7 @@ export class DashboardComponent implements OnInit {
           },
           yAxi: {
             name: 'U$D',
+            position: 'right',
             onValueFormatter: (value: number): string =>
               `U$D ${this.decimalPipe.transform(value, '1.2-2')}`
           }

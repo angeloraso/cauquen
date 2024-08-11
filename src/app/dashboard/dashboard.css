@@ -26,7 +26,6 @@
     display: flex;
     flex-direction: column;
     min-width: 7rem;
-    flex: 1;
 }
 
 .dashboard__charts {

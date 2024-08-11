@@ -14,9 +14,9 @@
     --bizy-input-min-width: 8rem;
     --bizy-input-max-width: 20rem;
 
-    --bizy-loading-color-1st-line: var(--light-primary-color);
-    --bizy-loading-color-2nd-line: var(--primary-color);
-    --bizy-loading-color-3rd-line: var(--dark-primary-color);
+    --bizy-loading-spinner-color-1st-line: var(--light-primary-color);
+    --bizy-loading-spinner-color-2nd-line: var(--primary-color);
+    --bizy-loading-spinner-color-3rd-line: var(--dark-primary-color);
 
     --bizy-table-column-min-width: 5rem;
     --bizy-table-background-color: var(--background-color);
