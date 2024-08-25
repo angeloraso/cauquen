@@ -33,7 +33,7 @@ export const locale = {
           INFLATION: 'Inflación',
           FIXED_RATE: 'Tasa',
           COUNTRY: 'País',
-          INCOME: 'Entrada de dinero',
+          INCOME: 'Ingreso',
           DOLLAR: 'Dólar',
           RETAIL_DOLLAR: 'Dólar (minorista)',
           MEP_DOLLAR: 'Dólar (MEP)',

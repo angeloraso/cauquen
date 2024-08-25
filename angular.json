@@ -22,7 +22,12 @@
             ],
             "allowedCommonJsDependencies": [
               "flatpickr/dist/l10n/es.js",
-              "html2canvas"
+              "html2canvas",
+              "lodash/throttle.js",
+              "namespace-emitter",
+              "classnames",
+              "is-shallow-equal",
+              "lodash/debounce.js"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [

@@ -7,24 +7,27 @@
         <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.DATE' | translate}}</strong></h6>
     </bizy-date-picker>
 
-    <span class="cauquen-form__toggle-field">
-        <h4 class="cauquen-form__toggle-field__label">{{'CORE.FORM.FIELD.INCOME' | translate}}:</h4>
+    <span class="cauquen-form__section">
+
+        <bizy-input
+            #amountInput
+            [value]="_amount.value"
+            type="number"
+            (onChange)="_amount.setValue($event)">
+            <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.AMOUNT' | translate}}</strong></h6>
+            <h6 slot="prefix">$</h6>
+            <h6 slot="error" *ngIf="_amount.hasError('min') && amountInput.touched">{{'CORE.FORM.ERROR.MIN' | translate}}: {{MIN_VALUE}}</h6>
+            <h6 slot="error" *ngIf="_amount.hasError('bizyNumber') && amountInput.touched">{{'CORE.FORM.ERROR.ONLY_NUMBERS' | translate}}</h6>
+        </bizy-input>
+
+
         <bizy-toggle 
             [selected]="_income.value"
-            (onSelect)="_income.setValue($event)">
+            (onSelect)="_income.setValue(!_income.value)">
+            <h5 slot="start">{{'CORE.FORM.FIELD.INCOME' | translate}}</h5>
         </bizy-toggle>
-    </span>
 
-    <bizy-input
-        #amountInput
-        [value]="_amount.value"
-        type="number"
-        (onChange)="_amount.setValue($event)">
-        <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.AMOUNT' | translate}}</strong></h6>
-        <h6 slot="prefix">$</h6>
-        <h6 slot="error" *ngIf="_amount.hasError('min') && amountInput.touched">{{'CORE.FORM.ERROR.MIN' | translate}}: {{MIN_VALUE}}</h6>
-        <h6 slot="error" *ngIf="_amount.hasError('bizyNumber') && amountInput.touched">{{'CORE.FORM.ERROR.ONLY_NUMBERS' | translate}}</h6>
-    </bizy-input>
+    </span>
 
     <bizy-input
         #balanceInput
