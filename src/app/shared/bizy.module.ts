@@ -10,8 +10,7 @@ import {
   BizyTableModule,
   BizyTabsModule,
   BizyToggleModule,
-  BizyToolbarModule,
-  BizyVirtualScrollModule
+  BizyToolbarModule
 } from '@bizy/components';
 import { BizyDirectivesModule } from '@bizy/directives';
 import { BizyPipesModule } from '@bizy/pipes';
@@ -19,7 +18,6 @@ import { BizyPopupModule, BizyToastModule, BizyTranslatePipeModule } from '@bizy
 
 @NgModule({
   exports: [
-    BizyVirtualScrollModule,
     BizyDirectivesModule,
     BizyPipesModule,
     BizyPopupModule,

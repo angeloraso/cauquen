@@ -22,6 +22,7 @@
             ],
             "allowedCommonJsDependencies": [
               "flatpickr/dist/l10n/es.js",
+              "flatpickr/dist/plugins/monthSelect/index.js",
               "html2canvas",
               "lodash/throttle.js",
               "namespace-emitter",
