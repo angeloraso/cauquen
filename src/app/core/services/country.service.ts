@@ -1,11 +1,11 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { COUNTRY_CODE, CountryRecord, ICountryRecord } from '@core/model';
 import { DatabaseService } from './database.service';
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
-  constructor(@Inject(DatabaseService) private database: DatabaseService) {}
+  readonly database = inject(DatabaseService);
 
   getRecords(countryCode: COUNTRY_CODE): Promise<Array<ICountryRecord>> {
     return this.database.getCountryRecords(countryCode) as Promise<Array<ICountryRecord>>;
@@ -43,7 +43,8 @@ export class CountryService {
         country: COUNTRY_CODE.ARGENTINA,
         from: Number(record.from),
         to: Number(record.to),
-        ipc: Number(record.ipc),
+        usInflationRate: Number(record.usInflationRate),
+        inflationRate: Number(record.inflationRate),
         fixedRate: Number(record.fixedRate),
         retailDollar: Number(record.retailDollar),
         mepDollar: Number(record.mepDollar),

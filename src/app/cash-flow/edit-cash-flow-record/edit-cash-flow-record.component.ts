@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BizyRouterService } from '@bizy/services';
+import { BizyLogService, BizyRouterService, BizyToastService } from '@bizy/services';
 import { ICashFlowRecord } from '@core/model';
 import { CashFlowService } from '@core/services';
 
@@ -10,26 +10,26 @@ import { CashFlowService } from '@core/services';
   styleUrls: ['./edit-cash-flow-record.css']
 })
 export class EditCashFlowRecordComponent implements OnInit {
+  readonly #cashFlow = inject(CashFlowService);
+  readonly #activatedRoute = inject(ActivatedRoute);
+  readonly #router = inject(BizyRouterService);
+  readonly #log = inject(BizyLogService);
+  readonly #toast = inject(BizyToastService);
+
   loading = false;
   record: ICashFlowRecord | null = null;
-
-  constructor(
-    @Inject(CashFlowService) private cashFlow: CashFlowService,
-    @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute,
-    @Inject(BizyRouterService) private router: BizyRouterService
-  ) {}
 
   async ngOnInit() {
     try {
       this.loading = true;
-      const recordId = this.router.getId(this.activatedRoute, 'cashFlowRecordId');
+      const recordId = this.#router.getId(this.#activatedRoute, 'cashFlowRecordId');
 
       if (!recordId) {
         this.goBack();
         return;
       }
 
-      const record = await this.cashFlow.getRecord(recordId);
+      const record = await this.#cashFlow.getRecord(recordId);
 
       this.record = record;
     } catch (error) {
@@ -41,20 +41,25 @@ export class EditCashFlowRecordComponent implements OnInit {
   }
 
   goBack() {
-    this.router.goBack();
+    this.#router.goBack();
   }
 
-  async confirm(record: ICashFlowRecord) {
+  async confirm(data: { date: number; amount: number; balance: number }) {
     try {
-      if (this.loading) {
+      if (this.loading || !data || !this.record) {
         return;
       }
 
       this.loading = true;
-      await this.cashFlow.putRecord(record);
+      await this.#cashFlow.putRecord({ ...this.record, ...data });
       this.goBack();
     } catch (error) {
-      console.log(error);
+      this.#log.error({
+        fileName: 'edit-cash-flow-record.component',
+        functionName: 'confirm',
+        param: error
+      });
+      this.#toast.danger();
     } finally {
       this.loading = false;
     }

@@ -1,8 +1,10 @@
 <bizy-toolbar>
 
-    <img slot=start class="cauquen-logo" src="/assets/favicons/favicon.ico" alt="logo"/>
+    <img slot="start" class="cauquen-logo" src="/assets/favicons/favicon.ico" alt="logo"/>
     
-    <h1 slot=start>{{'CASH_FLOW.EDIT_CASH_FLOW_RECORD.TITLE' | translate}}</h1>
+    <h1 slot="start">{{'CASH_FLOW.EDIT_CASH_FLOW_RECORD.TITLE' | translate}}</h1>
+
+    <span slot="start" [bizyLoading]="loading"></span>
 
 </bizy-toolbar>
 
@@ -10,7 +12,7 @@
 
     <cauquen-cash-flow-record-form
         *ngIf="record"
-        [id]="record.id"
+        [disabled]="loading"
         [date]="record.date"
         [amount]="record.amount"
         [balance]="record.balance"

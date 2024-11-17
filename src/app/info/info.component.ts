@@ -15,7 +15,7 @@ export class InfoComponent implements OnInit, OnDestroy {
   info: Array<ICountryRecord> = [];
   loading = false;
   orderBy: string = 'from';
-  order: 'asc' | 'desc' | null = 'desc';
+  order: 'asc' | 'desc' = 'desc';
   isAdmin = false;
 
   private _subscription = new Subscription();
@@ -80,7 +80,7 @@ export class InfoComponent implements OnInit, OnDestroy {
 
   onSort(property: string) {
     this.orderBy = property;
-    this.order = this.order === 'asc' ? 'desc' : this.order === 'desc' ? null : 'asc';
+    this.order = this.order === 'asc' ? 'desc' : 'asc';
   }
 
   async #deleteRecord(record: ICountryRecord) {

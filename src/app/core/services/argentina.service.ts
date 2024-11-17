@@ -17,15 +17,15 @@ export class ArgentinaService {
     @Inject(DatePipe) private datePipe: DatePipe
   ) {}
 
-  getIPC(data: { month: number; year: number }) {
+  getInflationRate(data: { month: number; year: number }) {
     return new Promise<number>(async (resolve, reject) => {
       try {
-        const IPC_VARIABLE_ID = '27';
+        const INFLATION_RATE_VARIABLE_ID = '27';
         const from = new Date(data.year, data.month, 1);
         const to = new Date(data.year, data.month + 1, 0);
         const res = (await lastValueFrom(
           this.http.get(
-            `${this.#BCRA_URL}/${IPC_VARIABLE_ID}/${this.datePipe.transform(from, 'yyyy-MM-dd')}/${this.datePipe.transform(to, 'yyyy-MM-dd')}`
+            `${this.#BCRA_URL}/${INFLATION_RATE_VARIABLE_ID}/${this.datePipe.transform(from, 'yyyy-MM-dd')}/${this.datePipe.transform(to, 'yyyy-MM-dd')}`
           )
         )) as IBCRAResponse;
         resolve(res.results[0].valor);
@@ -38,12 +38,12 @@ export class ArgentinaService {
   getAverageFixedRate(data: { year: number; month: number }) {
     return new Promise<number>(async (resolve, reject) => {
       try {
-        const IPC_VARIABLE_ID = '12';
+        const INFLATION_RATE_VARIABLE_ID = '12';
         const from = new Date(data.year, data.month, 1);
         const to = new Date(data.year, data.month + 1, 0);
         const res = (await lastValueFrom(
           this.http.get(
-            `${this.#BCRA_URL}/${IPC_VARIABLE_ID}/${this.datePipe.transform(from, 'yyyy-MM-dd')}/${this.datePipe.transform(to, 'yyyy-MM-dd')}`
+            `${this.#BCRA_URL}/${INFLATION_RATE_VARIABLE_ID}/${this.datePipe.transform(from, 'yyyy-MM-dd')}/${this.datePipe.transform(to, 'yyyy-MM-dd')}`
           )
         )) as IBCRAResponse;
         const values = res.results.map(_result => _result.valor);
@@ -60,12 +60,12 @@ export class ArgentinaService {
   getAverageRetailDollar(data: { year: number; month: number }) {
     return new Promise<number>(async (resolve, reject) => {
       try {
-        const IPC_VARIABLE_ID = '4';
+        const INFLATION_RATE_VARIABLE_ID = '4';
         const from = new Date(data.year, data.month, 1);
         const to = new Date(data.year, data.month + 1, 0);
         const res = (await lastValueFrom(
           this.http.get(
-            `${this.#BCRA_URL}/${IPC_VARIABLE_ID}/${this.datePipe.transform(from, 'yyyy-MM-dd')}/${this.datePipe.transform(to, 'yyyy-MM-dd')}`
+            `${this.#BCRA_URL}/${INFLATION_RATE_VARIABLE_ID}/${this.datePipe.transform(from, 'yyyy-MM-dd')}/${this.datePipe.transform(to, 'yyyy-MM-dd')}`
           )
         )) as IBCRAResponse;
         const values = res.results.map(_result => _result.valor);

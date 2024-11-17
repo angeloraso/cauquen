@@ -4,6 +4,7 @@ import {
   BizyButtonModule,
   BizyCardModule,
   BizyDatePickerModule,
+  BizyFormModule,
   BizyInputModule,
   BizySelectModule,
   BizySidebarModule,
@@ -26,6 +27,7 @@ import { BizyPopupModule, BizyToastModule, BizyTranslatePipeModule } from '@bizy
     BizyToggleModule,
     BizyInputModule,
     BizyTabsModule,
+    BizyToastModule,
     BizyToolbarModule,
     BizySidebarModule,
     BizyTableModule,
@@ -33,7 +35,8 @@ import { BizyPopupModule, BizyToastModule, BizyTranslatePipeModule } from '@bizy
     BizyTranslatePipeModule,
     BizyCardModule,
     BizyDatePickerModule,
-    BizyBarLineChartModule
+    BizyBarLineChartModule,
+    BizyFormModule
   ]
 })
 export class BizyModule {}

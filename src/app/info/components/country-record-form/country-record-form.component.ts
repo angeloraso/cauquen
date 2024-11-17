@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ICountryRecord } from '@core/model';
-import { ArgentinaService } from '@core/services';
+import { ArgentinaService, USService } from '@core/services';
 
 @Component({
   selector: 'cauquen-country-record-form',
@@ -13,12 +13,17 @@ export class CountryRecordFormComponent {
   @Output() confirm = new EventEmitter<
     Omit<ICountryRecord, 'id' | 'country' | 'created' | 'updated'>
   >();
+  readonly #fb = inject(FormBuilder);
+  readonly #argentina = inject(ArgentinaService);
+  readonly #us = inject(USService);
+
   form: FormGroup<{
     date: FormControl<any>;
   }>;
   loading: boolean = false;
 
-  ipc: number = 0;
+  usInflationRate: number = 0;
+  inflationRate: number = 0;
   fixedRate: number = 0;
   retailDollar: number = 0;
   mepDollar: number = 0;
@@ -34,13 +39,10 @@ export class CountryRecordFormComponent {
     this.onSearch();
   }
 
-  constructor(
-    @Inject(FormBuilder) private fb: FormBuilder,
-    @Inject(ArgentinaService) private argentina: ArgentinaService
-  ) {
+  constructor() {
     const today = new Date();
     today.setMonth(today.getMonth() - 1);
-    this.form = this.fb.group({
+    this.form = this.#fb.group({
       date: [today.getTime(), [Validators.required]]
     });
   }
@@ -49,21 +51,31 @@ export class CountryRecordFormComponent {
     try {
       this.loading = true;
       const date = new Date(this._date.value);
-      const [ipc, retailDollar, fixedRate, mepDollar, cclDollar, cryptoDollar] = await Promise.all([
-        this.argentina.getIPC({ year: date.getFullYear(), month: date.getMonth() }),
-        this.argentina.getAverageRetailDollar({
+      const [
+        inflationRate,
+        retailDollar,
+        fixedRate,
+        mepDollar,
+        cclDollar,
+        cryptoDollar,
+        usInflationRate
+      ] = await Promise.all([
+        this.#argentina.getInflationRate({ year: date.getFullYear(), month: date.getMonth() }),
+        this.#argentina.getAverageRetailDollar({
           year: date.getFullYear(),
           month: date.getMonth()
         }),
-        this.argentina.getAverageFixedRate({ year: date.getFullYear(), month: date.getMonth() }),
-        this.argentina.getAverageMEPDollar({ year: date.getFullYear(), month: date.getMonth() }),
-        this.argentina.getAverageCCLDollar({ year: date.getFullYear(), month: date.getMonth() }),
-        this.argentina.getAverageCryptoDollar({
+        this.#argentina.getAverageFixedRate({ year: date.getFullYear(), month: date.getMonth() }),
+        this.#argentina.getAverageMEPDollar({ year: date.getFullYear(), month: date.getMonth() }),
+        this.#argentina.getAverageCCLDollar({ year: date.getFullYear(), month: date.getMonth() }),
+        this.#argentina.getAverageCryptoDollar({
           year: date.getFullYear(),
           month: date.getMonth()
-        })
+        }),
+        this.#us.getInflationRate({ year: date.getFullYear(), month: date.getMonth() })
       ]);
-      this.ipc = ipc;
+      this.usInflationRate = usInflationRate;
+      this.inflationRate = inflationRate;
       this.retailDollar = retailDollar;
       this.fixedRate = fixedRate;
       this.mepDollar = mepDollar;
@@ -96,7 +108,8 @@ export class CountryRecordFormComponent {
     this.confirm.emit({
       from: from.getTime(),
       to: to.getTime(),
-      ipc: this.ipc,
+      usInflationRate: this.usInflationRate,
+      inflationRate: this.inflationRate,
       fixedRate: this.fixedRate,
       retailDollar: this.retailDollar,
       mepDollar: this.mepDollar,

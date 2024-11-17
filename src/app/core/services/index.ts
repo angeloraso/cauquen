@@ -4,5 +4,6 @@ export { CountryService } from './country.service';
 export { DatabaseService } from './database.service';
 export { MobileService } from './mobile.service';
 export { ServiceWorkerService } from './service-worker.service';
+export { USService } from './us.service';
 export { UserSettingsService } from './user-settings.service';
 export { UtilsService } from './utils.service';

@@ -34,7 +34,7 @@ export class CashFlowService {
     });
   }
 
-  postRecord(record: Omit<ICashFlowRecord, 'id'>): Promise<void> {
+  postRecord(record: Omit<ICashFlowRecord, 'id' | 'created' | 'updated'>): Promise<void> {
     return this.database.postCashFlowRecord(new CashFlowRecord(record));
   }
 

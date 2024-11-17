@@ -8,25 +8,25 @@
 
 </bizy-toolbar>
 
-<div class="cauquen-wrapper info">
+<div class="cauquen-wrapper info" [bizyLoading]="loading">
 
-    <bizy-table [bizyLoading]="loading">
+    <bizy-table>
 
         <bizy-table-header>
     
             <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="onSort('from')">
-                <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.FROM' | translate}}</strong></h5>
+                <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.MONTH' | translate}}</strong></h5>
                 <bizy-table-column-arrows [order]="order" [show]="orderBy === 'from'"></bizy-table-column-arrows>
             </bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="onSort('to')">
-                <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.TO' | translate}}</strong></h5>
-                <bizy-table-column-arrows [order]="order" [show]="orderBy === 'to'"></bizy-table-column-arrows>
+            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="onSort('inflationRate')">
+                <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.US_INFLATION_RATE' | translate}}</strong></h5>
+                <bizy-table-column-arrows [order]="order" [show]="orderBy === 'usInflationRate'"></bizy-table-column-arrows>
             </bizy-table-column>
     
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="onSort('ipc')">
-                <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.INFLATION' | translate}}</strong></h5>
-                <bizy-table-column-arrows [order]="order" [show]="orderBy === 'ipc'"></bizy-table-column-arrows>
+            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="onSort('inflationRate')">
+                <h5 class="cauquen-action--info"><strong>{{'CORE.FORM.FIELD.INFLATION_RATE' | translate}}</strong></h5>
+                <bizy-table-column-arrows [order]="order" [show]="orderBy === 'inflationRate'"></bizy-table-column-arrows>
             </bizy-table-column>
     
             <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="onSort('fixedRate')">
@@ -60,11 +60,11 @@
     
         <bizy-table-row *ngFor="let record of info | bizyOrderBy: order : orderBy">
     
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.from | date: 'dd/MM/YYYY'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.from | date: 'YYYY/MM'}}</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.to | date: 'dd/MM/YYYY'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.usInflationRate | number : '1.2-2'}} %</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.ipc | number : '1.2-2'}} %</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.inflationRate | number : '1.2-2'}} %</h6></bizy-table-column>
 
             <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.fixedRate | number : '1.2-2'}} %</h6></bizy-table-column>
 

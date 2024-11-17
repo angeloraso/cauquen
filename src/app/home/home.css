@@ -89,7 +89,7 @@ bizy-sidebar-option[slot=start] {
 }
 
 .home__tabs {
-  display: block;
+  display: inline-block;
 }
 
 .home__tabs__tab {

@@ -4,7 +4,7 @@
     
     <h1 slot=start>{{'INFO.EDIT_INFO_RECORD.TITLE' | translate}}</h1>
 
-    <i slot=end *ngIf="!loading" class="fa-solid fa-trash-alt cauquen-action cauquen-action--danger" (click)="openConfirmPopup()"></i>
+    <bizy-button slot="end" *ngIf="!loading" (onSelect)="openConfirmPopup()" class="cauquen-action cauquen-action--danger"><i class="fa-solid fa-trash-alt"></i></bizy-button>
 
 </bizy-toolbar>
 

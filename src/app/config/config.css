@@ -30,9 +30,9 @@
 
 .config__cards__card__icon {
     font-size: 1.2rem;
-    color: var(--info-color);
+    color: var(--bizy-info-color);
 }
 
 .config__cards__card__label {
-    color: var(--info-color);
+    color: var(--bizy-info-color);
 }

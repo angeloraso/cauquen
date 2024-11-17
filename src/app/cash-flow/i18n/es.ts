@@ -5,6 +5,10 @@ export const locale = {
   translations: {
     CASH_FLOW: {
       TITLE: 'Caja',
+      DELETE_POPUP: {
+        TITLE: 'Eliminar registro',
+        MSG: 'Se eliminará el siguiente registro'
+      },
       ADD_CASH_FLOW_RECORD: {
         TITLE: 'Crear registro'
       },

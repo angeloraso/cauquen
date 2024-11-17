@@ -30,7 +30,8 @@ export const locale = {
           PASSWORD: 'Contraseña',
           FROM: 'Desde',
           TO: 'Hasta',
-          INFLATION: 'Inflación',
+          US_INFLATION_RATE: 'Inflación (US)',
+          INFLATION_RATE: 'Inflación',
           FIXED_RATE: 'Tasa',
           COUNTRY: 'País',
           INCOME: 'Ingreso',
@@ -38,7 +39,8 @@ export const locale = {
           RETAIL_DOLLAR: 'Dólar (minorista)',
           MEP_DOLLAR: 'Dólar (MEP)',
           CCL_DOLLAR: 'Dólar (CCL)',
-          CRYPTO_DOLLAR: 'Dólar (Cripto)'
+          CRYPTO_DOLLAR: 'Dólar (Cripto)',
+          MONTH: 'Mes'
         },
         ERROR: {
           REQUIRED: 'Este campo es requerido',

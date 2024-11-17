@@ -28,7 +28,8 @@
               "namespace-emitter",
               "classnames",
               "is-shallow-equal",
-              "lodash/debounce.js"
+              "lodash/debounce.js",
+              "autonumeric"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [

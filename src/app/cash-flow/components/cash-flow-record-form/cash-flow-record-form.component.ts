@@ -1,39 +1,27 @@
-import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ICashFlowRecord } from '@core/model';
+import { MobileService } from '@core/services';
 
 @Component({
   selector: 'cauquen-cash-flow-record-form',
   templateUrl: './cash-flow-record-form.html',
-  styleUrls: ['./cash-flow-record-form.css']
+  styleUrls: ['./cash-flow-record-form.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CashFlowRecordFormComponent {
+  @Input() disabled: boolean = false;
   @Output() cancel = new EventEmitter<void>();
-  @Output() confirm = new EventEmitter<ICashFlowRecord>();
+  @Output() confirm = new EventEmitter<{ date: number; amount: number; balance: number }>();
 
-  @Input() set id(id: string) {
-    if (!id) {
-      return;
-    }
-
-    this._id.setValue(id);
-  }
-
-  @Input() set created(created: string) {
-    if (!created) {
-      return;
-    }
-
-    this._created.setValue(created);
-  }
-
-  @Input() set updated(updated: string) {
-    if (!updated) {
-      return;
-    }
-
-    this._updated.setValue(updated);
-  }
+  readonly isMobile = inject(MobileService).isMobile();
+  readonly #fb = inject(FormBuilder);
 
   @Input() set date(date: number) {
     if (!date) {
@@ -59,33 +47,19 @@ export class CashFlowRecordFormComponent {
 
     this._balance.setValue(balance);
   }
+
   form: FormGroup;
 
   readonly MIN_VALUE = 0;
 
-  constructor(@Inject(FormBuilder) private fb: FormBuilder) {
+  constructor() {
     const today = new Date();
-    this.form = this.fb.group({
-      id: [null],
+    this.form = this.#fb.group({
       date: [today.getTime(), [Validators.required]],
       income: [false, [Validators.required]],
       amount: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
-      balance: [null, [Validators.min(this.MIN_VALUE), Validators.required]],
-      created: [null],
-      updated: [null]
+      balance: [null, [Validators.min(this.MIN_VALUE), Validators.required]]
     });
-  }
-
-  get _id() {
-    return this.form.get('id') as FormControl;
-  }
-
-  get _created() {
-    return this.form.get('created') as FormControl;
-  }
-
-  get _updated() {
-    return this.form.get('updated') as FormControl;
   }
 
   get _date() {
@@ -110,12 +84,9 @@ export class CashFlowRecordFormComponent {
     }
 
     this.confirm.emit({
-      id: this._id.value,
       date: this._date.value,
       amount: this._income.value ? this._amount.value : this._amount.value * -1,
-      balance: this._balance.value,
-      created: this._created.value,
-      updated: this._updated.value
+      balance: this._balance.value
     });
   }
 

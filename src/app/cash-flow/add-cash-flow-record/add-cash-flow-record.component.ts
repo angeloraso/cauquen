@@ -1,6 +1,5 @@
-import { Component, Inject } from '@angular/core';
-import { BizyRouterService } from '@bizy/services';
-import { ICashFlowRecord } from '@core/model';
+import { Component, inject } from '@angular/core';
+import { BizyLogService, BizyRouterService, BizyToastService } from '@bizy/services';
 import { CashFlowService } from '@core/services';
 
 @Component({
@@ -9,28 +8,32 @@ import { CashFlowService } from '@core/services';
   styleUrls: ['./add-cash-flow-record.css']
 })
 export class AddCashFlowRecordComponent {
+  readonly #cashFlow = inject(CashFlowService);
+  readonly #router = inject(BizyRouterService);
+  readonly #log = inject(BizyLogService);
+  readonly #toast = inject(BizyToastService);
   loading = false;
 
-  constructor(
-    @Inject(CashFlowService) private cashFlow: CashFlowService,
-    @Inject(BizyRouterService) private router: BizyRouterService
-  ) {}
-
   goBack() {
-    this.router.goBack();
+    this.#router.goBack();
   }
 
-  async confirm(record: ICashFlowRecord) {
+  async confirm(data: { date: number; amount: number; balance: number }) {
     try {
-      if (this.loading) {
+      if (this.loading || !data) {
         return;
       }
 
       this.loading = true;
-      await this.cashFlow.postRecord(record);
+      await this.#cashFlow.postRecord(data);
       this.goBack();
     } catch (error) {
-      console.log(error);
+      this.#log.error({
+        fileName: 'add-cash-flow-record.component',
+        functionName: 'confirm',
+        param: error
+      });
+      this.#toast.danger();
     } finally {
       this.loading = false;
     }

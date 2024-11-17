@@ -53,23 +53,23 @@ h6 {
 }
 
 .cauquen-action--success {
-    --bizy-button-color: var(--success-color);
+    --bizy-button-color: var(--bizy-success-color);
 }
 
 .cauquen-action--default {
-    --bizy-button-color: var(--default-color);
+    --bizy-button-color: var(--bizy-default-color);
 }
 
 .cauquen-action--info {
-    --bizy-button-color: var(--info-color);
+    --bizy-button-color: var(--bizy-info-color);
 }
 
 .cauquen-action--warning {
-    --bizy-button-color: var(--warning-color);
+    --bizy-button-color: var(--bizy-warning-color);
 }
 
 .cauquen-action--danger {
-    --bizy-button-color: var(--danger-color);
+    --bizy-button-color: var(--bizy-danger-color);
 }
 
 .cauquen-toolbar-action {
@@ -82,30 +82,31 @@ h6 {
 }
 
 .cauquen-button--accent {
-    --bizy-button-background-color: var(--accent-color) !important;
+    --bizy-button-background-color: var(--bizy-accent-color) !important;
 }
 
 .cauquen-button--success {
-    --bizy-button-background-color: var(--success-color) !important;
+    --bizy-button-background-color: var(--bizy-success-color) !important;
 }
 
 .cauquen-button--default {
-    --bizy-button-background-color: var(--default-color) !important;
+    --bizy-button-background-color: var(--bizy-default-color) !important;
 }
 
 .cauquen-button--info {
-    --bizy-button-background-color: var(--info-color) !important;
+    --bizy-button-background-color: var(--bizy-info-color) !important;
 }
 
 .cauquen-button--warning {
-    --bizy-button-background-color: var(--warning-color) !important;
+    --bizy-button-background-color: var(--bizy-warning-color) !important;
 }
 
 .cauquen-button--danger {
-    --bizy-button-background-color: var(--danger-color) !important;
+    --bizy-button-background-color: var(--bizy-danger-color) !important;
 }
 
 .cauquen-logo {
+    border-radius: 50%;
     height: 2rem;
 }
 
@@ -168,7 +169,7 @@ h6 {
 .cauquen-wrapper {
     padding: 0.5rem;
     flex: 1;
-    min-height: fit-content;
+    height: 100%;
     overflow: auto;
     display: flex;
     flex-direction: column;
@@ -186,15 +187,6 @@ h6 {
 
 .cauquen-content {
     padding: 0.5rem;
-}
-
-.cauquen-form {
-    max-width: 40rem;
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-    --bizy-input-max-width: 100%;
-    --bizy-select-max-width: 100%;
 }
 
 .cauquen-form__section {
@@ -252,7 +244,7 @@ h6 {
 }
 
 .cauquen-title {
-    color: var(--info-color);
+    color: var(--bizy-info-color);
 }
 
 .cauquen-form__toggle-field {
@@ -263,7 +255,7 @@ h6 {
 }
 
 .cauquen-form__toggle-field__label {
-    color: var(--info-color);
+    color: var(--bizy-info-color);
 }
 
 .cauquen-confirm-buttons {
@@ -275,11 +267,11 @@ h6 {
 }
 
 .cauquen-confirm-buttons__cancel {
-    --bizy-button-background-color: var(--danger-color);
+    --bizy-button-background-color: var(--bizy-danger-color);
 }
 
 .cauquen-confirm-buttons__confirm {
-    --bizy-button-background-color: var(--accent-color);
+    --bizy-button-background-color: var(--bizy-accent-color);
 }
 
 .cauquen-text-ellipsis {

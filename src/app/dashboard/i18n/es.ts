@@ -6,14 +6,14 @@ export const locale = {
     DASHBOARD: {
       TITLE: 'Panel general',
       PROFIT: 'Ganancia acumulada',
-      ACCUMULATED_IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT: {
+      ACCUMULATED_INFLATION_RATE_ADJUST_ACCOUNT_DOLLAR_PROFIT: {
         TITLE: 'Ganancia acumulada ajustada por inflación (U$D)',
         RETAIL_DOLLAR: 'Minorista',
         CCL_DOLLAR: 'CCL',
         MEP_DOLLAR: 'MEP',
         CRYPTO_DOLLAR: 'Cripto'
       },
-      IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT: {
+      INFLATION_RATE_ADJUST_ACCOUNT_DOLLAR_PROFIT: {
         TITLE: 'Ganancia ajustada por inflación (U$D)',
         RETAIL_DOLLAR: 'Minorista',
         CCL_DOLLAR: 'CCL',

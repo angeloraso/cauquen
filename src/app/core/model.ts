@@ -36,7 +36,8 @@ export interface ICountryRecord {
   country: COUNTRY_CODE;
   from: number;
   to: number;
-  ipc: number;
+  usInflationRate: number;
+  inflationRate: number;
   fixedRate: number;
   retailDollar: number;
   mepDollar: number;
@@ -51,7 +52,8 @@ export class CountryRecord implements ICountryRecord {
   country: COUNTRY_CODE;
   from: number;
   to: number;
-  ipc: number;
+  usInflationRate: number;
+  inflationRate: number;
   fixedRate: number;
   retailDollar: number;
   mepDollar: number;
@@ -65,7 +67,8 @@ export class CountryRecord implements ICountryRecord {
     this.country = COUNTRY_CODE.ARGENTINA;
     this.from = Number(record.from);
     this.to = Number(record.to);
-    this.ipc = Number(record.ipc);
+    this.usInflationRate = Number(record.usInflationRate);
+    this.inflationRate = Number(record.inflationRate);
     this.fixedRate = Number(record.fixedRate);
     this.retailDollar = Number(record.retailDollar);
     this.mepDollar = Number(record.mepDollar);

@@ -9,7 +9,7 @@
 <div class="cauquen-wrapper dashboard" #dashboard>
 
     <bizy-card>
-        <h5 slot="header-start" class="cauquen-title"><strong>{{'DASHBOARD.PROFIT' | translate}}</strong></h5>
+        <h4 slot="header-start" class="cauquen-title"><strong>{{'DASHBOARD.PROFIT' | translate}}</strong></h4>
 
         <span class="dashboard__profit__content">
 
@@ -17,12 +17,12 @@
 
                 <span class="dashboard__profit__content__section">
                     <h6 class="cauquen-title">{{'CORE.FORM.FIELD.RETAIL_DOLLAR' | translate}}</h6>
-                    <h6 [bizyLoading]="loading" [bizyLoadingType]="LOADING_TYPE.BAR"><strong>U$D {{profit.retail | number : '1.2-2'}}</strong></h6>
+                    <h5 [bizyLoading]="loading"><strong>U$D {{profit.retail | number : '1.2-2'}}</strong></h5>
                 </span>
         
                 <span class="dashboard__profit__content__section">
                     <h6 class="cauquen-title">{{'CORE.FORM.FIELD.CCL_DOLLAR' | translate}}</h6>
-                    <h5 [bizyLoading]="loading" [bizyLoadingType]="LOADING_TYPE.BAR"><strong>U$D {{profit.ccl | number : '1.2-2'}}</strong></h5>
+                    <h5 [bizyLoading]="loading"><strong>U$D {{profit.ccl | number : '1.2-2'}}</strong></h5>
                 </span>
 
             </span>
@@ -31,12 +31,12 @@
 
                 <span class="dashboard__profit__content__section">
                     <h6 class="cauquen-title">{{'CORE.FORM.FIELD.MEP_DOLLAR' | translate}}</h6>
-                    <h5 [bizyLoading]="loading" [bizyLoadingType]="LOADING_TYPE.BAR"><strong>U$D {{profit.mep | number : '1.2-2'}}</strong></h5>
+                    <h5 [bizyLoading]="loading"><strong>U$D {{profit.mep | number : '1.2-2'}}</strong></h5>
                 </span>
         
                 <span class="dashboard__profit__content__section">
                     <h6 class="cauquen-title">{{'CORE.FORM.FIELD.CRYPTO_DOLLAR' | translate}}</h6>
-                    <h5 [bizyLoading]="loading" [bizyLoadingType]="LOADING_TYPE.BAR"><strong>U$D {{profit.crypto | number : '1.2-2'}}</strong></h5>
+                    <h5 [bizyLoading]="loading"><strong>U$D {{profit.crypto | number : '1.2-2'}}</strong></h5>
                 </span>
 
             </span>
@@ -50,7 +50,7 @@
 
         <bizy-card class="dashboard__charts__chart">
 
-            <h4 slot="header-start" class="cauquen-title"><strong>{{'DASHBOARD.ACCUMULATED_IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate}}</strong></h4>
+            <h4 slot="header-start" class="cauquen-title"><strong>{{'DASHBOARD.ACCUMULATED_INFLATION_RATE_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate}}</strong></h4>
 
             <span class="dashboard__charts__chart-wrapper">
 
@@ -58,11 +58,11 @@
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
                     [resizeRef]="dashboard"
-                    [onTooltipFormatter]="ipcAdjustAccountDollarProfitTooltipFormatter"
+                    [onTooltipFormatter]="inflationRateAdjustAccountDollarProfitTooltipFormatter"
                     [tooltip]="!isMobile"
-                    [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.ACCUMULATED_IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate)}"
-                    [xAxisLabels]="accumulatedIPCAdjustAccountDollarProfitLabels"
-                    [data]="accumulatedIPCAdjustAccountDollarProfitSeries">
+                    [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.ACCUMULATED_INFLATION_RATE_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate)}"
+                    [xAxisLabels]="accumulatedInflationRateAdjustAccountDollarProfitLabels"
+                    [data]="accumulatedInflationRateAdjustAccountDollarProfitSeries">
                 </bizy-bar-line-chart>
 
             </span>
@@ -71,7 +71,7 @@
 
         <bizy-card class="dashboard__charts__chart">
 
-            <h4 slot="header-start" class="cauquen-title"><strong>{{'DASHBOARD.IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate}}</strong></h4>
+            <h4 slot="header-start" class="cauquen-title"><strong>{{'DASHBOARD.INFLATION_RATE_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate}}</strong></h4>
 
             <span class="dashboard__charts__chart-wrapper">
 
@@ -79,11 +79,11 @@
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
                     [resizeRef]="dashboard"
-                    [onTooltipFormatter]="ipcAdjustAccountDollarProfitTooltipFormatter"
+                    [onTooltipFormatter]="inflationRateAdjustAccountDollarProfitTooltipFormatter"
                     [tooltip]="!isMobile"
-                    [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.IPC_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate)}"
-                    [xAxisLabels]="ipcAdjustAccountDollarProfitLabels"
-                    [data]="ipcAdjustAccountDollarProfitSeries">
+                    [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.INFLATION_RATE_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate)}"
+                    [xAxisLabels]="inflationRateAdjustAccountDollarProfitLabels"
+                    [data]="inflationRateAdjustAccountDollarProfitSeries">
                 </bizy-bar-line-chart>
 
             </span>

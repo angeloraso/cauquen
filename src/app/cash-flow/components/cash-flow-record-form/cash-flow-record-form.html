@@ -1,7 +1,8 @@
-<form class="cauquen-form" [formGroup]="form">
+<bizy-form>
 
     <bizy-date-picker
         type="date"
+        [disabled]="disabled"
         [date]="_date.value"
         (onChange)="_date.setValue($event)">
         <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.DATE' | translate}}</strong></h6>
@@ -11,8 +12,11 @@
 
         <bizy-input
             #amountInput
+            [disabled]="disabled"
+            [autofocus]="!isMobile"
             [value]="_amount.value"
-            type="number"
+            type="currency"
+            placeholder="0,00"
             (onChange)="_amount.setValue($event)">
             <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.AMOUNT' | translate}}</strong></h6>
             <h6 slot="prefix">$</h6>
@@ -23,6 +27,7 @@
 
         <bizy-toggle 
             [selected]="_income.value"
+            [disabled]="disabled"
             (onSelect)="_income.setValue(!_income.value)">
             <h5 slot="start">{{'CORE.FORM.FIELD.INCOME' | translate}}</h5>
         </bizy-toggle>
@@ -31,8 +36,10 @@
 
     <bizy-input
         #balanceInput
+        [disabled]="disabled"
         [value]="_balance.value"
-        type="number"
+        type="currency"
+        placeholder="0,00"
         (onChange)="_balance.setValue($event)">
         <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.BALANCE' | translate}}</strong></h6>
         <h6 slot="prefix">$</h6>
@@ -42,16 +49,16 @@
 
     <span class="cauquen-confirm-buttons">
 
-        <bizy-button class="cauquen-confirm-buttons__cancel" (onSelect)="_cancel()">
+        <bizy-button class="cauquen-confirm-buttons__cancel" (onSelect)="_cancel()" [disabled]="disabled">
             <h5><i class="fa-solid fa-xmark"></i></h5>
             <h5>{{'CORE.BUTTON.CANCEL' | translate}}</h5>
         </bizy-button>
 
-        <bizy-button class="cauquen-confirm-buttons__confirm" (onSelect)="_confirm()">
+        <bizy-button type="submit" class="cauquen-confirm-buttons__confirm" (onSelect)="_confirm()" [disabled]="disabled">
             <h5>{{'CORE.BUTTON.CONFIRM' | translate}}</h5>
             <h5><i class="fa-solid fa-check"></i></h5>
         </bizy-button>
 
     </span>
 
-</form>
+</bizy-form>

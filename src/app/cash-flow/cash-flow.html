@@ -8,9 +8,9 @@
 
 </bizy-toolbar>
 
-<div class="cauquen-wrapper cash-flow">
+<div class="cauquen-wrapper cash-flow" [bizyLoading]="loading">
 
-    <bizy-table [bizyLoading]="loading">
+    <bizy-table>
 
         <bizy-table-header>
     
@@ -35,7 +35,7 @@
     
         <bizy-table-row *ngFor="let record of records | bizyOrderBy: order : orderBy" [customClass]="!record.amount ? 'cash-flow__table__row--end-of-month' : ''">
     
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="editRecord(record)"><h6>{{record.date | date: 'dd/MM/YYYY'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="editRecord(record)"><h6>{{record.date | date: 'yyyy/MM/dd'}}</h6></bizy-table-column>
     
             <bizy-table-column [ngStyle]="{flex: 8}" (onSelect)="editRecord(record)"><h6 [ngClass]="{'cash-flow__table__income': record.amount > 0, 'cash-flow__table__expense': record.amount < 0}">$ {{record.amount | number : '1.2-2'}}</h6></bizy-table-column>
     
