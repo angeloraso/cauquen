@@ -18,23 +18,50 @@
     "noImplicitReturns": true,
     "resolveJsonModule": true,
     "strict": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "module": "ES2022",
     "target": "ES2022",
-    "lib": ["ES2022", "dom"],
+    "lib": [
+      "ES2022",
+      "dom"
+    ],
     "paths": {
-      "@env/*": ["src/environments/*"],
-      "@shared/*": ["src/app/shared/*"],
-      "@core/*": ["src/app/core/*"],
-      "@auth/*": ["src/app/core/auth/*"],
-      "@components/*": ["src/app/components/*"],
-      "@app/*": ["src/app/*"],
-      "@home/*": ["src/app/home/*"],
-      "@menu/*": ["src/app/side-menu/*"],
-      "@dashboard/*": ["src/app/dashboard/*"],
-      "@cash-flow/*": ["src/app/cash-flow/*"],
-      "@info/*": ["src/app/info/*"],
-      "@config/*": ["src/app/config/*"]
+      "@env/*": [
+        "src/environments/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@auth/*": [
+        "src/app/core/auth/*"
+      ],
+      "@components/*": [
+        "src/app/components/*"
+      ],
+      "@app/*": [
+        "src/app/*"
+      ],
+      "@home/*": [
+        "src/app/home/*"
+      ],
+      "@menu/*": [
+        "src/app/side-menu/*"
+      ],
+      "@dashboard/*": [
+        "src/app/dashboard/*"
+      ],
+      "@cash-flow/*": [
+        "src/app/cash-flow/*"
+      ],
+      "@info/*": [
+        "src/app/info/*"
+      ],
+      "@config/*": [
+        "src/app/config/*"
+      ]
     }
   },
   "angularCompilerOptions": {
