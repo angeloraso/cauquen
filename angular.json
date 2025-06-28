@@ -110,10 +110,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "cauquen:build:production"
+              "buildTarget": "cauquen:build:production"
             },
             "development": {
-              "browserTarget": "cauquen:build:development"
+              "buildTarget": "cauquen:build:development"
             }
           },
           "defaultConfiguration": "development"

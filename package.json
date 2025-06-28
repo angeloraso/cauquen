@@ -13,15 +13,15 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "16.2.12",
-    "@angular/common": "16.2.12",
-    "@angular/compiler": "16.2.12",
-    "@angular/core": "16.2.12",
-    "@angular/forms": "16.2.12",
-    "@angular/platform-browser": "16.2.12",
-    "@angular/platform-browser-dynamic": "16.2.12",
-    "@angular/router": "16.2.12",
-    "@angular/service-worker": "16.2.12",
+    "@angular/animations": "17.3.12",
+    "@angular/common": "17.3.12",
+    "@angular/compiler": "17.3.12",
+    "@angular/core": "17.3.12",
+    "@angular/forms": "17.3.12",
+    "@angular/platform-browser": "17.3.12",
+    "@angular/platform-browser-dynamic": "17.3.12",
+    "@angular/router": "17.3.12",
+    "@angular/service-worker": "17.3.12",
     "@capacitor-firebase/authentication": "6.0.0",
     "@capacitor-firebase/firestore": "6.0.0",
     "@capacitor/android": "6.0.0",
@@ -34,16 +34,16 @@
     "rxjs": "7.8.1",
     "tslib": "2.6.2",
     "uuid4": "2.0.3",
-    "zone.js": "0.13.0"
+    "zone.js": "0.14.10"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "16.2.12",
+    "@angular-devkit/build-angular": "17.3.17",
     "@angular-eslint/builder": "16.3.1",
     "@angular-eslint/eslint-plugin": "16.3.1",
     "@angular-eslint/eslint-plugin-template": "16.3.1",
     "@angular-eslint/template-parser": "16.3.1",
-    "@angular/cli": "16.2.12",
-    "@angular/compiler-cli": "16.2.12",
+    "@angular/cli": "17.3.17",
+    "@angular/compiler-cli": "17.3.12",
     "@capacitor/assets": "3.0.5",
     "@capacitor/cli": "6.0.0",
     "@trapezedev/configure": "7.0.10",
@@ -58,6 +58,6 @@
     "http-server": "14.1.1",
     "prettier": "3.2.2",
     "prettier-eslint": "16.2.0",
-    "typescript": "5.1.6"
+    "typescript": "5.4.5"
   }
 }
