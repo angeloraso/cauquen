@@ -3,14 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { IBCRAResponse, ICurrencyRecord } from '@core/model';
 import { lastValueFrom } from 'rxjs';
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ArgentinaService {
   #cclHistory: Array<ICurrencyRecord> = [];
   #mepHistory: Array<ICurrencyRecord> = [];
   #cryptoHistory: Array<ICurrencyRecord> = [];
-  #BCRA_URL = 'https://api.bcra.gob.ar/estadisticas/v2.0/datosvariable';
+  #BCRA_URL = 'https://api.bcra.gob.ar/estadisticas/v3.0/Monetarias';
 
   constructor(
     @Inject(HttpClient) private http: HttpClient,
@@ -25,7 +23,7 @@ export class ArgentinaService {
         const to = new Date(data.year, data.month + 1, 0);
         const res = (await lastValueFrom(
           this.http.get(
-            `${this.#BCRA_URL}/${INFLATION_RATE_VARIABLE_ID}/${this.datePipe.transform(from, 'yyyy-MM-dd')}/${this.datePipe.transform(to, 'yyyy-MM-dd')}`
+            `${this.#BCRA_URL}/${INFLATION_RATE_VARIABLE_ID}/?desde=${this.datePipe.transform(from, 'yyyy-MM-dd')}&hasta=${this.datePipe.transform(to, 'yyyy-MM-dd')}`
           )
         )) as IBCRAResponse;
         resolve(res.results[0].valor);
@@ -43,7 +41,7 @@ export class ArgentinaService {
         const to = new Date(data.year, data.month + 1, 0);
         const res = (await lastValueFrom(
           this.http.get(
-            `${this.#BCRA_URL}/${INFLATION_RATE_VARIABLE_ID}/${this.datePipe.transform(from, 'yyyy-MM-dd')}/${this.datePipe.transform(to, 'yyyy-MM-dd')}`
+            `${this.#BCRA_URL}/${INFLATION_RATE_VARIABLE_ID}/?desde=${this.datePipe.transform(from, 'yyyy-MM-dd')}&hasta=${this.datePipe.transform(to, 'yyyy-MM-dd')}`
           )
         )) as IBCRAResponse;
         const values = res.results.map(_result => _result.valor);
@@ -65,7 +63,7 @@ export class ArgentinaService {
         const to = new Date(data.year, data.month + 1, 0);
         const res = (await lastValueFrom(
           this.http.get(
-            `${this.#BCRA_URL}/${INFLATION_RATE_VARIABLE_ID}/${this.datePipe.transform(from, 'yyyy-MM-dd')}/${this.datePipe.transform(to, 'yyyy-MM-dd')}`
+            `${this.#BCRA_URL}/${INFLATION_RATE_VARIABLE_ID}/?desde=${this.datePipe.transform(from, 'yyyy-MM-dd')}&hasta=${this.datePipe.transform(to, 'yyyy-MM-dd')}`
           )
         )) as IBCRAResponse;
         const values = res.results.map(_result => _result.valor);
