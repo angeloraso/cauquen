@@ -4,9 +4,10 @@ import { ICountryRecord } from '@core/model';
 import { ArgentinaService, USService } from '@core/services';
 
 @Component({
-  selector: 'cauquen-country-record-form',
-  templateUrl: './country-record-form.html',
-  styleUrls: ['./country-record-form.css']
+    selector: 'cauquen-country-record-form',
+    templateUrl: './country-record-form.html',
+    styleUrls: ['./country-record-form.css'],
+    standalone: false
 })
 export class CountryRecordFormComponent {
   @Output() cancel = new EventEmitter<void>();

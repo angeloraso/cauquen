@@ -7,9 +7,10 @@ import { COUNTRY_CODE } from '@core/model';
 import { CashFlowService, CountryService, MobileService, UtilsService } from '@core/services';
 
 @Component({
-  selector: 'cauquen-dashboard',
-  templateUrl: './dashboard.html',
-  styleUrls: ['./dashboard.css']
+    selector: 'cauquen-dashboard',
+    templateUrl: './dashboard.html',
+    styleUrls: ['./dashboard.css'],
+    standalone: false
 })
 export class DashboardComponent implements OnInit {
   readonly #cashFlow = inject(CashFlowService);

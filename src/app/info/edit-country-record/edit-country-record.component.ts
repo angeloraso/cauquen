@@ -7,9 +7,10 @@ import { PopupComponent } from '@shared/components';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'cauquen-edit-country-record',
-  templateUrl: './edit-country-record.html',
-  styleUrls: ['./edit-country-record.css']
+    selector: 'cauquen-edit-country-record',
+    templateUrl: './edit-country-record.html',
+    styleUrls: ['./edit-country-record.css'],
+    standalone: false
 })
 export class EditCountryRecordComponent implements OnInit, OnDestroy {
   loading = false;

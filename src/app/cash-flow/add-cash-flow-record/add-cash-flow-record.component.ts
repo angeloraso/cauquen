@@ -3,9 +3,10 @@ import { BizyLogService, BizyRouterService, BizyToastService } from '@bizy/servi
 import { CashFlowService } from '@core/services';
 
 @Component({
-  selector: 'cauquen-add-cash-flow-record',
-  templateUrl: './add-cash-flow-record.html',
-  styleUrls: ['./add-cash-flow-record.css']
+    selector: 'cauquen-add-cash-flow-record',
+    templateUrl: './add-cash-flow-record.html',
+    styleUrls: ['./add-cash-flow-record.css'],
+    standalone: false
 })
 export class AddCashFlowRecordComponent {
   readonly #cashFlow = inject(CashFlowService);

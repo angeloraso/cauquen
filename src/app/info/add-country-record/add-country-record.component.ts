@@ -4,9 +4,10 @@ import { ICountryRecord } from '@core/model';
 import { CountryService } from '@core/services';
 
 @Component({
-  selector: 'cauquen-add-country-record',
-  templateUrl: './add-country-record.html',
-  styleUrls: ['./add-country-record.css']
+    selector: 'cauquen-add-country-record',
+    templateUrl: './add-country-record.html',
+    styleUrls: ['./add-country-record.css'],
+    standalone: false
 })
 export class AddCountryRecordComponent {
   loading = false;

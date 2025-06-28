@@ -7,9 +7,10 @@ import { Subscription } from 'rxjs';
 import { PATH } from './info.routing';
 
 @Component({
-  selector: 'cauquen-info',
-  templateUrl: './info.html',
-  styleUrls: ['./info.css']
+    selector: 'cauquen-info',
+    templateUrl: './info.html',
+    styleUrls: ['./info.css'],
+    standalone: false
 })
 export class InfoComponent implements OnInit, OnDestroy {
   info: Array<ICountryRecord> = [];

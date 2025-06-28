@@ -12,9 +12,10 @@ interface IOption {
   selected: boolean;
 }
 @Component({
-  selector: 'home',
-  templateUrl: './home.html',
-  styleUrls: ['./home.css']
+    selector: 'home',
+    templateUrl: './home.html',
+    styleUrls: ['./home.css'],
+    standalone: false
 })
 export class HomeComponent implements OnDestroy {
   closedSidebar: boolean = false;

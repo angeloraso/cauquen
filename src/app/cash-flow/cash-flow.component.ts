@@ -13,9 +13,10 @@ import { PopupComponent } from '@shared/components';
 import { PATH } from './cash-flow.routing';
 
 @Component({
-  selector: 'cauquen-cash-flow',
-  templateUrl: './cash-flow.html',
-  styleUrls: ['./cash-flow.css']
+    selector: 'cauquen-cash-flow',
+    templateUrl: './cash-flow.html',
+    styleUrls: ['./cash-flow.css'],
+    standalone: false
 })
 export class CashFlowComponent implements OnInit {
   readonly #translate = inject(BizyTranslateService);

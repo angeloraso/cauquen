@@ -10,10 +10,11 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MobileService } from '@core/services';
 
 @Component({
-  selector: 'cauquen-cash-flow-record-form',
-  templateUrl: './cash-flow-record-form.html',
-  styleUrls: ['./cash-flow-record-form.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'cauquen-cash-flow-record-form',
+    templateUrl: './cash-flow-record-form.html',
+    styleUrls: ['./cash-flow-record-form.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class CashFlowRecordFormComponent {
   @Input() disabled: boolean = false;

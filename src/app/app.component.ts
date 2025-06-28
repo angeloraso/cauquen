@@ -7,9 +7,10 @@ import { ENV } from '@env/environment';
 import { PATH } from './app.routing';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.html',
-  styleUrls: ['./app.css']
+    selector: 'app-root',
+    templateUrl: './app.html',
+    styleUrls: ['./app.css'],
+    standalone: false
 })
 export class AppComponent implements OnInit {
   constructor(

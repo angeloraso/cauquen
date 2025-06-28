@@ -10,9 +10,10 @@ import { Subscription } from 'rxjs';
 import { AboutPopupComponent } from './about-popup/about-popup.component';
 
 @Component({
-  selector: 'cauquen-config',
-  templateUrl: './config.html',
-  styleUrls: ['./config.css']
+    selector: 'cauquen-config',
+    templateUrl: './config.html',
+    styleUrls: ['./config.css'],
+    standalone: false
 })
 export class ConfigComponent implements OnInit, OnDestroy {
   #subscription = new Subscription();

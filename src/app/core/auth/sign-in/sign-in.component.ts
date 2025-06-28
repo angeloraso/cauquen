@@ -3,9 +3,10 @@ import { BizyToastService } from '@bizy/services';
 import { AuthService } from '@core/auth/auth.service';
 
 @Component({
-  selector: 'cauquen-sign-in',
-  templateUrl: './sign-in.html',
-  styleUrls: ['./sign-in.css']
+    selector: 'cauquen-sign-in',
+    templateUrl: './sign-in.html',
+    styleUrls: ['./sign-in.css'],
+    standalone: false
 })
 export class SignInComponent {
   loading = false;

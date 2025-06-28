@@ -5,9 +5,10 @@ import { ICashFlowRecord } from '@core/model';
 import { CashFlowService } from '@core/services';
 
 @Component({
-  selector: 'cauquen-edit-cash-flow-record',
-  templateUrl: './edit-cash-flow-record.html',
-  styleUrls: ['./edit-cash-flow-record.css']
+    selector: 'cauquen-edit-cash-flow-record',
+    templateUrl: './edit-cash-flow-record.html',
+    styleUrls: ['./edit-cash-flow-record.css'],
+    standalone: false
 })
 export class EditCashFlowRecordComponent implements OnInit {
   readonly #cashFlow = inject(CashFlowService);
