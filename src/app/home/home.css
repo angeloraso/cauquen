@@ -7,7 +7,7 @@
   overflow: hidden;
 }
 
-bizy-sidebar-option[slot=start] {
+bizy-sidebar-option[slot='start'] {
   height: var(--bizy-toolbar-height);
 }
 
@@ -40,10 +40,7 @@ bizy-sidebar-option[slot=start] {
 
 .home__sidebar__option__profile-pic {
   height: 1.2rem;
-}
-
-.home__sidebar__option__icon {
-  color: var(--text-color);
+  border-radius: 50%;
 }
 
 .home__sidebar__option__label {
@@ -72,15 +69,18 @@ bizy-sidebar-option[slot=start] {
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
   --bizy-toolbar-padding: 0 0.7rem;
 }
 
 .home__content__router-outlet {
   width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  background-color: var(--background-color);
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .home__sidebar {
@@ -89,16 +89,21 @@ bizy-sidebar-option[slot=start] {
 }
 
 .home__tabs {
-  display: inline-block;
-}
-
-.home__tabs__tab {
-  flex: 1;
-  overflow: hidden;
+  display: block;
 }
 
 .home__tabs__tab--selected {
-  color: var(--accent-color);
+  --bizy-tab-row-gap: 0.15rem;
+}
+
+.home__tabs__tab__icon--selected * {
+  background-color: #fff;
+  padding: 0.1rem 0.6rem;
+  border-radius: 20rem;
+}
+
+.home__tabs__tab__label--selected {
+  font-weight: bold;
 }
 
 @media only screen and (min-width: 768px) {

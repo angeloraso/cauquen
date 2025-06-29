@@ -1,22 +1,19 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import {
-  BizyLogService,
-  BizyPopupService,
-  BizyRouterService,
-  BizyToastService,
-  BizyTranslateService
-} from '@bizy/services';
+import { HomeService } from '@app/home/home.service';
+import { SharedModules } from '@app/shared';
+import { BizyLogService, BizyPopupService, BizyRouterService, BizyToastService, BizyTranslateService } from '@bizy/core';
+import { PopupComponent } from '@components/popup';
 import { ICashFlowRecord } from '@core/model';
 import { CashFlowService } from '@core/services';
-import { PopupComponent } from '@shared/components';
 import { PATH } from './cash-flow.routing';
+import { es } from './i18n';
 
 @Component({
-    selector: 'cauquen-cash-flow',
-    templateUrl: './cash-flow.html',
-    styleUrls: ['./cash-flow.css'],
-    standalone: false
+  selector: 'cauquen-cash-flow',
+  templateUrl: './cash-flow.html',
+  styleUrls: ['./cash-flow.css'],
+  imports: SharedModules
 })
 export class CashFlowComponent implements OnInit {
   readonly #translate = inject(BizyTranslateService);
@@ -26,6 +23,7 @@ export class CashFlowComponent implements OnInit {
   readonly #cashFlow = inject(CashFlowService);
   readonly #log = inject(BizyLogService);
   readonly #toast = inject(BizyToastService);
+  readonly #home = inject(HomeService);
 
   records: Array<ICashFlowRecord> = [];
   loading = false;
@@ -35,10 +33,17 @@ export class CashFlowComponent implements OnInit {
   async ngOnInit() {
     try {
       this.loading = true;
+      this.#home.showTabs();
+      this.#translate.loadTranslations(es);
       const data = await this.#cashFlow.getRecords();
       this.records = data ?? [];
     } catch (error) {
-      console.log(error);
+      this.#log.error({
+        fileName: 'cash-flows.component',
+        functionName: 'ngOnInit',
+        param: error
+      });
+      this.#toast.danger();
     } finally {
       this.loading = false;
     }

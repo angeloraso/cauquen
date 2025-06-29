@@ -1,55 +1,60 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BizyPopupService, BizyTranslateService } from '@bizy/services';
-import { AuthService } from '@core/auth/auth.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { HomeService } from '@app/home/home.service';
+import { SharedModules } from '@app/shared';
+import { AuthService } from '@auth/auth.service';
+import { BizyLogService, BizyPopupService, BizyToastService, BizyTranslateService } from '@bizy/core';
+import { PopupComponent } from '@components/popup';
 import { COUNTRIES, LOGO_PATH } from '@core/constants';
 import { COUNTRY_CODE } from '@core/model';
 import { UserSettingsService } from '@core/services';
-import { PopupComponent } from '@shared/components';
-import { Subscription } from 'rxjs';
 import { AboutPopupComponent } from './about-popup/about-popup.component';
+import { es } from './i18n';
 
 @Component({
-    selector: 'cauquen-config',
-    templateUrl: './config.html',
-    styleUrls: ['./config.css'],
-    standalone: false
+  selector: 'cauquen-config',
+  templateUrl: './config.html',
+  styleUrls: ['./config.css'],
+  imports: SharedModules
 })
-export class ConfigComponent implements OnInit, OnDestroy {
-  #subscription = new Subscription();
+export class ConfigComponent implements OnInit {
+  readonly #translate = inject(BizyTranslateService);
+  readonly #popup = inject(BizyPopupService);
+  readonly #log = inject(BizyLogService);
+  readonly #toast = inject(BizyToastService);
+  readonly #home = inject(HomeService);
+  readonly #userSettings = inject(UserSettingsService);
+  readonly #fb = inject(FormBuilder);
+  readonly #auth = inject(AuthService);
+
   loading = false;
-  form: FormGroup<{
-    userCountry: FormControl<string | null>;
-  }>;
+  form = this.#fb.group({
+    userCountry: ['', [Validators.required]]
+  });
 
   profilePic = LOGO_PATH;
 
   readonly COUNTRIES = COUNTRIES;
 
-  constructor(
-    @Inject(BizyPopupService) private popup: BizyPopupService,
-    @Inject(AuthService) private auth: AuthService,
-    @Inject(FormBuilder) private fb: FormBuilder,
-    @Inject(UserSettingsService) private userSettings: UserSettingsService,
-    @Inject(BizyTranslateService) private translate: BizyTranslateService
-  ) {
-    this.form = this.fb.group({
-      userCountry: ['', [Validators.required]]
-    });
-
-    const profilePic = this.auth.getProfilePicture();
-    if (profilePic) {
-      this.profilePic = profilePic;
-    }
-  }
-
   async ngOnInit() {
     try {
       this.loading = true;
-      const userCountry = await this.userSettings.getCountry();
+
+      this.#home.showTabs();
+      this.#translate.loadTranslations(es);
+      const profilePic = await this.#auth.getProfilePicture();
+      if (profilePic) {
+        this.profilePic = profilePic;
+      }
+      const userCountry = await this.#userSettings.getCountry();
       this.userCountry.setValue(userCountry);
     } catch (error) {
-      console.debug(error);
+      this.#log.error({
+        fileName: 'config.component',
+        functionName: 'ngOnInit',
+        param: error
+      });
+      this.#toast.danger();
     } finally {
       this.loading = false;
     }
@@ -67,7 +72,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
       this.loading = true;
 
-      await this.userSettings.putCountry(country as COUNTRY_CODE);
+      await this.#userSettings.putCountry(country as COUNTRY_CODE);
     } catch (error) {
       console.log(error);
     } finally {
@@ -76,7 +81,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   }
 
   openPopup(): void {
-    this.popup.open({ component: AboutPopupComponent });
+    this.#popup.open({ component: AboutPopupComponent });
   }
 
   onSignOut(): void {
@@ -84,24 +89,20 @@ export class ConfigComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.popup.open<boolean>(
+    this.#popup.open<boolean>(
       {
         component: PopupComponent,
         data: {
-          title: this.translate.get('CONFIG.SIGN_OUT_POPUP.TITLE'),
-          msg: `${this.translate.get('CONFIG.SIGN_OUT_POPUP.MSG')}: ${this.auth.getEmail()}`
+          title: this.#translate.get('CONFIG.SIGN_OUT_POPUP.TITLE'),
+          msg: `${this.#translate.get('CONFIG.SIGN_OUT_POPUP.MSG')}: ${this.#auth.getEmail()}`
         }
       },
       res => {
         if (res) {
           this.loading = true;
-          this.auth.signOut().finally(() => (this.loading = false));
+          this.#auth.signOut().finally(() => (this.loading = false));
         }
       }
     );
-  }
-
-  ngOnDestroy() {
-    this.#subscription.unsubscribe;
   }
 }

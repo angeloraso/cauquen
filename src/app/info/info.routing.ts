@@ -1,38 +1,20 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { adminGuard, authGuard } from '@core/guards';
-import { AddCountryRecordComponent } from './add-country-record/add-country-record.component';
-import { EditCountryRecordComponent } from './edit-country-record/edit-country-record.component';
-import { InfoComponent } from './info.component';
+import { Routes } from '@angular/router';
+import { adminGuard } from '@core/guards';
 
 export enum PATH {
   EMPTY = '',
   ADD = 'add'
 }
 
-const routes: Routes = [
+export const ROUTES: Routes = [
   {
     path: PATH.EMPTY,
-    component: InfoComponent,
-    pathMatch: 'full',
-    canActivate: [authGuard]
+    loadComponent: () => import('@info/info.component').then(m => m.InfoComponent),
+    pathMatch: 'full'
   },
   {
     path: PATH.ADD,
-    component: AddCountryRecordComponent,
-    canActivate: [authGuard, adminGuard]
-  },
-  {
-    path: ':countryRecordId',
-    component: EditCountryRecordComponent,
-    canActivate: [authGuard, adminGuard]
+    loadComponent: () => import('@info/add-country-record/add-country-record.component').then(m => m.AddCountryRecordComponent),
+    canActivate: [adminGuard]
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-export class InfoRoutingModule {
-  static COMPONENTS = [InfoComponent, AddCountryRecordComponent, EditCountryRecordComponent];
-}

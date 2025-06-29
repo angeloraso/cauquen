@@ -1,12 +1,12 @@
 <bizy-toolbar>
 
-    <img slot=start class="cauquen-logo" src="/assets/favicons/favicon.ico" alt="logo"/>
-    
+    <img slot=start class="cauquen-logo" [src]="LOGO_PATH" alt="logo"/>
+
     <h1 slot=start>{{'DASHBOARD.TITLE' | translate}}</h1>
 
 </bizy-toolbar>
 
-<div class="cauquen-wrapper dashboard" #dashboard>
+<bizy-content>
 
     <bizy-card>
         <h4 slot="header-start" class="cauquen-title"><strong>{{'DASHBOARD.PROFIT' | translate}}</strong></h4>
@@ -57,7 +57,6 @@
                 <bizy-bar-line-chart 
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
-                    [resizeRef]="dashboard"
                     [onTooltipFormatter]="inflationRateAdjustAccountDollarProfitTooltipFormatter"
                     [tooltip]="!isMobile"
                     [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.ACCUMULATED_INFLATION_RATE_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate)}"
@@ -78,7 +77,6 @@
                 <bizy-bar-line-chart 
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
-                    [resizeRef]="dashboard"
                     [onTooltipFormatter]="inflationRateAdjustAccountDollarProfitTooltipFormatter"
                     [tooltip]="!isMobile"
                     [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.INFLATION_RATE_ADJUST_ACCOUNT_DOLLAR_PROFIT.TITLE' | translate)}"
@@ -99,7 +97,6 @@
                 <bizy-bar-line-chart 
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
-                    [resizeRef]="dashboard"
                     [onTooltipFormatter]="onDollarTooltipFormatter"
                     [tooltip]="!isMobile"
                     [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.ACCOUNT_EVOLUTION.TITLE' | translate)}"
@@ -120,7 +117,6 @@
                 <bizy-bar-line-chart 
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
-                    [resizeRef]="dashboard"
                     [tooltip]="!isMobile"
                     [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.DOLLAR_RATE.TITLE' | translate)}"
                     [xAxisLabels]="dollarRateLabels"
@@ -140,7 +136,6 @@
                 <bizy-bar-line-chart 
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
-                    [resizeRef]="dashboard"
                     [tooltip]="!isMobile"
                     [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.INFLATION.TITLE' | translate)}"
                     [xAxisLabels]="inflationLabels"
@@ -160,7 +155,6 @@
                 <bizy-bar-line-chart 
                     class="dashboard__charts__chart-wrapper__chart"
                     [bizyLoading]="loading"
-                    [resizeRef]="dashboard"
                     [tooltip]="!isMobile"
                     [download]="{label: ('CORE.BUTTON.DOWNLOAD' | translate), name: ('DASHBOARD.FIXED_RATE.TITLE' | translate)}"
                     [xAxisLabels]="fixedRateLabels"
@@ -173,4 +167,4 @@
 
     </span>
 
-</div>
+</bizy-content>

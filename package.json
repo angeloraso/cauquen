@@ -5,11 +5,14 @@
   "scripts": {
     "start": "ng serve -o --configuration=development",
     "start:pwa": "npm run build && http-server -o -p 4200 -c-1 dist",
-    "build": "ng build --configuration=production",
+    "build": "npm run lint && npm run format && ng build --configuration=production",
     "build:mobile": "ng build --configuration=mobile",
     "android:resources": "capacitor-assets generate --android",
     "android:config": "VERSION_NAME=$npm_package_version npx trapeze run config.yaml --android -y",
-    "android": "rm -rf ./android && npm run build:mobile && capacitor add android && capacitor sync android && npm run android:resources && npm run android:config && capacitor open android"
+    "android": "rm -rf ./android && npm run build:mobile && capacitor add android && capacitor sync android && npm run android:resources && npm run android:config && capacitor open android",
+    "lint": "eslint . --ext .ts, --fix",
+    "format": "prettier --write \"src/**/*.{ts,html,scss,css,json,md}\"",
+    "analyze": "ng build --configuration=production && esbuild-visualizer --metadata ./dist/stats.json && npx open stats.html"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +30,7 @@
     "@capacitor/android": "7.4.0",
     "@capacitor/app": "7.0.1",
     "@capacitor/core": "7.4.0",
+    "@capacitor/preferences": "7.0.1",
     "@capacitor/splash-screen": "7.0.1",
     "@capacitor/status-bar": "7.0.1",
     "@fortawesome/fontawesome-free": "6.7.2",
@@ -45,7 +49,7 @@
     "@angular/build": "^20.0.4",
     "@angular/cli": "20.0.4",
     "@angular/compiler-cli": "20.0.5",
-    "@bizy/core": "20.0.1",
+    "@bizy/core": "20.1.0",
     "@capacitor/assets": "3.0.5",
     "@capacitor/cli": "7.4.0",
     "@trapezedev/configure": "7.1.3",

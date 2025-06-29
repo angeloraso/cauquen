@@ -1,0 +1,24 @@
+
+<bizy-list>
+
+    <bizy-section-center>
+        <h1 class="cauquen--info cauquen-text--center">{{title}}</h1>
+    </bizy-section-center>
+
+    <h3 class="cauquen-text--center">{{msg}}</h3>
+
+    <bizy-section>
+
+        <bizy-button class="cauquen-confirm-buttons__cancel" (onSelect)="close()">
+            <h5>{{'CORE.BUTTON.CANCEL' | translate}}</h5>
+        </bizy-button>
+    
+        <bizy-button type="submit" class="cauquen-confirm-buttons__confirm" (onSelect)="apply()">
+            <h5>{{'CORE.BUTTON.CONFIRM' | translate}}</h5>
+            <h5><i class="fa-solid fa-check"></i></h5>
+        </bizy-button>
+            
+    </bizy-section>
+        
+</bizy-list>
+

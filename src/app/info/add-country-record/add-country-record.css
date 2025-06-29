@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.add-country-record__card {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.add-country-record__card__section {
+  display: grid;
+  grid-template-columns: 14rem auto;
+  align-items: center;
+}
+
+.add-country-record__card__section__title {
+  color: var(--bizy-info-color);
+  justify-self: start;
+}
+
+.add-country-record__card__section__value {
+  justify-self: end;
+}

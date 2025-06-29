@@ -1,26 +1,29 @@
-@import '/node_modules/@bizy/directives/styles/loading.css';
-@import '/node_modules/@bizy/directives/styles/tooltip.css';
-@import '/node_modules/@bizy/directives/styles/variables.css';
-@import '/node_modules/@bizy/services/styles/popup.css';
-@import '/node_modules/@bizy/services/styles/animations.css';
-@import '/node_modules/@bizy/services/styles/variables.css';
-@import '/node_modules/@bizy/services/styles/toast.css';
-@import '/node_modules/@bizy/components/styles/date-picker.css';
-@import '/node_modules/@bizy/components/styles/variables.css';
-@import '/node_modules/@bizy/components/styles/normalize.css';
-@import '/node_modules/@bizy/components/styles/overlay.css';
+@import '../../node_modules/@bizy/core/styles/animations.css';
+@import '../../node_modules/@bizy/core/styles/calendar.css';
+@import '../../node_modules/@bizy/core/styles/date-picker.css';
+@import '../../node_modules/@bizy/core/styles/file-uploader.css';
+@import '../../node_modules/@bizy/core/styles/loading.css';
+@import '../../node_modules/@bizy/core/styles/normalize.css';
+@import '../../node_modules/@bizy/core/styles/overlay.css';
+@import '../../node_modules/@bizy/core/styles/toast.css';
+@import '../../node_modules/@bizy/core/styles/tooltip.css';
+@import '../../node_modules/@bizy/core/styles/variables.css';
 
 :root {
-    --bizy-input-min-width: 8rem;
-    --bizy-input-max-width: 20rem;
+    --bizy-accent-color: var(--accent-color);
+    --bizy-light-accent-color: var(--light-accent-color);
+    --bizy-dark-accent-color: var(--dark-accent-color);
 
     --bizy-loading-spinner-color-1st-line: var(--light-primary-color);
     --bizy-loading-spinner-color-2nd-line: var(--primary-color);
     --bizy-loading-spinner-color-3rd-line: var(--dark-primary-color);
 
-    --bizy-table-column-min-width: 5rem;
+    --bizy-table-column-min-width: 4.3rem;
     --bizy-table-background-color: var(--background-color);
-    --bizy-table-header-background-color: var(--hover-color);
+
+    --bizy-select-min-width: 8rem;
+    --bizy-input-min-width: 8rem;
+    --bizy-input-max-width: 20rem;
 
     --bizy-sidebar-shrinked-width: 3rem;
     --bizy-sidebar-width: 14rem;
@@ -31,4 +34,13 @@
     --bizy-tab-border-right: none;
     --bizy-tab-border-left: none;
     --bizy-tab-border-bottom: none;
+    --bizy-tab-padding: 0.3rem;
+    --bizy-tab-flex: 1;
+    --bizy-tab-row-gap: 0.2rem;
+    --bizy-tab-color: var(--dark-secondary-color);
+    --bizy-tab-selected-color: var(--accent-color);
+    --bizy-tab-selected-background-color: var(--bizy-tab-background-color);
+
+    --bizy-grid-row-height: 6rem;
+    --bizy-toolbar-column-gap: 0.5rem;
 }

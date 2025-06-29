@@ -1,1 +1,5 @@
-.add-cash-flow-record {}
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

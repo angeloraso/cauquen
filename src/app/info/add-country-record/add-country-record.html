@@ -1,16 +1,108 @@
 <bizy-toolbar>
 
-    <img slot=start class="cauquen-logo" src="/assets/favicons/favicon.ico" alt="logo"/>
+    <bizy-button slot="start" (onSelect)="goBack()" class="cauquen-action cauquen-action--info"><i class="fa-solid fa-angle-left"></i></bizy-button>
     
-    <h1 slot=start>{{'INFO.ADD_INFO_RECORD.TITLE' | translate}}</h1>
+    <h1 slot=start>{{'ADD_INFO_RECORD.TITLE' | translate}}</h1>
+
+    <span slot="start" [bizyLoading]="loading"></span>
 
 </bizy-toolbar>
 
-<div class="cauquen-wrapper add-country-record" [bizyLoading]="loading">
+<bizy-content>
 
-    <cauquen-country-record-form
-        (cancel)="goBack()"
-        (confirm)="confirm($event)">
-    </cauquen-country-record-form>
+    <bizy-form>
 
-</div>
+        <bizy-section-start>
+
+            <bizy-date-picker
+                type="year-month"
+                [disabled]="loading"
+                [date]="date.value"
+                (onChange)="date.setValue($event); onSearch()">
+                <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.DATE' | translate}}</strong></h6>
+            </bizy-date-picker>
+
+            <bizy-button (onSelect)="onSearch()">{{'CORE.FORM.FIELD.SEARCH' | translate}}</bizy-button>
+
+        </bizy-section-start>
+    
+        <bizy-card>
+        
+            <span class="add-country-record__card">
+
+                <span class="add-country-record__card__section">
+        
+                    <h4 class="add-country-record__card__section__title">{{'CORE.FORM.FIELD.US_INFLATION_RATE' | translate}} (%)</h4>
+        
+                    <h4 class="add-country-record__card__section__value" [bizyLoading]="loading">{{usInflationRate | number : '1.2-2'}}</h4>
+        
+                </span>
+        
+                <span class="add-country-record__card__section">
+        
+                    <h4 class="add-country-record__card__section__title">{{'CORE.FORM.FIELD.INFLATION_RATE' | translate}} (%)</h4>
+        
+                    <h4 class="add-country-record__card__section__value" [bizyLoading]="loading">{{inflationRate | number : '1.2-2'}}</h4>
+        
+                </span>
+        
+                <span class="add-country-record__card__section">
+        
+                    <h4 class="add-country-record__card__section__title">{{'CORE.FORM.FIELD.FIXED_RATE' | translate}} (%)</h4>
+        
+                    <h4 class="add-country-record__card__section__value" [bizyLoading]="loading">{{fixedRate | number : '1.2-2'}}</h4>
+        
+                </span>
+        
+                <span class="add-country-record__card__section">
+        
+                    <h4 class="add-country-record__card__section__title">{{'CORE.FORM.FIELD.RETAIL_DOLLAR' | translate}} ($)</h4>
+        
+                    <h4 class="add-country-record__card__section__value" [bizyLoading]="loading">{{retailDollar | number : '1.2-2'}}</h4>
+        
+                </span>
+        
+                <span class="add-country-record__card__section">
+        
+                    <h4 class="add-country-record__card__section__title">{{'CORE.FORM.FIELD.MEP_DOLLAR' | translate}} ($)</h4>
+        
+                    <h4 class="add-country-record__card__section__value" [bizyLoading]="loading">{{mepDollar | number : '1.2-2'}}</h4>
+        
+                </span>
+        
+                <span class="add-country-record__card__section">
+        
+                    <h4 class="add-country-record__card__section__title">{{'CORE.FORM.FIELD.CCL_DOLLAR' | translate}} ($)</h4>
+        
+                    <h4 class="add-country-record__card__section__value" [bizyLoading]="loading">{{cclDollar | number : '1.2-2'}}</h4>
+        
+                </span>
+
+                <span class="add-country-record__card__section">
+        
+                    <h4 class="add-country-record__card__section__title">{{'CORE.FORM.FIELD.CRYPTO_DOLLAR' | translate}} ($)</h4>
+        
+                    <h4 class="add-country-record__card__section__value" [bizyLoading]="loading">{{cryptoDollar | number : '1.2-2'}}</h4>
+        
+                </span>
+        
+            </span>
+        
+        </bizy-card>
+
+    </bizy-form>
+
+</bizy-content>
+
+<bizy-section class="cauquen-confirm-buttons">
+
+    <bizy-button class="cauquen-confirm-buttons__cancel" (onSelect)="goBack()" [disabled]="loading">
+        <h5>{{'CORE.BUTTON.CANCEL' | translate}}</h5>
+    </bizy-button>
+
+    <bizy-button type="submit" class="cauquen-confirm-buttons__confirm" (onSelect)="save()" [disabled]="loading">
+        <h5>{{'CORE.BUTTON.CONFIRM' | translate}}</h5>
+        <h5><i class="fa-solid fa-check"></i></h5>
+    </bizy-button>
+        
+</bizy-section>

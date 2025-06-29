@@ -1,16 +1,9 @@
-import { LANGUAGE } from '@bizy/services';
-
+import { LANGUAGE } from '@bizy/core';
 export const locale = {
   lang: LANGUAGE.SPANISH,
   translations: {
     INFO: {
-      TITLE: 'Información',
-      ADD_INFO_RECORD: {
-        TITLE: 'Crear registro'
-      },
-      EDIT_INFO_RECORD: {
-        TITLE: 'Editar registro'
-      }
+      TITLE: 'Información'
     }
   }
 };

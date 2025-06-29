@@ -15,22 +15,26 @@
           "options": {
             "preserveSymlinks": true,
             "outputPath": {
-              "base": "dist"
+              "base": "dist",
+              "browser": ""
             },
             "index": "src/index.html",
             "polyfills": [
               "zone.js"
             ],
             "allowedCommonJsDependencies": [
-              "flatpickr/dist/l10n/es.js",
-              "flatpickr/dist/plugins/monthSelect/index.js",
-              "html2canvas",
               "lodash/throttle.js",
               "namespace-emitter",
               "classnames",
               "is-shallow-equal",
               "lodash/debounce.js",
-              "autonumeric"
+              "flatpickr/dist/l10n/es.js",
+              "flatpickr/dist/plugins/monthSelect/index.js",
+              "html2canvas",
+              "autonumeric",
+              "@transloadit/prettier-bytes",
+              "mime-match",
+              "validator"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [

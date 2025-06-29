@@ -115,5 +115,5 @@ export interface ICurrencyRecord {
   casa: CURRENCY_NAME;
   compra: number;
   venta: number;
-  fecha: string; // YYYY-MM-dd
+  fecha: string; // yyyy-MM-dd
 }

@@ -1,25 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { authGuard } from '@core/guards';
-import { DashboardComponent } from './dashboard.component';
+import { Routes } from '@angular/router';
 
 export enum PATH {
   EMPTY = ''
 }
 
-const routes: Routes = [
+export const ROUTES: Routes = [
   {
     path: PATH.EMPTY,
-    component: DashboardComponent,
-    pathMatch: 'full',
-    canActivate: [authGuard]
+    loadComponent: () => import('@dashboard/dashboard.component').then(m => m.DashboardComponent),
+    pathMatch: 'full'
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-export class DashboardRoutingModule {
-  static COMPONENTS = [DashboardComponent];
-}

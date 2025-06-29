@@ -1,57 +1,55 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { BizyPopupService, BizyRouterService } from '@bizy/services';
+import { Component, inject, OnInit } from '@angular/core';
+import { HomeService } from '@app/home/home.service';
+import { SharedModules } from '@app/shared';
+import { BizyLogService, BizyPopupService, BizyRouterService, BizyToastService, BizyTranslateService } from '@bizy/core';
+import { PopupComponent } from '@components/popup';
 import { ICountryRecord } from '@core/model';
 import { CountryService, UserSettingsService } from '@core/services';
-import { PopupComponent } from '@shared/components';
-import { Subscription } from 'rxjs';
+import { es } from './i18n';
 import { PATH } from './info.routing';
 
 @Component({
-    selector: 'cauquen-info',
-    templateUrl: './info.html',
-    styleUrls: ['./info.css'],
-    standalone: false
+  selector: 'cauquen-info',
+  templateUrl: './info.html',
+  styleUrls: ['./info.css'],
+  imports: SharedModules
 })
-export class InfoComponent implements OnInit, OnDestroy {
+export class InfoComponent implements OnInit {
+  readonly #translate = inject(BizyTranslateService);
+  readonly #popup = inject(BizyPopupService);
+  readonly #router = inject(BizyRouterService);
+  readonly #country = inject(CountryService);
+  readonly #log = inject(BizyLogService);
+  readonly #toast = inject(BizyToastService);
+  readonly #home = inject(HomeService);
+  readonly #userSettings = inject(UserSettingsService);
+
   info: Array<ICountryRecord> = [];
   loading = false;
   orderBy: string = 'from';
   order: 'asc' | 'desc' = 'desc';
   isAdmin = false;
 
-  private _subscription = new Subscription();
-
-  constructor(
-    @Inject(CountryService) private country: CountryService,
-    @Inject(UserSettingsService) private userSettings: UserSettingsService,
-    @Inject(BizyRouterService) private router: BizyRouterService,
-    @Inject(BizyPopupService) private popup: BizyPopupService
-  ) {}
-
   async ngOnInit() {
     try {
       this.loading = true;
-      const [isAdmin, userCountry] = await Promise.all([
-        this.userSettings.isAdmin(),
-        this.userSettings.getCountry()
-      ]);
+      this.#home.showTabs();
+      this.#translate.loadTranslations(es);
+      const [isAdmin, userCountry] = await Promise.all([this.#userSettings.isAdmin(), this.#userSettings.getCountry()]);
 
       this.isAdmin = isAdmin;
-      const countryData = await this.country.getRecords(userCountry);
+      const countryData = await this.#country.getRecords(userCountry);
       this.info = countryData ?? [];
     } catch (error) {
-      console.debug(error);
+      this.#log.error({
+        fileName: 'info.component',
+        functionName: 'ngOnInit',
+        param: error
+      });
+      this.#toast.danger();
     } finally {
       this.loading = false;
     }
-  }
-
-  goToRecord(record: ICountryRecord): void {
-    if (!this.isAdmin) {
-      return;
-    }
-
-    this.router.goTo({ path: record.id });
   }
 
   openConfirmPopup(record: ICountryRecord) {
@@ -59,7 +57,7 @@ export class InfoComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.popup.open<boolean>(
+    this.#popup.open<boolean>(
       {
         component: PopupComponent,
         data: record
@@ -76,7 +74,7 @@ export class InfoComponent implements OnInit, OnDestroy {
     if (!this.isAdmin) {
       return;
     }
-    this.router.goTo({ path: PATH.ADD });
+    this.#router.goTo({ path: PATH.ADD });
   }
 
   onSort(property: string) {
@@ -87,7 +85,7 @@ export class InfoComponent implements OnInit, OnDestroy {
   async #deleteRecord(record: ICountryRecord) {
     try {
       this.loading = true;
-      await this.country.deleteRecord(record);
+      await this.#country.deleteRecord(record);
       const index = this.info.findIndex(_record => _record.id === record.id);
       if (index !== -1) {
         this.info.splice(index, 1);
@@ -98,9 +96,5 @@ export class InfoComponent implements OnInit, OnDestroy {
     } finally {
       this.loading = false;
     }
-  }
-
-  ngOnDestroy() {
-    this._subscription.unsubscribe();
   }
 }

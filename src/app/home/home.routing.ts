@@ -1,6 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home.component';
+import { Routes } from '@angular/router';
+import { authGuard } from '@core/guards';
 
 export enum PATH {
   EMPTY = '',
@@ -11,10 +10,10 @@ export enum PATH {
   ANY = '**'
 }
 
-const routes: Routes = [
+export const ROUTES: Routes = [
   {
     path: PATH.EMPTY,
-    component: HomeComponent,
+    loadComponent: () => import('@home/home.component').then(m => m.HomeComponent),
     children: [
       {
         path: PATH.EMPTY,
@@ -22,20 +21,24 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: PATH.DASHBOARD,
-        loadChildren: () => import('@dashboard/dashboard.module').then(m => m.DashboardModule)
+        path: PATH.CASH_FLOW,
+        loadChildren: () => import('@cash-flow/cash-flow.routing').then(m => m.ROUTES),
+        canActivate: [authGuard]
       },
       {
-        path: PATH.CASH_FLOW,
-        loadChildren: () => import('@cash-flow/cash-flow.module').then(m => m.CashFlowModule)
+        path: PATH.DASHBOARD,
+        loadChildren: () => import('@dashboard/dashboard.routing').then(m => m.ROUTES),
+        canActivate: [authGuard]
       },
       {
         path: PATH.INFO,
-        loadChildren: () => import('@info/info.module').then(m => m.InfoModule)
+        loadChildren: () => import('@info/info.routing').then(m => m.ROUTES),
+        canActivate: [authGuard]
       },
       {
         path: PATH.CONFIG,
-        loadChildren: () => import('@config/config.module').then(m => m.ConfigModule)
+        loadChildren: () => import('@config/config.routing').then(m => m.ROUTES),
+        canActivate: [authGuard]
       },
       {
         path: PATH.ANY,
@@ -44,11 +47,3 @@ const routes: Routes = [
     ]
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-export class HomeRoutingModule {
-  static COMPONENTS = [HomeComponent];
-}

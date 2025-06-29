@@ -1,14 +1,7 @@
 import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { AuthService } from '@auth/auth.service';
 import { FirebaseFirestore } from '@capacitor-firebase/firestore';
-import { AuthService } from '@core/auth/auth.service';
-import {
-  COUNTRY_CODE,
-  ICashFlowRecord,
-  ICountryRecord,
-  IUserPreferences,
-  IUserSettings,
-  ROLE
-} from '@core/model';
+import { COUNTRY_CODE, ICashFlowRecord, ICountryRecord, IUserPreferences, IUserSettings, ROLE } from '@core/model';
 import { BehaviorSubject } from 'rxjs';
 
 enum COLLECTION {
@@ -31,14 +24,16 @@ enum USER_DOCUMENT {
   CONTAINS = 'array-contains'
 } */
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class DatabaseService implements OnDestroy {
   #cashFlowRecords = new BehaviorSubject<Array<ICashFlowRecord> | undefined>(undefined);
   #countryRecords = new BehaviorSubject<Array<ICountryRecord> | undefined>(undefined);
   #userSettings = new BehaviorSubject<IUserSettings | undefined>(undefined);
   #userPreferences = new BehaviorSubject<IUserPreferences | undefined>(undefined);
+
+  start() {
+    return FirebaseFirestore.clearPersistence();
+  }
 
   constructor(@Inject(AuthService) private auth: AuthService) {}
 

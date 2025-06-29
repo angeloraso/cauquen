@@ -1,23 +1,75 @@
 <bizy-toolbar>
 
-    <img slot="start" class="cauquen-logo" src="/assets/favicons/favicon.ico" alt="logo"/>
+    <bizy-button slot="start" (onSelect)="goBack()" class="cauquen-action cauquen-action--info"><i class="fa-solid fa-angle-left"></i></bizy-button>
     
-    <h1 slot="start">{{'CASH_FLOW.EDIT_CASH_FLOW_RECORD.TITLE' | translate}}</h1>
+    <h1 slot=start>{{'EDIT_CASH_FLOW_RECORD.TITLE' | translate}}</h1>
 
     <span slot="start" [bizyLoading]="loading"></span>
 
 </bizy-toolbar>
 
-<div class="cauquen-wrapper edit-cash-flow-record">
+<bizy-content>
 
-    <cauquen-cash-flow-record-form
-        *ngIf="record"
-        [disabled]="loading"
-        [date]="record.date"
-        [amount]="record.amount"
-        [balance]="record.balance"
-        (cancel)="goBack()"
-        (confirm)="confirm($event)">
-    </cauquen-cash-flow-record-form>
+    <bizy-form>
 
-</div>
+        <bizy-date-picker
+            type="date"
+            [disabled]="loading"
+            [date]="date.value"
+            (onChange)="date.setValue($event)">
+            <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.DATE' | translate}}</strong></h6>
+        </bizy-date-picker>
+
+        <bizy-section-start>
+            
+            <bizy-input
+                #amountInput
+                [disabled]="loading"
+                [value]="amount.value"
+                type="currency"
+                placeholder="0,00"
+                (onChange)="amount.setValue($event)">
+                <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.AMOUNT' | translate}}</strong></h6>
+                <h6 slot="prefix">$</h6>
+                <h6 slot="error" *ngIf="amount.hasError('min') && amountInput.touched">{{'CORE.FORM.ERROR.MIN' | translate}}: {{MIN_VALUE}}</h6>
+                <h6 slot="error" *ngIf="amount.hasError('bizyNumber') && amountInput.touched">{{'CORE.FORM.ERROR.ONLY_NUMBERS' | translate}}</h6>
+            </bizy-input>
+
+            <bizy-toggle 
+                [selected]="income"
+                [disabled]="loading"
+                (onSelect)="income = !income">
+                <h5 slot="start">{{'CORE.FORM.FIELD.INCOME' | translate}}</h5>
+            </bizy-toggle>
+
+        </bizy-section-start>
+
+        <bizy-input
+            #balanceInput
+            [disabled]="loading"
+            [value]="balance.value"
+            type="currency"
+            placeholder="0,00"
+            (onChange)="balance.setValue($event)">
+            <h6 slot="header" class="cauquen-title"><strong>{{'CORE.FORM.FIELD.BALANCE' | translate}}</strong></h6>
+            <h6 slot="prefix">$</h6>
+            <h6 slot="error" *ngIf="balance.hasError('min') && balanceInput.touched">{{'CORE.FORM.ERROR.MIN' | translate}}: {{MIN_VALUE}}</h6>
+            <h6 slot="error" *ngIf="balance.hasError('bizyNumber') && balanceInput.touched">{{'CORE.FORM.ERROR.ONLY_NUMBERS' | translate}}</h6>
+        </bizy-input>
+
+    </bizy-form>
+
+</bizy-content>
+
+<bizy-section class="cauquen-confirm-buttons">
+
+    <bizy-button class="cauquen-confirm-buttons__cancel" (onSelect)="goBack()" [disabled]="loading">
+        <h5>{{'CORE.BUTTON.CANCEL' | translate}}</h5>
+    </bizy-button>
+
+    <bizy-button type="submit" class="cauquen-confirm-buttons__confirm" (onSelect)="save()" [disabled]="loading">
+        <h5>{{'CORE.BUTTON.CONFIRM' | translate}}</h5>
+        <h5><i class="fa-solid fa-check"></i></h5>
+    </bizy-button>
+        
+</bizy-section>

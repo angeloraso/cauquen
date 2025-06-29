@@ -1,38 +1,22 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { authGuard } from '@core/guards';
-import { AddCashFlowRecordComponent } from './add-cash-flow-record/add-cash-flow-record.component';
-import { CashFlowComponent } from './cash-flow.component';
-import { EditCashFlowRecordComponent } from './edit-cash-flow-record/edit-cash-flow-record.component';
+import { Routes } from '@angular/router';
 
 export enum PATH {
   EMPTY = '',
   ADD = 'add'
 }
 
-const routes: Routes = [
+export const ROUTES: Routes = [
   {
     path: PATH.EMPTY,
-    component: CashFlowComponent,
-    pathMatch: 'full',
-    canActivate: [authGuard]
+    loadComponent: () => import('@cash-flow/cash-flow.component').then(m => m.CashFlowComponent),
+    pathMatch: 'full'
   },
   {
     path: PATH.ADD,
-    component: AddCashFlowRecordComponent,
-    canActivate: [authGuard]
+    loadComponent: () => import('@cash-flow/add-cash-flow-record/add-cash-flow-record.component').then(m => m.AddCashFlowRecordComponent)
   },
   {
     path: ':cashFlowRecordId',
-    component: EditCashFlowRecordComponent,
-    canActivate: [authGuard]
+    loadComponent: () => import('@cash-flow/edit-cash-flow-record/edit-cash-flow-record.component').then(m => m.EditCashFlowRecordComponent)
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-export class CashFlowRoutingModule {
-  static COMPONENTS = [CashFlowComponent, AddCashFlowRecordComponent, EditCashFlowRecordComponent];
-}

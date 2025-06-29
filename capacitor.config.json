@@ -1,7 +1,6 @@
 {
   "appId": "ar.com.cauquen",
   "appName": "Cauquen",
-  "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "dist",
   "plugins": {

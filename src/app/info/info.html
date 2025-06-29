@@ -8,9 +8,29 @@
 
 </bizy-toolbar>
 
-<div class="cauquen-wrapper info" [bizyLoading]="loading">
+<bizy-content>
 
-    <bizy-table>
+     <bizy-list *ngIf="loading" class="animated fade-in">
+
+        <bizy-skeleton height="2.6rem"></bizy-skeleton>
+
+        <bizy-section>
+
+            <bizy-section-start>
+
+                <bizy-list *ngFor="let i of 3 | bizyRepeat">
+    
+                    <bizy-skeleton *ngFor="let j of 12 | bizyRepeat" height="2rem"></bizy-skeleton>
+    
+                </bizy-list>
+
+            </bizy-section-start>
+
+        </bizy-section>
+
+    </bizy-list>
+
+    <bizy-table *ngIf="!loading" class="animated fade-in">
 
         <bizy-table-header>
     
@@ -60,21 +80,21 @@
     
         <bizy-table-row *ngFor="let record of info | bizyOrderBy: order : orderBy">
     
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.from | date: 'YYYY/MM'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}"><h6>{{record.from | date: 'yyyy/MM'}}</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.usInflationRate | number : '1.2-2'}} %</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}"><h6>{{record.usInflationRate | number : '1.2-2'}} %</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.inflationRate | number : '1.2-2'}} %</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}"><h6>{{record.inflationRate | number : '1.2-2'}} %</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>{{record.fixedRate | number : '1.2-2'}} %</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}"><h6>{{record.fixedRate | number : '1.2-2'}} %</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>$ {{record.retailDollar | number : '1.2-2'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}"><h6>$ {{record.retailDollar | number : '1.2-2'}}</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>$ {{record.cclDollar | number : '1.2-2'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}"><h6>$ {{record.cclDollar | number : '1.2-2'}}</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>$ {{record.mepDollar | number : '1.2-2'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}"><h6>$ {{record.mepDollar | number : '1.2-2'}}</h6></bizy-table-column>
 
-            <bizy-table-column [ngStyle]="{flex: 3}" (onSelect)="goToRecord(record)"><h6>$ {{record.cryptoDollar | number : '1.2-2'}}</h6></bizy-table-column>
+            <bizy-table-column [ngStyle]="{flex: 3}"><h6>$ {{record.cryptoDollar | number : '1.2-2'}}</h6></bizy-table-column>
 
             <bizy-table-column [ngStyle]="{flex: 1, minWidth: '3rem'}">
                 <bizy-button (onSelect)="openConfirmPopup(record)" class="cauquen-action cauquen-action--danger"><i class="fa-solid fa-trash-alt"></i></bizy-button>
@@ -84,6 +104,4 @@
     
     </bizy-table>
 
-    <span *ngIf="info.length === 0" class="cauquen__table--empty">{{'CORE.EMPTY' | translate}}</span>
-    
-</div>
+</bizy-content>

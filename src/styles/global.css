@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 
+body {
+    background-color: var(--background-color);
+}
+
 p,
 h1,
 h2,
@@ -10,42 +14,9 @@ h6 {
     color: var(--text-color);
 }
 
-.cauquen-card {
-    background-color: #fff;
-    border-radius: 0.5em;
-    box-shadow:
-        0 4px 6px rgb(50 50 93 / 11%),
-        0 1px 3px rgb(0 0 0 / 8%);
-    padding: 0.5em;
-    transition: transform 250ms ease-in-out;
-    height: 100%;
-    width: 100%;
-}
-
-.cauquen-card:hover {
-    box-shadow:
-        0 7px 14px rgb(50 50 93 / 10%),
-        0 3px 6px rgb(0 0 0 / 8%);
-    transform: translateY(-1px);
-}
-
-.cauquen__table--empty {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 20em;
-    width: 100%;
-    text-align: center;
-}
-
 .cauquen-action {
     --bizy-button-background-color: transparent;
     cursor: pointer;
-    transition: transform 100ms ease;
-}
-
-.cauquen-action:hover {
-    transform: scale(1.1);
 }
 
 .cauquen-action--primary {
@@ -77,8 +48,22 @@ h6 {
     --bizy-button-color: var(--dark-secondary-color);
 }
 
+.cauquen-table-column-start {
+    --bizy-table-column-justify-content: flex-start;
+}
+
 .cauquen-table-column-center {
-    justify-content: center;
+    --bizy-table-column-justify-content: center;
+}
+
+.cauquen-table-column-end {
+    --bizy-table-column-justify-content: flex-end;
+}
+
+.cauquen-block-button {
+    flex: 1;
+    width: 100%;
+    --bizy-button-width: 100%;
 }
 
 .cauquen-button--accent {
@@ -105,9 +90,69 @@ h6 {
     --bizy-button-background-color: var(--bizy-danger-color) !important;
 }
 
+.cauquen-outlined-button--accent {
+    --bizy-button-background-color: transparent;
+    --bizy-button-border: 0.1rem solid var(--bizy-accent-color);
+    --bizy-button-color: var(--bizy-accent-color);
+}
+
+.cauquen-outlined-button--accent:hover {
+    --bizy-button-background-color: var(--bizy-light-accent-color);
+}
+
+.cauquen-outlined-button--success {
+    --bizy-button-background-color: transparent;
+    --bizy-button-border: 0.1rem solid var(--bizy-success-color);
+    --bizy-button-color: var(--bizy-success-color);
+}
+
+.cauquen-outlined-button--success:hover {
+    --bizy-button-background-color: var(--bizy-light-success-color);
+}
+
+.cauquen-outlined-button--default {
+    --bizy-button-background-color: transparent;
+    --bizy-button-border: 0.1rem solid var(--bizy-default-color);
+    --bizy-button-color: var(--bizy-default-color);
+}
+
+.cauquen-outlined-button--default:hover {
+    --bizy-button-background-color: var(--bizy-light-default-color);
+}
+
+.cauquen-outlined-button--info {
+    --bizy-button-background-color: transparent;
+    --bizy-button-border: 0.1rem solid var(--bizy-info-color);
+    --bizy-button-color: var(--bizy-info-color);
+}
+
+.cauquen-outlined-button--info:hover {
+    --bizy-button-background-color: var(--bizy-light-info-color);
+}
+
+.cauquen-outlined-button--warning {
+    --bizy-button-background-color: transparent;
+    --bizy-button-border: 0.1rem solid var(--bizy-warning-color);
+    --bizy-button-color: var(--bizy-warning-color);
+}
+
+.cauquen-outlined-button--warning:hover {
+    --bizy-button-background-color: var(--bizy-light-warning-color);
+}
+
+.cauquen-outlined-button--danger {
+    --bizy-button-background-color: transparent;
+    --bizy-button-border: 0.1rem solid var(--bizy-danger-color);
+    --bizy-button-color: var(--bizy-danger-color);
+}
+
+.cauquen-outlined-button--danger:hover {
+    --bizy-button-background-color: var(--bizy-light-danger-color);
+}
+
 .cauquen-logo {
-    border-radius: 50%;
     height: 2rem;
+    border-radius: 50%;
 }
 
 @media only screen and (min-width: 768px) {
@@ -125,15 +170,6 @@ h6 {
         width: 2rem;
     }
 }
-
-
-@media only screen and (max-width: 576px) {
-    .hidden-xs {
-        visibility: hidden !important;
-        display: none !important;
-    }
-}
-
 
 .bizy-table-row h5,
 .bizy-table-row h6,
@@ -157,85 +193,9 @@ h6 {
     -webkit-line-clamp: unset !important;
 }
 
-.cauquen-table-actions {
-    padding: 0 0.5rem;
-}
-
 .cauquen-no-padding {
     padding: 0 !important;
     --bizy-button-padding: 0;
-}
-
-.cauquen-wrapper {
-    padding: 0.5rem;
-    flex: 1;
-    height: 100%;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.cauquen-wrapper--light {
-    padding: 0.5rem;
-    flex: 1;
-    min-height: fit-content;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-}
-
-.cauquen-content {
-    padding: 0.5rem;
-}
-
-.cauquen-form__section {
-    display: flex;
-    justify-content: space-between;
-    column-gap: 1rem;
-    align-items: center;
-}
-
-.cauquen-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 0.5rem;
-}
-
-.cauquen-section__start {
-    flex: 1;
-    display: flex;
-    align-items: flex-end;
-    gap: 1rem;
-}
-
-.cauquen-section__end {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    gap: 1rem;
-}
-
-.cauquen-section__end bizy-search-input {
-    flex: 1;
-}
-
-.hidden-xs {
-    @media only screen and (max-width: 576px) {
-        visibility: hidden;
-        display: none;
-    }
-}
-
-.hidden-xl {
-    @media only screen and (max-width: 1200px) {
-        visibility: hidden;
-        display: none;
-    }
 }
 
 .cauquen-counter {
@@ -243,47 +203,61 @@ h6 {
     --bizy-input-max-width: 4.6rem;
 }
 
-.cauquen-title {
+.cauquen--primary {
+    color: var(--primary-color);
+}
+
+.cauquen--accent {
+    color: var(--bizy-accent-color);
+}
+
+.cauquen--success {
+    color: var(--bizy-success-color);
+}
+
+.cauquen--info {
     color: var(--bizy-info-color);
 }
 
-.cauquen-form__toggle-field {
-    display: flex;
-    justify-content: space-between;
+.cauquen--default {
+    color: var(--bizy-default-color);
+}
+
+.cauquen--warning {
+    color: var(--bizy-warning-color);
+}
+
+.cauquen--danger {
+    color: var(--bizy-danger-color);
+}
+
+.cauquen-no-matches {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    height: 100%;
     width: 100%;
-    column-gap: 0.5em;
 }
 
-.cauquen-form__toggle-field__label {
-    color: var(--bizy-info-color);
+.cauquen-text--center {
+    text-wrap: auto;
+    text-align: center;
+    width: 100%;
 }
 
 .cauquen-confirm-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    column-gap: 1rem;
-    width: 100%;
+    padding: 0.5rem;
+    --bizy-section-background-color: #fff;
 }
 
 .cauquen-confirm-buttons__cancel {
-    --bizy-button-background-color: var(--bizy-danger-color);
+    --bizy-button-min-width: 6rem;
+    --bizy-button-background-color: transparent;
+    --bizy-button-color: var(--bizy-info-color);
 }
 
 .cauquen-confirm-buttons__confirm {
+    flex: 1;
+    --bizy-button-width: 100%;
     --bizy-button-background-color: var(--bizy-accent-color);
-}
-
-.cauquen-text-ellipsis {
-    width: 100%;
-    min-width: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.cauquen--hidden {
-    display: none !important;
-    height: 0 !important;
-    width: 0 !important;
 }
