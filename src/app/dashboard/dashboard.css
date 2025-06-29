@@ -1,8 +1,9 @@
-.dashboard {
-    height: auto;
+:host {
     display: flex;
     flex-direction: column;
-    row-gap: 0.5em;
+    height: 100%;
+
+    --bizy-card-height: fit-content;
 }
 
 .dashboard__profit__content {
