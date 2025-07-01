@@ -1,28 +1,28 @@
 :host {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .cash-flow__table__income {
-    font-weight: bold;
-    color: var(--bizy-success-color);
+  font-weight: bold;
+  color: var(--bizy-success-color);
 }
 
 .cash-flow__table__expense {
-    font-weight: bold;
-    color: var(--bizy-danger-color);
+  font-weight: bold;
+  color: var(--bizy-danger-color);
 }
 
 .cash-flow__table__balance {
-    font-weight: bold;
-    color: var(--bizy-info-color);
+  font-weight: bold;
+  color: var(--bizy-info-color);
 }
 
 .cash-flow__table__actions__delete {
-    color: var(--bizy-danger-color);
+  color: var(--bizy-danger-color);
 }
 
 ::ng-deep .cash-flow__table__row--end-of-month {
-    --bizy-table-row-background-color: var(--hover-color);
+  --bizy-table-row-background-color: var(--hover-color);
 }

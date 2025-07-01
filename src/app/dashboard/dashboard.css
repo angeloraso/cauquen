@@ -1,53 +1,53 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
-    --bizy-card-height: fit-content;
+  --bizy-card-height: fit-content;
 }
 
 .dashboard__profit__content {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .dashboard__profit__content__wrapper {
-    flex: 1;
-    display: flex;
-    gap: 0.5rem;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+  flex: 1;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .dashboard__profit__content__section {
-    display: flex;
-    flex-direction: column;
-    min-width: 7rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 7rem;
 }
 
 .dashboard__charts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .dashboard__charts__chart {
-    flex: 1;
+  flex: 1;
 }
 
 .dashboard__charts__chart-wrapper {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    min-height: min(34rem, 80vw);
-    min-width: min(34rem, 80vw);
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-height: min(34rem, 80vw);
+  min-width: min(34rem, 80vw);
 }
 
 .dashboard__charts__chart-wrapper__chart {
-    flex: 1;
+  flex: 1;
 }

@@ -1,43 +1,43 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { AuthService } from '@auth/auth.service';
 import { COUNTRY_CODE, ROLE } from '@core/model';
 import { DatabaseService } from '@core/services';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UserSettingsService {
-  constructor(@Inject(DatabaseService) private database: DatabaseService) {}
+  readonly #database = inject(DatabaseService);
+  readonly #auth = inject(AuthService);
 
-  isAdmin() {
-    return new Promise<boolean>(async resolve => {
-      try {
-        const roles = await this.database.getUserRoles();
-        resolve(roles && roles.includes(ROLE.ADMIN));
-      } catch {
-        resolve(false);
+  isAdmin = async (): Promise<boolean> => {
+    try {
+      const email = this.#auth.getEmail();
+      if (!email) {
+        return false;
       }
-    });
-  }
 
-  getCountry() {
-    return new Promise<COUNTRY_CODE>(async (resolve, reject) => {
-      try {
-        const country = await this.database.getUserCountry();
-        resolve(country ?? COUNTRY_CODE.ARGENTINA);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
+      const roles = await this.#database.getUserRoles(email);
+      return roles && roles.includes(ROLE.ADMIN);
+    } catch {
+      return false;
+    }
+  };
 
-  putCountry(country: COUNTRY_CODE) {
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        await this.database.putUserCountry(country);
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
+  getCountry = async (): Promise<COUNTRY_CODE> => {
+    const email = this.#auth.getEmail();
+    if (!email) {
+      return COUNTRY_CODE.ARGENTINA;
+    }
+
+    const country = await this.#database.getUserCountry(email);
+    return country ?? COUNTRY_CODE.ARGENTINA;
+  };
+
+  putCountry = (country: COUNTRY_CODE): Promise<void> => {
+    const email = this.#auth.getEmail();
+    if (!email) {
+      throw new Error();
+    }
+
+    return this.#database.putUserCountry({ email, country });
+  };
 }

@@ -1,5 +1,4 @@
-import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { AuthService } from '@auth/auth.service';
+import { Injectable, OnDestroy } from '@angular/core';
 import { FirebaseFirestore } from '@capacitor-firebase/firestore';
 import { COUNTRY_CODE, ICashFlowRecord, ICountryRecord, IUserPreferences, IUserSettings, ROLE } from '@core/model';
 import { BehaviorSubject } from 'rxjs';
@@ -35,367 +34,225 @@ export class DatabaseService implements OnDestroy {
     return FirebaseFirestore.clearPersistence();
   }
 
-  constructor(@Inject(AuthService) private auth: AuthService) {}
+  getCashFlowRecords = (email: string) =>
+    new Promise<Array<ICashFlowRecord>>((resolve, reject) => {
+      if (typeof this.#cashFlowRecords.value !== 'undefined') {
+        resolve(this.#cashFlowRecords.value);
+        return;
+      }
 
-  getCashFlowRecords() {
-    return new Promise<Array<ICashFlowRecord>>(async (resolve, reject) => {
-      try {
-        if (typeof this.#cashFlowRecords.value !== 'undefined') {
-          resolve(this.#cashFlowRecords.value);
-          return;
-        }
-
-        const userEmail = this.auth.getEmail();
-        if (!userEmail) {
-          throw new Error('No user email');
-        }
-
-        await FirebaseFirestore.addDocumentSnapshotListener<{ data: Array<ICashFlowRecord> }>(
-          { reference: `${userEmail}/${USER_DOCUMENT.CASH_FLOW_RECORDS}` },
-          (event, error) => {
-            if (error) {
-              console.log(error);
-            } else {
-              const records = event && event.snapshot.data ? event.snapshot.data.data : [];
-              this.#cashFlowRecords.next(records);
-              resolve(records);
-            }
+      FirebaseFirestore.addDocumentSnapshotListener<{ data: Array<ICashFlowRecord> }>(
+        { reference: `${email}/${USER_DOCUMENT.CASH_FLOW_RECORDS}` },
+        (event, error) => {
+          if (error) {
+            console.log(error);
+            reject(error);
+          } else {
+            const records = event && event.snapshot.data ? event.snapshot.data.data : [];
+            this.#cashFlowRecords.next(records);
+            resolve(records);
           }
-        );
-      } catch (error) {
-        reject(error);
-      }
+        }
+      );
     });
-  }
 
-  getCashFlowRecord(recordId: string) {
-    return new Promise<ICashFlowRecord | null>(async (resolve, reject) => {
-      try {
-        if (typeof this.#cashFlowRecords.value !== 'undefined') {
-          resolve(this.#cashFlowRecords.value.find(_record => _record.id === recordId) || null);
-          return;
-        }
+  getCashFlowRecord = async (data: { email: string; recordId: string }): Promise<ICashFlowRecord | null> => {
+    if (typeof this.#cashFlowRecords.value !== 'undefined') {
+      return this.#cashFlowRecords.value.find(_record => _record.id === data.recordId) || null;
+    }
 
-        const records = await this.getCashFlowRecords();
-        const record = records.find(_record => _record.id === recordId) || null;
-        resolve(record as ICashFlowRecord);
-      } catch (error) {
-        reject(error);
-      }
+    const records = await this.getCashFlowRecords(data.email);
+    const record = records.find(_record => _record.id === data.recordId) || null;
+    return record;
+  };
+
+  postCashFlowRecord = async (data: { email: string; record: ICashFlowRecord }): Promise<void> => {
+    const records = await this.getCashFlowRecords(data.email);
+    const index = records.findIndex(_record => _record.id === data.record.id);
+    if (index !== -1) {
+      records[index] = data.record;
+    } else {
+      records.push(data.record);
+    }
+
+    const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
+    await FirebaseFirestore.setDocument({
+      reference: `${data.email}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
+      data: cashFlowRecords
     });
-  }
+  };
 
-  postCashFlowRecord(record: ICashFlowRecord): Promise<void> {
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        const userEmail = this.auth.getEmail();
-        if (!userEmail) {
-          throw new Error('No user email');
-        }
+  putCashFlowRecord = async (data: { email: string; record: ICashFlowRecord }): Promise<void> => {
+    const records = await this.getCashFlowRecords(data.email);
+    const index = records.findIndex(_record => _record.id === data.record.id);
+    if (index !== -1) {
+      records[index] = data.record;
+      const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
+      await FirebaseFirestore.setDocument({
+        reference: `${data.email}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
+        data: cashFlowRecords
+      });
+    }
+  };
 
-        const records = await this.getCashFlowRecords();
-        const index = records.findIndex(_record => _record.id === record.id);
-        if (index !== -1) {
-          records[index] = record;
-        } else {
-          records.push(record);
-        }
+  deleteCashFlowRecord = async (data: { email: string; id: string }): Promise<void> => {
+    let records = await this.getCashFlowRecords(data.email);
+    records = records.filter(_record => _record.id !== data.id);
 
-        const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
-        await FirebaseFirestore.setDocument({
-          reference: `${userEmail}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
-          data: cashFlowRecords
-        });
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
+    const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
+
+    await FirebaseFirestore.setDocument({
+      reference: `${data.email}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
+      data: cashFlowRecords
     });
-  }
+  };
 
-  putCashFlowRecord(record: ICashFlowRecord): Promise<void> {
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        const userEmail = this.auth.getEmail();
-        if (!userEmail) {
-          throw new Error('No user email');
-        }
-
-        const records = await this.getCashFlowRecords();
-        const index = records.findIndex(_record => _record.id === record.id);
-        if (index !== -1) {
-          records[index] = record;
-          const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
-          await FirebaseFirestore.setDocument({
-            reference: `${userEmail}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
-            data: cashFlowRecords
-          });
-        }
-
-        resolve();
-      } catch (error) {
-        reject(error);
+  getCountryRecords = (country: COUNTRY_CODE): Promise<Array<ICountryRecord>> =>
+    new Promise<Array<ICountryRecord>>((resolve, reject) => {
+      if (typeof this.#countryRecords.value !== 'undefined') {
+        resolve(this.#countryRecords.value);
+        return;
       }
-    });
-  }
 
-  deleteCashFlowRecord(id: string): Promise<void> {
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        const userEmail = this.auth.getEmail();
-        if (!userEmail) {
-          throw new Error('No user email');
-        }
-
-        let records = await this.getCashFlowRecords();
-        records = records.filter(_record => _record.id !== id);
-
-        const cashFlowRecords = JSON.parse(JSON.stringify({ data: records }));
-
-        await FirebaseFirestore.setDocument({
-          reference: `${userEmail}/${USER_DOCUMENT.CASH_FLOW_RECORDS}`,
-          data: cashFlowRecords
-        });
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
-
-  getCountryRecords(country: COUNTRY_CODE) {
-    return new Promise<Array<ICountryRecord>>(async (resolve, reject) => {
-      try {
-        if (typeof this.#countryRecords.value !== 'undefined') {
-          resolve(this.#countryRecords.value);
-          return;
-        }
-
-        await FirebaseFirestore.addDocumentSnapshotListener<{ data: Array<ICountryRecord> }>(
-          { reference: `${COLLECTION.COUNTRY}/${country}` },
-          (event, error) => {
-            if (error) {
-              console.log(error);
-            } else {
-              const records = event && event.snapshot.data ? event.snapshot.data.data : [];
-              this.#countryRecords.next(records);
-              resolve(records);
-            }
+      FirebaseFirestore.addDocumentSnapshotListener<{ data: Array<ICountryRecord> }>(
+        { reference: `${COLLECTION.COUNTRY}/${country}` },
+        (event, error) => {
+          if (error) {
+            console.log(error);
+            reject(error);
+          } else {
+            const records = event && event.snapshot.data ? event.snapshot.data.data : [];
+            this.#countryRecords.next(records);
+            resolve(records);
           }
-        );
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
-
-  getCountryRecord(data: { id: string; country: COUNTRY_CODE }) {
-    return new Promise<ICountryRecord | null>(async (resolve, reject) => {
-      try {
-        if (typeof this.#countryRecords.value !== 'undefined') {
-          resolve(this.#countryRecords.value.find(_record => _record.id === data.id) || null);
-          return;
         }
-
-        const records = await this.getCountryRecords(data.country);
-        const record = records.find(_record => _record.id === data.id) || null;
-        resolve(record as ICountryRecord);
-      } catch (error) {
-        reject(error);
-      }
+      );
     });
-  }
 
-  postCountryRecord(data: { record: ICountryRecord; country: COUNTRY_CODE }): Promise<void> {
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        const records = await this.getCountryRecords(data.country);
-        const index = records.findIndex(_record => _record.id === data.record.id);
-        if (index !== -1) {
-          records[index] = data.record;
+  getCountryRecord = async (data: { id: string; country: COUNTRY_CODE }): Promise<ICountryRecord | null> => {
+    if (typeof this.#countryRecords.value !== 'undefined') {
+      return this.#countryRecords.value.find(_record => _record.id === data.id) || null;
+    }
+
+    const records = await this.getCountryRecords(data.country);
+    const record = records.find(_record => _record.id === data.id) || null;
+    return record;
+  };
+
+  postCountryRecord = async (data: { record: ICountryRecord; country: COUNTRY_CODE }): Promise<void> => {
+    const records = await this.getCountryRecords(data.country);
+    const index = records.findIndex(_record => _record.id === data.record.id);
+    if (index !== -1) {
+      records[index] = data.record;
+    } else {
+      records.push(data.record);
+    }
+
+    const countryRecord = JSON.parse(JSON.stringify({ data: records }));
+
+    await FirebaseFirestore.setDocument({
+      reference: `${COLLECTION.COUNTRY}/${data.country}`,
+      data: countryRecord
+    });
+  };
+
+  putCountryRecord = async (data: { record: ICountryRecord; country: COUNTRY_CODE }): Promise<void> => {
+    const records = await this.getCountryRecords(data.country);
+    const index = records.findIndex(_record => _record.id === data.record.id);
+    if (index !== -1) {
+      records[index] = data.record;
+
+      const countryRecord = JSON.parse(JSON.stringify({ data: records }));
+      await FirebaseFirestore.setDocument({
+        reference: `${COLLECTION.COUNTRY}/${data.country}`,
+        data: countryRecord
+      });
+    }
+  };
+
+  deleteCountryRecord = async (data: { id: string; country: COUNTRY_CODE }): Promise<void> => {
+    let records = await this.getCountryRecords(data.country);
+    records = records.filter(_record => _record.id !== data.id);
+
+    const countryRecord = JSON.parse(JSON.stringify({ data: records }));
+
+    await FirebaseFirestore.setDocument({
+      reference: `${COLLECTION.COUNTRY}/${data.country}`,
+      data: countryRecord
+    });
+  };
+
+  getUserSettings = (email: string) =>
+    new Promise<IUserSettings | null>((resolve, reject) => {
+      if (typeof this.#userSettings.value !== 'undefined') {
+        resolve(this.#userSettings.value);
+        return;
+      }
+
+      FirebaseFirestore.addDocumentSnapshotListener<IUserSettings>({ reference: `${email}/${USER_DOCUMENT.SETTINGS}` }, (event, error) => {
+        if (error) {
+          console.log(error);
+          reject(error);
         } else {
-          records.push(data.record);
+          const settings = event && event.snapshot.data ? event.snapshot.data : undefined;
+          this.#userSettings.next(settings);
+          resolve(settings ?? null);
         }
-
-        const countryRecord = JSON.parse(JSON.stringify({ data: records }));
-
-        await FirebaseFirestore.setDocument({
-          reference: `${COLLECTION.COUNTRY}/${data.country}`,
-          data: countryRecord
-        });
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
+      });
     });
-  }
 
-  putCountryRecord(data: { record: ICountryRecord; country: COUNTRY_CODE }): Promise<void> {
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        const records = await this.getCountryRecords(data.country);
-        const index = records.findIndex(_record => _record.id === data.record.id);
-        if (index !== -1) {
-          records[index] = data.record;
-
-          const countryRecord = JSON.parse(JSON.stringify({ data: records }));
-          await FirebaseFirestore.setDocument({
-            reference: `${COLLECTION.COUNTRY}/${data.country}`,
-            data: countryRecord
-          });
-        }
-
-        resolve();
-      } catch (error) {
-        reject(error);
+  getUserPreferences = (email: string) =>
+    new Promise<IUserPreferences | null>((resolve, reject) => {
+      if (typeof this.#userPreferences.value !== 'undefined') {
+        resolve(this.#userPreferences.value);
+        return;
       }
-    });
-  }
 
-  deleteCountryRecord(data: { id: string; country: COUNTRY_CODE }): Promise<void> {
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        let records = await this.getCountryRecords(data.country);
-        records = records.filter(_record => _record.id !== data.id);
-
-        const countryRecord = JSON.parse(JSON.stringify({ data: records }));
-
-        await FirebaseFirestore.setDocument({
-          reference: `${COLLECTION.COUNTRY}/${data.country}`,
-          data: countryRecord
-        });
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
-
-  getUserSettings() {
-    return new Promise<IUserSettings | null>(async (resolve, reject) => {
-      try {
-        if (typeof this.#userSettings.value !== 'undefined') {
-          resolve(this.#userSettings.value);
-          return;
-        }
-
-        const userEmail = this.auth.getEmail();
-        if (!userEmail) {
-          throw new Error('No user email');
-        }
-
-        await FirebaseFirestore.addDocumentSnapshotListener<IUserSettings>(
-          { reference: `${userEmail}/${USER_DOCUMENT.SETTINGS}` },
-          (event, error) => {
-            if (error) {
-              console.log(error);
-            } else {
-              const settings = event && event.snapshot.data ? event.snapshot.data : undefined;
-              this.#userSettings.next(settings);
-              resolve(settings ?? null);
-            }
-          }
-        );
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
-
-  getUserPreferences() {
-    return new Promise<IUserPreferences | null>(async (resolve, reject) => {
-      try {
-        if (typeof this.#userPreferences.value !== 'undefined') {
-          resolve(this.#userPreferences.value);
-          return;
-        }
-
-        const userEmail = this.auth.getEmail();
-        if (!userEmail) {
-          throw new Error('No user email');
-        }
-
-        await FirebaseFirestore.addDocumentSnapshotListener<IUserPreferences>(
-          { reference: `${userEmail}/${USER_DOCUMENT.PREFERENCES}` },
-          (event, error) => {
-            if (error) {
-              console.log(error);
-            } else {
-              const preferences = event && event.snapshot.data ? event.snapshot.data : undefined;
-              this.#userPreferences.next(preferences);
-              resolve(preferences ?? null);
-            }
-          }
-        );
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
-
-  getUserRoles() {
-    return new Promise<Array<ROLE>>(async (resolve, reject) => {
-      try {
-        if (typeof this.#userSettings.value !== 'undefined') {
-          resolve(this.#userSettings.value.roles ?? []);
-          return;
-        }
-
-        const settings = await this.getUserSettings();
-
-        if (settings && settings.roles) {
-          resolve(settings.roles);
+      FirebaseFirestore.addDocumentSnapshotListener<IUserPreferences>({ reference: `${email}/${USER_DOCUMENT.PREFERENCES}` }, (event, error) => {
+        if (error) {
+          console.log(error);
+          reject(error);
         } else {
-          resolve([]);
+          const preferences = event && event.snapshot.data ? event.snapshot.data : undefined;
+          this.#userPreferences.next(preferences);
+          resolve(preferences ?? null);
         }
-      } catch (error) {
-        reject(error);
-      }
+      });
     });
-  }
 
-  getUserCountry() {
-    return new Promise<COUNTRY_CODE>(async (resolve, reject) => {
-      try {
-        if (typeof this.#userPreferences.value !== 'undefined') {
-          resolve(this.#userPreferences.value.country ?? []);
-          return;
-        }
+  getUserRoles = async (email: string): Promise<Array<ROLE>> => {
+    if (typeof this.#userSettings.value !== 'undefined') {
+      return this.#userSettings.value.roles ?? [];
+    }
 
-        const preferences = await this.getUserPreferences();
+    const settings = await this.getUserSettings(email);
 
-        if (preferences && preferences.country) {
-          resolve(preferences.country);
-        } else {
-          resolve(COUNTRY_CODE.ARGENTINA);
-        }
-      } catch (error) {
-        reject(error);
-      }
+    return settings && settings.roles ? settings.roles : [];
+  };
+
+  getUserCountry = async (email: string): Promise<COUNTRY_CODE> => {
+    if (typeof this.#userPreferences.value !== 'undefined') {
+      return this.#userPreferences.value.country ?? [];
+    }
+
+    const preferences = await this.getUserPreferences(email);
+
+    if (preferences && preferences.country) {
+      return preferences.country;
+    } else {
+      return COUNTRY_CODE.ARGENTINA;
+    }
+  };
+
+  putUserCountry = async (data: { email: string; country: COUNTRY_CODE }): Promise<void> => {
+    const preferences = await this.getUserPreferences(data.email);
+    const newPreferences = JSON.parse(JSON.stringify({ ...preferences, country: data.country }));
+
+    await FirebaseFirestore.setDocument({
+      reference: `${data.email}/${USER_DOCUMENT.PREFERENCES}`,
+      data: newPreferences
     });
-  }
-
-  putUserCountry(country: COUNTRY_CODE) {
-    return new Promise<void>(async (resolve, reject) => {
-      try {
-        const userEmail = this.auth.getEmail();
-        if (!userEmail) {
-          throw new Error('No user email');
-        }
-
-        const preferences = await this.getUserPreferences();
-        const newPreferences = JSON.parse(JSON.stringify({ ...preferences, country }));
-
-        await FirebaseFirestore.setDocument({
-          reference: `${userEmail}/${USER_DOCUMENT.PREFERENCES}`,
-          data: newPreferences
-        });
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
+  };
 
   destroy = () => {
     this.#cashFlowRecords.next(undefined);

@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-    background-color: var(--background-color);
+  background-color: var(--background-color);
 }
 
 p,
@@ -11,253 +11,253 @@ h3,
 h4,
 h5,
 h6 {
-    color: var(--text-color);
+  color: var(--text-color);
 }
 
 .cauquen-action {
-    --bizy-button-background-color: transparent;
-    cursor: pointer;
+  --bizy-button-background-color: transparent;
+  cursor: pointer;
 }
 
 .cauquen-action--primary {
-    --bizy-button-color: var(--primary-color);
+  --bizy-button-color: var(--primary-color);
 }
 
 .cauquen-action--success {
-    --bizy-button-color: var(--bizy-success-color);
+  --bizy-button-color: var(--bizy-success-color);
 }
 
 .cauquen-action--default {
-    --bizy-button-color: var(--bizy-default-color);
+  --bizy-button-color: var(--bizy-default-color);
 }
 
 .cauquen-action--info {
-    --bizy-button-color: var(--bizy-info-color);
+  --bizy-button-color: var(--bizy-info-color);
 }
 
 .cauquen-action--warning {
-    --bizy-button-color: var(--bizy-warning-color);
+  --bizy-button-color: var(--bizy-warning-color);
 }
 
 .cauquen-action--danger {
-    --bizy-button-color: var(--bizy-danger-color);
+  --bizy-button-color: var(--bizy-danger-color);
 }
 
 .cauquen-toolbar-action {
-    --bizy-button-background-color: transparent;
-    --bizy-button-color: var(--dark-secondary-color);
+  --bizy-button-background-color: transparent;
+  --bizy-button-color: var(--dark-secondary-color);
 }
 
 .cauquen-table-column-start {
-    --bizy-table-column-justify-content: flex-start;
+  --bizy-table-column-justify-content: flex-start;
 }
 
 .cauquen-table-column-center {
-    --bizy-table-column-justify-content: center;
+  --bizy-table-column-justify-content: center;
 }
 
 .cauquen-table-column-end {
-    --bizy-table-column-justify-content: flex-end;
+  --bizy-table-column-justify-content: flex-end;
 }
 
 .cauquen-block-button {
-    flex: 1;
-    width: 100%;
-    --bizy-button-width: 100%;
+  flex: 1;
+  width: 100%;
+  --bizy-button-width: 100%;
 }
 
 .cauquen-button--accent {
-    --bizy-button-background-color: var(--bizy-accent-color) !important;
+  --bizy-button-background-color: var(--bizy-accent-color) !important;
 }
 
 .cauquen-button--success {
-    --bizy-button-background-color: var(--bizy-success-color) !important;
+  --bizy-button-background-color: var(--bizy-success-color) !important;
 }
 
 .cauquen-button--default {
-    --bizy-button-background-color: var(--bizy-default-color) !important;
+  --bizy-button-background-color: var(--bizy-default-color) !important;
 }
 
 .cauquen-button--info {
-    --bizy-button-background-color: var(--bizy-info-color) !important;
+  --bizy-button-background-color: var(--bizy-info-color) !important;
 }
 
 .cauquen-button--warning {
-    --bizy-button-background-color: var(--bizy-warning-color) !important;
+  --bizy-button-background-color: var(--bizy-warning-color) !important;
 }
 
 .cauquen-button--danger {
-    --bizy-button-background-color: var(--bizy-danger-color) !important;
+  --bizy-button-background-color: var(--bizy-danger-color) !important;
 }
 
 .cauquen-outlined-button--accent {
-    --bizy-button-background-color: transparent;
-    --bizy-button-border: 0.1rem solid var(--bizy-accent-color);
-    --bizy-button-color: var(--bizy-accent-color);
+  --bizy-button-background-color: transparent;
+  --bizy-button-border: 0.1rem solid var(--bizy-accent-color);
+  --bizy-button-color: var(--bizy-accent-color);
 }
 
 .cauquen-outlined-button--accent:hover {
-    --bizy-button-background-color: var(--bizy-light-accent-color);
+  --bizy-button-background-color: var(--bizy-light-accent-color);
 }
 
 .cauquen-outlined-button--success {
-    --bizy-button-background-color: transparent;
-    --bizy-button-border: 0.1rem solid var(--bizy-success-color);
-    --bizy-button-color: var(--bizy-success-color);
+  --bizy-button-background-color: transparent;
+  --bizy-button-border: 0.1rem solid var(--bizy-success-color);
+  --bizy-button-color: var(--bizy-success-color);
 }
 
 .cauquen-outlined-button--success:hover {
-    --bizy-button-background-color: var(--bizy-light-success-color);
+  --bizy-button-background-color: var(--bizy-light-success-color);
 }
 
 .cauquen-outlined-button--default {
-    --bizy-button-background-color: transparent;
-    --bizy-button-border: 0.1rem solid var(--bizy-default-color);
-    --bizy-button-color: var(--bizy-default-color);
+  --bizy-button-background-color: transparent;
+  --bizy-button-border: 0.1rem solid var(--bizy-default-color);
+  --bizy-button-color: var(--bizy-default-color);
 }
 
 .cauquen-outlined-button--default:hover {
-    --bizy-button-background-color: var(--bizy-light-default-color);
+  --bizy-button-background-color: var(--bizy-light-default-color);
 }
 
 .cauquen-outlined-button--info {
-    --bizy-button-background-color: transparent;
-    --bizy-button-border: 0.1rem solid var(--bizy-info-color);
-    --bizy-button-color: var(--bizy-info-color);
+  --bizy-button-background-color: transparent;
+  --bizy-button-border: 0.1rem solid var(--bizy-info-color);
+  --bizy-button-color: var(--bizy-info-color);
 }
 
 .cauquen-outlined-button--info:hover {
-    --bizy-button-background-color: var(--bizy-light-info-color);
+  --bizy-button-background-color: var(--bizy-light-info-color);
 }
 
 .cauquen-outlined-button--warning {
-    --bizy-button-background-color: transparent;
-    --bizy-button-border: 0.1rem solid var(--bizy-warning-color);
-    --bizy-button-color: var(--bizy-warning-color);
+  --bizy-button-background-color: transparent;
+  --bizy-button-border: 0.1rem solid var(--bizy-warning-color);
+  --bizy-button-color: var(--bizy-warning-color);
 }
 
 .cauquen-outlined-button--warning:hover {
-    --bizy-button-background-color: var(--bizy-light-warning-color);
+  --bizy-button-background-color: var(--bizy-light-warning-color);
 }
 
 .cauquen-outlined-button--danger {
-    --bizy-button-background-color: transparent;
-    --bizy-button-border: 0.1rem solid var(--bizy-danger-color);
-    --bizy-button-color: var(--bizy-danger-color);
+  --bizy-button-background-color: transparent;
+  --bizy-button-border: 0.1rem solid var(--bizy-danger-color);
+  --bizy-button-color: var(--bizy-danger-color);
 }
 
 .cauquen-outlined-button--danger:hover {
-    --bizy-button-background-color: var(--bizy-light-danger-color);
+  --bizy-button-background-color: var(--bizy-light-danger-color);
 }
 
 .cauquen-logo {
-    height: 2rem;
-    border-radius: 50%;
+  height: 2rem;
+  border-radius: 50%;
 }
 
 @media only screen and (min-width: 768px) {
-    .cauquen-logo {
-        visibility: hidden;
-        pointer-events: none;
-        width: 0.5rem;
-    }
+  .cauquen-logo {
+    visibility: hidden;
+    pointer-events: none;
+    width: 0.5rem;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-    .cauquen-logo {
-        visibility: visible;
-        pointer-events: all;
-        width: 2rem;
-    }
+  .cauquen-logo {
+    visibility: visible;
+    pointer-events: all;
+    width: 2rem;
+  }
 }
 
 .bizy-table-row h5,
 .bizy-table-row h6,
 .bizy-table-footer h5,
 .bizy-table-footer h6 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.2em !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2em !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .bizy-table-row h5:hover,
 .bizy-table-row h6:hover,
 .bizy-table-footer h5:hover,
 .bizy-table-footer h6:hover {
-    -webkit-line-clamp: unset !important;
+  -webkit-line-clamp: unset !important;
 }
 
 .cauquen-no-padding {
-    padding: 0 !important;
-    --bizy-button-padding: 0;
+  padding: 0 !important;
+  --bizy-button-padding: 0;
 }
 
 .cauquen-counter {
-    --bizy-input-min-width: 3rem;
-    --bizy-input-max-width: 4.6rem;
+  --bizy-input-min-width: 3rem;
+  --bizy-input-max-width: 4.6rem;
 }
 
 .cauquen--primary {
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
 
 .cauquen--accent {
-    color: var(--bizy-accent-color);
+  color: var(--bizy-accent-color);
 }
 
 .cauquen--success {
-    color: var(--bizy-success-color);
+  color: var(--bizy-success-color);
 }
 
 .cauquen--info {
-    color: var(--bizy-info-color);
+  color: var(--bizy-info-color);
 }
 
 .cauquen--default {
-    color: var(--bizy-default-color);
+  color: var(--bizy-default-color);
 }
 
 .cauquen--warning {
-    color: var(--bizy-warning-color);
+  color: var(--bizy-warning-color);
 }
 
 .cauquen--danger {
-    color: var(--bizy-danger-color);
+  color: var(--bizy-danger-color);
 }
 
 .cauquen-no-matches {
-    flex: 1;
-    display: grid;
-    place-items: center;
-    height: 100%;
-    width: 100%;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 .cauquen-text--center {
-    text-wrap: auto;
-    text-align: center;
-    width: 100%;
+  text-wrap: auto;
+  text-align: center;
+  width: 100%;
 }
 
 .cauquen-confirm-buttons {
-    padding: 0.5rem;
-    --bizy-section-background-color: #fff;
+  padding: 0.5rem;
+  --bizy-section-background-color: #fff;
 }
 
 .cauquen-confirm-buttons__cancel {
-    --bizy-button-min-width: 6rem;
-    --bizy-button-background-color: transparent;
-    --bizy-button-color: var(--bizy-info-color);
+  --bizy-button-min-width: 6rem;
+  --bizy-button-background-color: transparent;
+  --bizy-button-color: var(--bizy-info-color);
 }
 
 .cauquen-confirm-buttons__confirm {
-    flex: 1;
-    --bizy-button-width: 100%;
-    --bizy-button-background-color: var(--bizy-accent-color);
+  flex: 1;
+  --bizy-button-width: 100%;
+  --bizy-button-background-color: var(--bizy-accent-color);
 }

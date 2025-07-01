@@ -1,55 +1,66 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { AuthService } from '@auth/auth.service';
 import { CashFlowRecord, ICashFlowRecord } from '@core/model';
 import { DatabaseService } from '@core/services';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CashFlowService {
-  constructor(@Inject(DatabaseService) private database: DatabaseService) {}
+  readonly #database = inject(DatabaseService);
+  readonly #auth = inject(AuthService);
 
-  getRecords() {
-    return new Promise<Array<ICashFlowRecord>>(async (resolve, reject) => {
-      try {
-        const records = await this.database.getCashFlowRecords();
-        resolve(records ?? []);
-      } catch (error) {
-        reject(error);
+  getRecords = async (): Promise<Array<ICashFlowRecord>> => {
+    const email = this.#auth.getEmail();
+    if (!email) {
+      throw new Error();
+    }
+
+    const records = await this.#database.getCashFlowRecords(email);
+    return records ?? [];
+  };
+
+  getRecord = async (recordId: string): Promise<ICashFlowRecord | null> => {
+    const email = this.#auth.getEmail();
+    if (!email) {
+      throw new Error();
+    }
+
+    const record = await this.#database.getCashFlowRecord({ email, recordId });
+    return record || null;
+  };
+
+  postRecord = (record: Omit<ICashFlowRecord, 'id' | 'created' | 'updated'>): Promise<void> => {
+    const email = this.#auth.getEmail();
+    if (!email) {
+      throw new Error();
+    }
+
+    return this.#database.postCashFlowRecord({ email, record: new CashFlowRecord(record) });
+  };
+
+  putRecord = async (record: ICashFlowRecord): Promise<void> => {
+    const email = this.#auth.getEmail();
+    if (!email) {
+      throw new Error();
+    }
+    return this.#database.putCashFlowRecord({
+      email,
+      record: {
+        id: record.id,
+        date: Number(record.date),
+        amount: Number(record.amount),
+        balance: Number(record.balance),
+        created: Number(record.created) || Date.now(),
+        updated: Date.now()
       }
     });
-  }
+  };
 
-  getRecord(recordId: string) {
-    return new Promise<ICashFlowRecord>(async (resolve, reject) => {
-      try {
-        const record = await this.database.getCashFlowRecord(recordId);
-        if (record) {
-          resolve(record);
-        } else {
-          throw new Error('Not exists');
-        }
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
+  deleteRecord = (record: ICashFlowRecord): Promise<void> => {
+    const email = this.#auth.getEmail();
+    if (!email) {
+      throw new Error();
+    }
 
-  postRecord(record: Omit<ICashFlowRecord, 'id' | 'created' | 'updated'>): Promise<void> {
-    return this.database.postCashFlowRecord(new CashFlowRecord(record));
-  }
-
-  putRecord(record: ICashFlowRecord): Promise<void> {
-    return this.database.putCashFlowRecord({
-      id: record.id,
-      date: Number(record.date),
-      amount: Number(record.amount),
-      balance: Number(record.balance),
-      created: Number(record.created) || Date.now(),
-      updated: Date.now()
-    });
-  }
-
-  deleteRecord(record: ICashFlowRecord): Promise<void> {
-    return this.database.deleteCashFlowRecord(record.id);
-  }
+    return this.#database.deleteCashFlowRecord({ email, id: record.id });
+  };
 }

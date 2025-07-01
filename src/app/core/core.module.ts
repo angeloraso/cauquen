@@ -8,10 +8,15 @@ import { BizyTranslateModule, BizyTranslateService, LANGUAGE } from '@bizy/servi
 import { ENV } from '@env/environment';
 import { es } from './i18n';
 
-@NgModule({ imports: [BrowserModule,
-        BrowserAnimationsModule,
-        BizyTranslateModule,
-        ServiceWorkerModule.register('ngsw-worker.js', { enabled: ENV.production && !ENV.mobile })], providers: [DatePipe, provideHttpClient(withInterceptorsFromDi())] })
+@NgModule({
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    BizyTranslateModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: ENV.production && !ENV.mobile })
+  ],
+  providers: [DatePipe, provideHttpClient(withInterceptorsFromDi())]
+})
 export class CoreModule {
   /* Make sure CoreModule is imported only by one NgModule the AppModule */
   constructor(

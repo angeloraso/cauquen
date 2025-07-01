@@ -1,18 +1,18 @@
 html:root {
-    --primary-color: #07368C;
-    --light-primary-color: #245BC1;
-    --dark-primary-color: #0e1a32;
-    --secondary-color: #240991;
-    --light-secondary-color: #240991;
-    --secondary-color: #4829C6;
-    --dark-secondary-color: #130356;
-    --accent-color: #008375;
-    --light-accent-color: #bde8e4;
-    --dark-accent-color: #004d45;
+  --primary-color: #07368c;
+  --light-primary-color: #245bc1;
+  --dark-primary-color: #0e1a32;
+  --secondary-color: #240991;
+  --light-secondary-color: #240991;
+  --secondary-color: #4829c6;
+  --dark-secondary-color: #130356;
+  --accent-color: #008375;
+  --light-accent-color: #bde8e4;
+  --dark-accent-color: #004d45;
 
-    --hover-color: #d9edff;
-    --background-color: #c1d6fe;
-    --text-color: #413202;
-    --border-color: #eee;
-    --dark-input-background-color: #f3f3f3;
+  --hover-color: #d9edff;
+  --background-color: #c1d6fe;
+  --text-color: #413202;
+  --border-color: #eee;
+  --dark-input-background-color: #f3f3f3;
 }

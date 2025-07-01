@@ -64,6 +64,11 @@ export class EditCashFlowRecordComponent implements OnInit {
 
       const record = await this.#cashFlow.getRecord(recordId);
 
+      if (!record) {
+        this.goBack();
+        return;
+      }
+
       this.record = record;
 
       this.date.setValue(record.date);

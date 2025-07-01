@@ -9,40 +9,24 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class MobileService {
-  private _backButton = new Subject<void>();
+  #backButton = new Subject<void>();
 
   get backButton$(): Observable<void> {
-    return this._backButton.asObservable();
+    return this.#backButton.asObservable();
   }
 
-  isMobile() {
-    return ENV.mobile;
-  }
+  isMobile = () => ENV.mobile;
 
-  init() {
-    return new Promise<void>(async resolve => {
-      try {
-        if (!this.isMobile()) {
-          resolve();
-        }
-
-        App.addListener('backButton', () => {
-          this._backButton.next();
-        });
-
-        await StatusBar.setBackgroundColor({ color: '#666666' });
-        resolve();
-      } catch {
-        resolve();
-      }
+  init = async () => {
+    App.addListener('backButton', () => {
+      this.#backButton.next();
     });
-  }
 
-  hideSplash() {
-    SplashScreen.hide();
-  }
+    await StatusBar.setBackgroundColor({ color: '#666666' });
+    await StatusBar.setOverlaysWebView({ overlay: false });
+  };
 
-  exit(): Promise<void> {
-    return App.exitApp();
-  }
+  hideSplash = () => SplashScreen.hide();
+
+  exit = () => App.exitApp();
 }
