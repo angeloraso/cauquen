@@ -16,7 +16,7 @@
 }
 
 .auth__button {
-  --bizy-button-background-color: #eee;
+  --bizy-button-background-color: #fff;
   --bizy-button-color: var(--text-color);
 }
 
